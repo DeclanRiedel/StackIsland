@@ -9,6 +9,7 @@ namespace StackIsland
         public float Speed = 3.6f;
         protected ItemStack Stack;
         protected Transform Model;
+        protected CharAnim Anim;
         readonly List<Vector3> _route = new List<Vector3>();
         Vector3 _routeTarget = new Vector3(9999, 0, 9999);
         float _bob;
@@ -20,14 +21,17 @@ namespace StackIsland
             Model.SetParent(transform, false);
             var body = Visuals.Spawn(model, Model, 1.6f, Color.white, true);
             Visuals.SetShadows(body, true);
+            Anim = CharAnim.Attach(body);
             // a coloured cap so helpers stand out from customers
             var cap = Visuals.Primitive(PrimitiveType.Sphere, Model, new Vector3(0, 1.62f, 0), new Vector3(0.62f, 0.3f, 0.62f), Mats.Lit(shirt), "cap");
             cap.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-            var hands = new GameObject("hands");
-            hands.transform.SetParent(Model, false);
-            hands.transform.localPosition = new Vector3(0, 0.78f, 0.45f);
-            Stack = hands.AddComponent<ItemStack>();
+            var back = new GameObject("back");
+            back.transform.SetParent(Model, false);
+            back.transform.localPosition = new Vector3(0, 0.74f, -0.48f);
+            Stack = back.AddComponent<ItemStack>();
             Stack.Capacity = capacity;
+            Stack.Columns = 2;
+            Stack.ColumnSpacing = 0.48f;
         }
 
         /// <summary>Walk toward <paramref name="target"/> (detouring through the pen gate). True once there.</summary>
@@ -39,7 +43,7 @@ namespace StackIsland
                 _routeTarget = target;
                 Yard.Route(transform.position, target, _route);
             }
-            if (_route.Count == 0) return true;
+            if (_route.Count == 0) { Anim.SetMoving(false); return true; }
             var next = _route[0];
             var d = next - transform.position;
             d.y = 0;
@@ -48,14 +52,18 @@ namespace StackIsland
             if (dist <= (last ? stopAt : 0.25f))
             {
                 _route.RemoveAt(0);
-                if (last) { _bob = 0; Model.localPosition = Vector3.zero; return true; }
+                if (last) { _bob = 0; Model.localPosition = Vector3.zero; Anim.SetMoving(false); return true; }
                 return false;
             }
             float dt = Time.deltaTime;
             transform.position += d / dist * Mathf.Min(dist, Speed * dt);
             Model.rotation = Quaternion.Slerp(Model.rotation, Quaternion.LookRotation(d / dist), 12f * dt);
-            _bob += dt * Speed * 2.6f;
-            Model.localPosition = new Vector3(0, Mathf.Abs(Mathf.Sin(_bob)) * 0.1f, 0);
+            if (Anim.HasClips) Anim.SetMoving(true, Speed / 4.2f);
+            else
+            {
+                _bob += dt * Speed * 2.6f;
+                Model.localPosition = new Vector3(0, Mathf.Abs(Mathf.Sin(_bob)) * 0.1f, 0);
+            }
             return false;
         }
 
@@ -128,6 +136,7 @@ namespace StackIsland
                     _attack = 0.5f;
                     var dir = crab.transform.position - transform.position;
                     dir.y = 0;
+                    Anim.Attack(2f);
                     Fx.I?.Slash(transform.position + Vector3.up * 0.9f + dir.normalized * 0.7f, dir.normalized);
                     crab.Hit(1, transform.position);
                 }

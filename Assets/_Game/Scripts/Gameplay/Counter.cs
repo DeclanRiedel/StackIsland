@@ -18,6 +18,9 @@ namespace StackIsland
         public float SpawnEvery = 2.2f;
         public int MaxWant = 3;
         public float PriceMultiplier = 1f;
+        public bool AutoCash;
+        float _parrotT;
+        GameObject _parrot;
 
         readonly List<Customer> _queue = new List<Customer>();
         float _spawn;
@@ -116,6 +119,18 @@ namespace StackIsland
             var want = on ? _signActive : _signIdle;
             if (r.sharedMaterial != want) r.sharedMaterial = want;
 
+            // the parrot also empties whatever was already on the tray
+            if (AutoCash && Cash.Count > 0 && Game.I != null)
+            {
+                _parrotT -= Time.deltaTime;
+                if (_parrotT <= 0)
+                {
+                    _parrotT = 0.08f;
+                    Cash.Remove(out var at, out var v);
+                    Game.I.AddCash(v, at);
+                }
+            }
+
             _spawn -= Time.deltaTime;
             if (_spawn <= 0 && _queue.Count < MaxQueue)
             {
@@ -129,6 +144,27 @@ namespace StackIsland
             for (int i = 0; i < _queue.Count; i++) _queue[i].SetSlot(i);
         }
 
+        /// <summary>Hire the Cash Parrot: it perches on the cash tray and sends all money to the wallet.</summary>
+        public void EnableAutoCash()
+        {
+            AutoCash = true;
+            if (_parrot != null) return;
+            _parrot = Visuals.Spawn("cube-pets/animal-parrot", Cash.transform, 0.9f, Color.white);
+            _parrot.transform.localPosition = new Vector3(0.7f, 0.12f, 0.45f);
+            _parrot.transform.localRotation = Quaternion.Euler(0, 200, 0);
+            Visuals.SetShadows(_parrot, true);
+        }
+
+        public double PriceEach => Items.Price(Sells) * PriceMultiplier * (Game.I != null ? Game.I.SellBonus : 1.0);
+
+        public string Info()
+        {
+            return $"<b>Counter</b>\n{Items.Name(Sells)} sells for <color=#9CFF9A>{NumberFormatter.Format(PriceEach)}</color> each\n" +
+                   $"{_queue.Count} customers in line, each wants up to {MaxWant}\n" +
+                   $"On the counter: {Shelf.Count}/{Shelf.Capacity}\n" +
+                   (AutoCash ? "Cash Parrot sends all money to your wallet" : $"Cash waiting: {NumberFormatter.Format(Cash.CashValue)} (walk over the tray)");
+        }
+
         public bool IsHead(Customer c) => _queue.Count > 0 && _queue[0] == c;
 
         public void Done(Customer c) => _queue.Remove(c);
@@ -136,7 +172,13 @@ namespace StackIsland
         /// <summary>A customer got what they wanted: pay in bundles at the cash tray.</summary>
         public void Pay(Customer c, int items)
         {
-            double each = Items.Price(Sells) * PriceMultiplier * (Game.I != null ? Game.I.SellBonus : 1.0);
+            double each = PriceEach;
+            if (AutoCash && Game.I != null)
+            {
+                // the Cash Parrot takes the money straight to your wallet
+                Game.I.AddCash(each * items, c.transform.position + Vector3.up * 1.2f);
+                return;
+            }
             for (int i = 0; i < items; i++)
                 if (!Cash.Add(c.transform.position + Vector3.up * 1.2f, each))
                     Cash.CashValue += each;   // tray full: the money is still there, just not drawn
@@ -174,6 +216,7 @@ namespace StackIsland
             transform.position = counter.SpawnPoint;
             _model = Visuals.Spawn(Models[(_seed++ * 7) % Models.Length], transform, 1.6f, Color.white, true).transform;
             Visuals.SetShadows(_model.gameObject, true);
+            _anim = CharAnim.Attach(_model.gameObject);
             var hands = new GameObject("hands");
             hands.transform.SetParent(transform, false);
             hands.transform.localPosition = new Vector3(0, 0.75f, 0.42f);
@@ -213,6 +256,7 @@ namespace StackIsland
         }
 
         SpriteRenderer _plateSprite;
+        CharAnim _anim;
         Transform _icon, _check;
 
         public void SetSlot(int i) => _slot = i;
@@ -260,13 +304,15 @@ namespace StackIsland
                 transform.position += d.normalized * Mathf.Min(dist, 3.2f * dt);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(d.normalized), 10f * dt);
                 _bob += dt * 12f;
+                _anim.SetMoving(true, 0.8f);
             }
             else if (!_leaving)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 6f * dt);
+                _anim.SetMoving(false);
                 _bob = Mathf.MoveTowards(_bob, Mathf.Round(_bob / Mathf.PI) * Mathf.PI, dt * 4f);
             }
-            _model.localPosition = new Vector3(0, Mathf.Abs(Mathf.Sin(_bob)) * 0.1f, 0);
+            if (!_anim.HasClips) _model.localPosition = new Vector3(0, Mathf.Abs(Mathf.Sin(_bob)) * 0.1f, 0);
 
             if (_leaving) return;
             if (_counter.IsHead(this) && dist < 0.4f)

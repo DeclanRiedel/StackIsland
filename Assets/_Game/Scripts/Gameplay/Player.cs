@@ -3,9 +3,9 @@ using UnityEngine;
 namespace StackIsland
 {
     /// <summary>
-    /// You. Walk with WASD (or right-click to walk somewhere). Items you carry tower up in your hands, your cash
-    /// towers up on your back. Near a crab you swing at it automatically; near a tray, table or cash pile items
-    /// hop on and off your stack by themselves.
+    /// You. Walk with WASD (or right-click to walk somewhere). Items you carry stack up on your back in a 2-wide
+    /// grid. Near a crab you swing your knife at it automatically; near a tray, table or cash pile items hop on and
+    /// off your stack by themselves. Cash goes straight into your wallet (the counter top-right).
     /// </summary>
     public class Player : MonoBehaviour
     {
@@ -13,18 +13,18 @@ namespace StackIsland
         public float AttackRange = 1.9f;
         public float AttackEvery = 0.36f;
         public int Damage = 1;
-        public const double CashPerBundle = 10;
-        const int MaxCashBundles = 30;
 
         public ItemStack Stack { get; private set; }
-        public ItemStack CashTower { get; private set; }
         public bool IsMoving { get; private set; }
+        public CharAnim Anim { get; private set; }
 
         CharacterController _cc;
         Transform _model, _tool;
         float _bob, _attackT, _swing, _transfer;
         Vector3 _clickTarget;
         bool _hasClick;
+
+        public Vector3 Chest => transform.position + Vector3.up * 1.1f;
 
         public void Init()
         {
@@ -38,21 +38,31 @@ namespace StackIsland
             _model = modelRoot;
             var body = Visuals.Spawn("mini-characters/character-male-b", modelRoot, 1.75f, Color.white, true);
             Visuals.SetShadows(body, true);
-            _tool = Visuals.Spawn("food-kit/cooking-knife", modelRoot, 0.7f, Color.white).transform;
-            _tool.localPosition = new Vector3(0.45f, 0.75f, 0.15f);
-            _tool.localRotation = Quaternion.Euler(0, 0, -70);
+            Anim = CharAnim.Attach(body);
 
-            var hands = new GameObject("hands");
-            hands.transform.SetParent(modelRoot, false);
-            hands.transform.localPosition = new Vector3(0, 0.82f, 0.5f);
-            Stack = hands.AddComponent<ItemStack>();
-            Stack.Capacity = 12;
+            // knife in the right hand: follows the arm bone so the swing animation swings it
+            _tool = Visuals.Spawn("food-kit/cooking-knife", modelRoot, 0.75f, Color.white).transform;
+            var hand = Anim.Bone("arm-right");
+            if (hand != null && Anim.HasClips)
+            {
+                _tool.position = hand.position + Vector3.down * 0.42f + modelRoot.forward * 0.12f;
+                _tool.rotation = modelRoot.rotation * Quaternion.Euler(-90, 0, 0);
+                _tool.SetParent(hand, true);
+            }
+            else
+            {
+                _tool.localPosition = new Vector3(0.45f, 0.75f, 0.15f);
+                _tool.localRotation = Quaternion.Euler(0, 0, -70);
+            }
+
+            // carried items: a 2-wide stack on your back
             var back = new GameObject("back");
             back.transform.SetParent(modelRoot, false);
-            back.transform.localPosition = new Vector3(0, 0.95f, -0.42f);
-            CashTower = back.AddComponent<ItemStack>();
-            CashTower.Capacity = MaxCashBundles;
-            CashTower.Sway = 0.045f;
+            back.transform.localPosition = new Vector3(0, 0.78f, -0.5f);
+            Stack = back.AddComponent<ItemStack>();
+            Stack.Capacity = 12;
+            Stack.Columns = 2;
+            Stack.ColumnSpacing = 0.5f;
         }
 
         public void Teleport(Vector3 p)
@@ -77,7 +87,6 @@ namespace StackIsland
                 _transfer = 0.055f;
                 Trade(g);
             }
-            SyncCashTower(g.Cash);
         }
 
         void Move(float dt, bool blocked)
@@ -107,25 +116,31 @@ namespace StackIsland
             var vel = dir * Speed;
             vel.y = -6f;   // keep grounded
             if (_cc.enabled) _cc.Move(vel * dt);
-            if (IsMoving)
+            if (IsMoving) _model.rotation = Quaternion.Slerp(_model.rotation, Quaternion.LookRotation(dir), 14f * dt);
+            if (Anim.HasClips) Anim.SetMoving(IsMoving, Speed / 4.2f);
+            else
             {
-                _model.rotation = Quaternion.Slerp(_model.rotation, Quaternion.LookRotation(dir), 14f * dt);
-                _bob += dt * Speed * 2.6f;
+                // fallback hop when the model has no clips
+                if (IsMoving) _bob += dt * Speed * 2.6f;
+                else _bob = Mathf.MoveTowards(_bob, Mathf.Round(_bob / Mathf.PI) * Mathf.PI, dt * 6f);
+                _model.localPosition = new Vector3(0, Mathf.Abs(Mathf.Sin(_bob)) * 0.1f, 0);
             }
-            else _bob = Mathf.MoveTowards(_bob, Mathf.Round(_bob / Mathf.PI) * Mathf.PI, dt * 6f);
-            _model.localPosition = new Vector3(0, Mathf.Abs(Mathf.Sin(_bob)) * 0.1f, 0);
         }
 
         void Attack(float dt)
         {
             _attackT -= dt;
-            _swing = Mathf.MoveTowards(_swing, 0, dt * 6f);
-            _tool.localRotation = Quaternion.Euler(0, -_swing * 120f, -70);
+            if (!Anim.HasClips)
+            {
+                _swing = Mathf.MoveTowards(_swing, 0, dt * 6f);
+                _tool.localRotation = Quaternion.Euler(0, -_swing * 120f, -70);
+            }
             if (_attackT > 0 || !Yard.InPen(transform.position)) return;
             var crab = CrabPen.NearestAlive(transform.position, AttackRange);
             if (crab == null) return;
             _attackT = AttackEvery;
             _swing = 1f;
+            Anim.Attack(2.2f);
             var to = crab.transform.position - transform.position;
             to.y = 0;
             if (!IsMoving && to.sqrMagnitude > 0.01f) _model.rotation = Quaternion.LookRotation(to.normalized);
@@ -188,30 +203,20 @@ namespace StackIsland
             }
         }
 
-        /// <summary>The back tower shows your money: one bundle per 10 coins, up to a tall-but-sane cap.</summary>
-        void SyncCashTower(double cash)
-        {
-            int want = Mathf.Clamp((int)System.Math.Ceiling(cash / CashPerBundle), 0, MaxCashBundles);
-            if (CashTower.Count < want) CashTower.Add(ItemType.Cash);
-            else if (CashTower.Count > want) CashTower.Remove(ItemType.Cash, out _);
-        }
-
-        /// <summary>Visual: a bundle leaves your back and flies to <paramref name="target"/>.</summary>
+        /// <summary>Visual: a cash bundle leaves you and flies to <paramref name="target"/>.</summary>
         public void FlyCashTo(Vector3 target)
         {
             if (Tweens.I == null) return;
             var go = Items.Get(ItemType.Cash, null);
-            var tr = go.transform;
-            Tweens.I.Fly(tr, CashTower.TopWorld, () => target, 0.25f, 1.0f, () => Items.Release(ItemType.Cash, go));
+            Tweens.I.Fly(go.transform, Chest, () => target, 0.25f, 1.0f, () => Items.Release(ItemType.Cash, go));
         }
 
-        /// <summary>Visual: a bundle flies from <paramref name="from"/> onto your back.</summary>
+        /// <summary>Visual: a cash bundle flies from <paramref name="from"/> into you (and on to your wallet).</summary>
         public void FlyCashFrom(Vector3 from)
         {
             if (Tweens.I == null) return;
             var go = Items.Get(ItemType.Cash, null);
-            var tr = go.transform;
-            Tweens.I.Fly(tr, from, () => CashTower.TopWorld, 0.25f, 0.8f, () => Items.Release(ItemType.Cash, go));
+            Tweens.I.Fly(go.transform, from, () => Chest, 0.25f, 0.8f, () => Items.Release(ItemType.Cash, go));
         }
     }
 }

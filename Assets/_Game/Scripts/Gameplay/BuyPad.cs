@@ -20,6 +20,7 @@ namespace StackIsland
         public Func<int, double> CostAt = l => 10;
         public Func<bool> Available = () => true;
         public Action<int> OnBought;            // called with the new level
+        public Func<int, string> Describe = l => "";   // what the next level does (given the current level)
         public float Width = 3.2f, Depth = 2.5f;
 
         public int Level { get; private set; }
@@ -98,7 +99,7 @@ namespace StackIsland
             _fill.localScale = new Vector3(Mathf.Max(0.0001f, p), 1, 1);
         }
 
-        bool PlayerOn(Vector3 p)
+        public bool PlayerOn(Vector3 p)
         {
             var local = transform.InverseTransformPoint(p);
             return Mathf.Abs(local.x) < Width * 0.5f && Mathf.Abs(local.z) < Depth * 0.5f;
@@ -148,6 +149,14 @@ namespace StackIsland
             OnBought?.Invoke(Level);
             Game.I?.OnPurchase(this);
             foreach (var p in All) p.Refresh();
+        }
+
+        public string Info()
+        {
+            string lvl = MaxLevel > 1 ? $"  <size=80%>Lv {Level}/{MaxLevel}</size>" : "";
+            if (Maxed) return $"<b>{Title}</b>{lvl}\n<color=#9CFF9A>Maxed out</color>";
+            string paid = Paid > 0 ? $" ({NumberFormatter.Format(Paid)} paid)" : "";
+            return $"<b>{Title}</b>{lvl}\n{Describe(Level)}\nCost: <color=#9CFF9A>{NumberFormatter.Format(Remaining)}</color>{paid}\n<size=80%><color=#B8C8D4>Stand still on it to pay</color></size>";
         }
 
         /// <summary>Tests / debug: buy without paying.</summary>

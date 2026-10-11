@@ -49,6 +49,7 @@ namespace StackIsland
         public bool Alive => Hp > 0 && _spawnT >= 1f;
         Vector3 _target;
         float _wait, _flash, _spawnT;
+        bool _tinted;
         Transform _model, _bar, _barFill, _barRoot;
 
         void OnEnable() { All.Add(this); }
@@ -95,7 +96,8 @@ namespace StackIsland
             _flash = 1f;
             var push = transform.position - from;
             push.y = 0;
-            transform.position = Pen.Clamp(transform.position + push.normalized * 0.35f);
+            transform.position = Pen.Clamp(transform.position + push.normalized * 0.45f);
+            Fx.I?.HitSparks(transform.position + Vector3.up * 0.7f - push.normalized * 0.4f);
             Sfx.I?.Play(Sfx.I.Hit, 0.5f, Random.Range(0.9f, 1.1f));
             UpdateBar();
             if (Hp <= 0) Die();
@@ -143,9 +145,14 @@ namespace StackIsland
                 var face = Quaternion.LookRotation(Vector3.Cross(Vector3.up, d.normalized));
                 transform.rotation = Quaternion.Slerp(transform.rotation, face, 4f * dt);
             }
-            // squash when hit
+            // squash and flash red when hit
+            if (_flash > 0 || _tinted)
+            {
+                Visuals.Tint(_model.gameObject, Color.Lerp(Color.white, new Color(1f, 0.35f, 0.35f), _flash));
+                _tinted = _flash > 0;
+            }
             _flash = Mathf.MoveTowards(_flash, 0, dt * 5f);
-            float sq = 1f + _flash * 0.25f;
+            float sq = 1f + _flash * 0.35f;
             _model.localScale = new Vector3(sq, 1f / sq, sq) * Mathf.SmoothStep(0.05f, 1f, _spawnT);
         }
     }
@@ -182,6 +189,15 @@ namespace StackIsland
                 c.Init(this);
                 _crabs.Add(c);
             }
+        }
+
+        public string Info(int damage)
+        {
+            int alive = 0;
+            foreach (var c in _crabs) if (c.Alive) alive++;
+            return $"<b>Crab Pen</b>\n{alive}/{CrabCount} crabs ready · {MeatPerCrab} meat each\n" +
+                   $"Takes {Mathf.CeilToInt(3f / damage)} hits · a new crab arrives {RespawnSeconds:0.#}s after one is caught\n" +
+                   "Walk in to fight them; walk over the meat to pick it up";
         }
 
         public void QueueRespawn(Crab c) => _respawn.Add((c, RespawnSeconds));

@@ -141,23 +141,51 @@ namespace StackIsland
         void BuildPads()
         {
             Pad("crabs", "UPGRADE", "More Crabs", new Vector3(-8.2f, 0, 1.4f), Costs(30, 90, 220, 500),
-                () => true, l => Pen.SetCount(4 + 2 * l));
+                () => true, l => Pen.SetCount(4 + 2 * l),
+                l => $"+2 crabs in the pen ({4 + 2 * l} > {6 + 2 * l})");
             Pad("backpack", "UPGRADE", "Bigger Stack", new Vector3(-8.2f, 0, -4.6f), Costs(25, 80, 200, 450),
-                () => true, l => Player.Stack.Capacity = 12 + 6 * l);
+                () => true, l => Player.Stack.Capacity = 12 + 6 * l,
+                l => $"Carry 6 more items ({12 + 6 * l} > {18 + 6 * l})");
             Pad("catcher", "HIRE", "Crab Catcher", new Vector3(-2.6f, 0, -1.4f), Costs(50, 150, 400),
-                () => Save.totalEarned >= 15, l => SyncWorkers());
+                () => Save.totalEarned >= 15, l => SyncWorkers(),
+                l => $"A helper who catches crabs and carries the meat to the grill ({l} > {l + 1} hired)");
             Pad("hotgrill", "UPGRADE", "Hotter Grill", new Vector3(10.9f, 0, 13f), Costs(100, 250, 600, 1200),
-                () => Level("catcher") >= 1, l => { foreach (var g in Grills) g.CookSeconds = 1.1f * Mathf.Pow(0.78f, l); });
+                () => Level("catcher") >= 1, l => { foreach (var g in Grills) g.CookSeconds = 1.1f * Mathf.Pow(0.78f, l); },
+                l => $"Grills cook 28% faster ({1.1f * Mathf.Pow(0.78f, l):0.00}s > {1.1f * Mathf.Pow(0.78f, l + 1):0.00}s per cake)");
             Pad("waiter", "HIRE", "Waiter", new Vector3(10.9f, 0, -3.6f), Costs(120, 350),
-                () => Level("catcher") >= 1, l => SyncWorkers());
+                () => Level("catcher") >= 1, l => SyncWorkers(),
+                l => $"A helper who carries crab cakes from the grills to the counter ({l} > {l + 1} hired)");
+            Pad("parrot", "HIRE", "Cash Parrot", new Vector3(5.6f, 0, -14.8f), Costs(180),
+                () => Level("catcher") >= 1, l => { if (l >= 1) Counter.EnableAutoCash(); },
+                l => "Collects every customer's cash for you, straight into your wallet");
             Pad("grill2", "UNLOCK", "Second Grill", new Vector3(6f, 0, 3.4f), Costs(400),
                 () => Level("hotgrill") >= 1 || Level("waiter") >= 1, l => { if (l >= 1 && Grills.Count < 2) AddGrill("grill2", new Vector3(6, 0, 3)); },
-                4.2f, 3.2f);
+                l => "Builds a second grill (doubles how fast meat becomes crab cakes)", 4.2f, 3.2f);
             Pad("recipe", "UPGRADE", "Secret Recipe", new Vector3(-8.2f, 0, -10.6f), Costs(300, 800, 2000),
-                () => Level("grill2") >= 1, l => { });
+                () => Level("grill2") >= 1, l => { },
+                l => $"Crab cakes sell for 30% more ({Items.Price(ItemType.CrabCake) * (1 + 0.3 * l):0.#} > {Items.Price(ItemType.CrabCake) * (1 + 0.3 * (l + 1)):0.#})");
         }
 
-        void Pad(string id, string kind, string title, Vector3 pos, double[] costs, System.Func<bool> available, System.Action<int> apply, float w = 3.2f, float d = 2.5f)
+        /// <summary>Hover info for whatever is at world point <paramref name="p"/> (null = nothing interesting).</summary>
+        public string InfoAt(Vector3 p)
+        {
+            foreach (var pad in BuyPad.All)
+                if (pad.Shown && pad.PlayerOn(p)) return pad.Info();
+            foreach (var g in Grills)
+            {
+                var d = g.transform.position - p;
+                d.y = 0;
+                if (d.magnitude < 2.4f || g.Input.InReach(p, -0.3f) || g.Output.InReach(p, -0.3f)) return g.Info();
+            }
+            if (Yard.InPen(p)) return Pen.Info(Player.Damage);
+            var c = Counter.transform.position - p;
+            c.y = 0;
+            if ((Mathf.Abs(c.x) < 3.4f && Mathf.Abs(c.z) < 1.2f) || Counter.Shelf.InReach(p) || Counter.Cash.InReach(p)) return Counter.Info();
+            return null;
+        }
+
+        void Pad(string id, string kind, string title, Vector3 pos, double[] costs, System.Func<bool> available, System.Action<int> apply,
+                 System.Func<int, string> describe, float w = 3.2f, float d = 2.5f)
         {
             var go = new GameObject("Pad " + id);
             go.transform.SetParent(_world, false);
@@ -170,6 +198,7 @@ namespace StackIsland
             p.CostAt = l => costs[Mathf.Clamp(l, 0, costs.Length - 1)];
             p.Available = available;
             p.OnBought = apply;
+            p.Describe = describe;
             p.Width = w;
             p.Depth = d;
             p.Build();

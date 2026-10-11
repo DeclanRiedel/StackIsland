@@ -26,6 +26,7 @@ namespace StackIsland.EditorTools
         public static void RunBatch()
         {
             ImportTmpEssentials();
+            ReimportCharacters();
             BuildArtLibrary();
             CreateScene();
             ConfigurePlayer();
@@ -38,6 +39,19 @@ namespace StackIsland.EditorTools
             if (AssetDatabase.IsValidFolder("Assets/TextMesh Pro")) return;
             var pkg = Directory.GetDirectories("Library/PackageCache", "com.unity.ugui@*").Select(d => Path.Combine(d, "Package Resources", "TMP Essential Resources.unitypackage")).FirstOrDefault(File.Exists);
             if (pkg != null) AssetDatabase.ImportPackage(pkg, false);
+        }
+
+        /// <summary>Import rules changed for the characters (animations on): make Unity re-import them.</summary>
+        static void ReimportCharacters()
+        {
+            foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { ArtRoot + "/mini-characters" }))
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                if (!KenneyImportRules.IsAnimatedCharacter(path)) continue;
+                var mi = AssetImporter.GetAtPath(path) as ModelImporter;
+                if (mi != null && mi.animationType == ModelImporterAnimationType.Legacy && mi.importAnimation) continue;
+                AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+            }
         }
 
         static void EnsureFolder(string path)
@@ -193,10 +207,21 @@ namespace StackIsland.EditorTools
         {
             if (!assetPath.Contains("ThirdParty/Kenney")) return;
             var mi = (ModelImporter)assetImporter;
-            mi.importAnimation = false;
             mi.importCameras = false;
             mi.importLights = false;
-            mi.animationType = ModelImporterAnimationType.None;
+            if (IsAnimatedCharacter(assetPath))
+            {
+                // the mini characters ship with walk / idle / attack clips: keep them as simple legacy animations
+                mi.importAnimation = true;
+                mi.animationType = ModelImporterAnimationType.Legacy;
+            }
+            else
+            {
+                mi.importAnimation = false;
+                mi.animationType = ModelImporterAnimationType.None;
+            }
         }
+
+        public static bool IsAnimatedCharacter(string path) => path.Contains("mini-characters/FBX/character-");
     }
 }

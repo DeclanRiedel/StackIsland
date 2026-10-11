@@ -97,7 +97,14 @@ namespace StackIsland
 
             // buy a few things, let the helpers run
             g.Grant(3000);
-            foreach (var id in new[] { "crabs", "backpack", "catcher", "catcher", "waiter", "hotgrill", "grill2" })
+            var crabPad = BuyPad.All.FirstOrDefault(p => p.Id == "crabs");
+            if (crabPad != null)
+            {
+                yield return Walk(crabPad.transform.position);
+                yield return new WaitForSeconds(0.3f);
+                yield return Shot("a06b_padinfo");
+            }
+            foreach (var id in new[] { "crabs", "backpack", "catcher", "catcher", "waiter", "hotgrill", "grill2", "parrot" })
             {
                 var pad = BuyPad.All.FirstOrDefault(p => p.Id == id && p.Shown);
                 if (pad != null) pad.ForceBuy();

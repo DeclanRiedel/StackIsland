@@ -52,6 +52,7 @@ namespace StackIsland
             UIKit.Stretch((RectTransform)_hudLayer.transform);
             BuildCash();
             BuildToasts();
+            BuildInfo();
             BuildPause();
             BuildMenu();
             _shown = g.Cash;
@@ -102,6 +103,62 @@ namespace StackIsland
             while (_toastList.Count > 3) { Destroy(_toastList[0].rt.gameObject); _toastList.RemoveAt(0); }
         }
 
+        // ------------------------------------------------------------------ info (hover / standing on a tile)
+
+        Image _tipBg, _padBg;
+        TextMeshProUGUI _tip, _padText;
+
+        void BuildInfo()
+        {
+            _tipBg = UIKit.Panel(_hudLayer.transform, new Color(0.06f, 0.09f, 0.13f, 0.92f), "tooltip");
+            _tipBg.raycastTarget = false;
+            _tipBg.rectTransform.pivot = new Vector2(0, 1);
+            _tipBg.rectTransform.anchorMin = _tipBg.rectTransform.anchorMax = Vector2.zero;
+            _tip = UIKit.Text(_tipBg.rectTransform, "", 24);
+            UIKit.Stretch(_tip.rectTransform, 14);
+            _tipBg.gameObject.SetActive(false);
+
+            _padBg = UIKit.Panel(_hudLayer.transform, new Color(0.06f, 0.09f, 0.13f, 0.88f), "padInfo");
+            _padBg.raycastTarget = false;
+            UIKit.Place(_padBg.rectTransform, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 40), new Vector2(720, 150));
+            _padText = UIKit.Text(_padBg.rectTransform, "", 26, TextAlignmentOptions.Center);
+            UIKit.Stretch(_padText.rectTransform, 14);
+            _padBg.gameObject.SetActive(false);
+        }
+
+        void UpdateInfo()
+        {
+            if (IsMenuOpen || _g.Player == null) { _tipBg.gameObject.SetActive(false); _padBg.gameObject.SetActive(false); return; }
+
+            // standing on a buy tile: say what it does at the bottom of the screen
+            string padInfo = null;
+            foreach (var p in BuyPad.All)
+                if (p.Shown && p.PlayerOn(_g.Player.transform.position)) { padInfo = p.Info(); break; }
+            _padBg.gameObject.SetActive(padInfo != null);
+            if (padInfo != null && _padText.text != padInfo) _padText.text = padInfo;
+
+            // mouse hover: stats for grills, the pen, the counter and tiles
+            string tip = null;
+            var cam = Camera.main;
+            if (cam != null && !_g.PointerOverUI)
+            {
+                var ray = cam.ScreenPointToRay(GameInput.MousePosition);
+                if (new Plane(Vector3.up, Vector3.zero).Raycast(ray, out float enter)) tip = _g.InfoAt(ray.GetPoint(enter));
+            }
+            bool show = tip != null && tip != padInfo;
+            if (_tipBg.gameObject.activeSelf != show) _tipBg.gameObject.SetActive(show);
+            if (!show) return;
+            _tip.text = tip;
+            var size = _tip.GetPreferredValues(tip, 560, 1000);
+            var rt = _tipBg.rectTransform;
+            rt.sizeDelta = new Vector2(Mathf.Min(600, size.x + 30), size.y + 30);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(_root, GameInput.MousePosition, null, out var local);
+            var pos = local + _root.rect.size * 0.5f + new Vector2(24, -24);
+            pos.x = Mathf.Min(pos.x, _root.rect.width - rt.sizeDelta.x - 8);
+            pos.y = Mathf.Max(pos.y, rt.sizeDelta.y + 8);
+            rt.anchoredPosition = pos;
+        }
+
         // ------------------------------------------------------------------ menus
 
         GameObject Overlay(string name, float alpha)
@@ -134,17 +191,28 @@ namespace StackIsland
 
         void BuildPause()
         {
-            _pause = Overlay("pause", 0.5f);
-            var title = UIKit.Text(_pause.transform, "Paused", 72, TextAlignmentOptions.Center, Color.white, "title");
+            _pause = Overlay("pause", 0.55f);
+            // one rounded card in the middle: title, Resume, settings, then leave options
+            var card = UIKit.Panel(_pause.transform, new Color(0.1f, 0.14f, 0.2f, 0.96f), "card");
+            UIKit.Place(card.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(560, 640));
+            var col = UIKit.Rect("content", card.rectTransform);
+            UIKit.Stretch(col, 36);
+            var v = UIKit.VLayout(col.gameObject, 16, 0);
+            v.childAlignment = TextAnchor.UpperCenter;
+            var title = UIKit.Text(col, "Paused", 60, TextAlignmentOptions.Center, Color.white, "title");
             title.fontStyle = FontStyles.Bold;
-            UIKit.Place(title.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 260), new Vector2(800, 100));
-            var col = UIKit.Rect("buttons", _pause.transform);
-            UIKit.Place(col, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 1f), new Vector2(0, 190), new Vector2(520, 520));
-            UIKit.VLayout(col.gameObject, 14, 0);
+            UIKit.Size(title, -1, 80);
             BigButton(col, "Resume", new Color(0.3f, 0.75f, 0.35f), () => CloseMenus());
+
+            var settings = UIKit.Panel(col, new Color(1f, 1f, 1f, 0.06f), "settings");
+            UIKit.Size(settings, -1, 130);
+            var sv = UIKit.VLayout(settings.gameObject, 10, 16);
+            sv.childAlignment = TextAnchor.MiddleLeft;
             var s = _g.Settings;
-            UIKit.Slider(col, "Volume", s.volume, v => { s.volume = v; if (Sfx.I != null) Sfx.I.Volume = v; SaveSystem.SaveSettings(s); });
-            _windowed = UIKit.Toggle(col, "Windowed", s.windowed, v => { s.windowed = v; _g.ApplyWindowMode(); SaveSystem.SaveSettings(s); });
+            var vol = UIKit.Slider(settings.transform, "Volume", s.volume, x => { s.volume = x; if (Sfx.I != null) Sfx.I.Volume = x; SaveSystem.SaveSettings(s); });
+            ((RectTransform)vol.transform).GetComponent<LayoutElement>().preferredWidth = 220;
+            _windowed = UIKit.Toggle(settings.transform, "Windowed", s.windowed, x => { s.windowed = x; _g.ApplyWindowMode(); SaveSystem.SaveSettings(s); });
+
             BigButton(col, "Main menu", new Color(0.95f, 0.55f, 0.25f), () => { _g.SaveNow(); ShowMainMenu(); });
             BigButton(col, "Quit", new Color(0.35f, 0.38f, 0.45f), () => { _g.SaveNow(); Application.Quit(); });
             _pause.SetActive(false);
@@ -193,6 +261,8 @@ namespace StackIsland
                     Time.timeScale = 0f;
                 }
             }
+
+            UpdateInfo();
 
             // count up/down smoothly, and pop when money comes in
             double target = _g.Cash;

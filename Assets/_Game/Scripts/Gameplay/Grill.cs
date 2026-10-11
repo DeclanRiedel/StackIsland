@@ -55,6 +55,13 @@ namespace StackIsland
             return z;
         }
 
+        public string Info()
+        {
+            string status = Working ? "<color=#9CFF9A>Cooking</color>" : Output.IsFull ? "<color=#FF9A8A>Full - take the cakes</color>" : "<color=#FFD27A>Needs crab meat</color>";
+            return $"<b>Grill</b>  {status}\nCooks 1 {Items.Name(Output.Type)} every {CookSeconds:0.00}s ({60f / CookSeconds:0} per minute)\n" +
+                   $"Meat waiting: {Input.Count}/{Input.Capacity}\nReady to take: {Output.Count}/{Output.Capacity}";
+        }
+
         void Update()
         {
             Working = Input.Count > 0 && !Output.IsFull;

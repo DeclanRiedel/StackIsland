@@ -8,7 +8,7 @@ namespace StackIsland
     public class Fx : MonoBehaviour
     {
         public static Fx I;
-        ParticleSystem _confetti, _puff;
+        ParticleSystem _confetti, _puff, _sparks;
 
         class Slasher { public Transform t; public Material m; public float life; }
         readonly List<Slasher> _slashes = new List<Slasher>();
@@ -22,6 +22,7 @@ namespace StackIsland
             I = this;
             _confetti = MakeParticles("confetti", new[] { new Color(1f, .8f, .2f), new Color(.3f, .8f, 1f), new Color(1f, .4f, .6f), new Color(.5f, 1f, .5f) }, 0.22f, 8f, 1.8f, 1.2f);
             _puff = MakeParticles("puff", new[] { new Color(1, 1, 1, .9f) }, 0.55f, 2.5f, 0.6f, 0.2f);
+            _sparks = MakeParticles("sparks", new[] { new Color(1f, .95f, .5f), Color.white, new Color(1f, .55f, .4f) }, 0.14f, 7f, 0.35f, 1.6f);
         }
 
         ParticleSystem MakeParticles(string n, Color[] colors, float size, float speed, float life, float gravity)
@@ -66,6 +67,13 @@ namespace StackIsland
         {
             _confetti.transform.position = pos + Vector3.up;
             _confetti.Emit(count);
+        }
+
+        /// <summary>Burst of little sparks where a hit lands.</summary>
+        public void HitSparks(Vector3 pos, int count = 12)
+        {
+            _sparks.transform.position = pos;
+            _sparks.Emit(count);
         }
 
         public void Puff(Vector3 pos, int count = 20)

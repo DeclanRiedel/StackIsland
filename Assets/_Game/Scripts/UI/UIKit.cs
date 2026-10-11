@@ -205,6 +205,7 @@ namespace StackIsland
             bg.sprite = Rounded; bg.type = Image.Type.Sliced; bg.color = new Color(0, 0, 0, 0.4f);
             var fillArea = Rect("fillArea", sRt); Stretch(fillArea, 2);
             var fill = Panel(fillArea, Accent, "fill");
+            fill.rectTransform.sizeDelta = Vector2.zero;   // the slider drives its anchors; no extra size
             var handleArea = Rect("handleArea", sRt); Stretch(handleArea);
             var handle = Rect("handle", handleArea);
             var hImg = handle.gameObject.AddComponent<Image>();
