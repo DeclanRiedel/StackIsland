@@ -27,13 +27,23 @@ namespace StackIsland.Tests
         }
 
         [Test]
-        public void RoutingDetoursThroughPenGate()
+        public void YardsAreConsistent()
         {
-            var pts = new System.Collections.Generic.List<Vector3>();
-            Yard.Route(new Vector3(5, 0, -5), new Vector3(-6, 0, 10), pts);
-            Assert.AreEqual(3, pts.Count, "outside -> gate outside -> gate inside -> target");
-            Yard.Route(new Vector3(5, 0, -5), new Vector3(8, 0, 8), pts);
-            Assert.AreEqual(1, pts.Count);
+            var all = YardDefs.All;
+            Assert.GreaterOrEqual(all.Count, 3);
+            for (int i = 0; i < all.Count; i++)
+            {
+                var y = all[i];
+                Assert.AreEqual(i + 1, y.Index, "yards are numbered 1..n in order");
+                Assert.Greater(Items.Price(y.Product), 0, y.Name + " product has a price");
+                Assert.AreEqual(0, Items.Price(y.Raw), y.Name + " raw item is not sold directly");
+                if (y.Source == SourceKind.Pen) Assert.IsFalse(string.IsNullOrEmpty(y.AnimalModel));
+                if (i == 0) continue;
+                var prev = all[i - 1];
+                Assert.Greater(y.GateCost, prev.GateCost, "gates get more expensive");
+                Assert.Greater(Items.Price(y.Product), Items.Price(prev.Product), "later products are worth more");
+                Assert.Greater(y.Scale, prev.Scale, "later yards cost more");
+            }
         }
 
         [Test]

@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace StackIsland
 {
-    /// <summary>Shared bits for hired helpers: a body, a carry stack, walking along waypoints.</summary>
+    /// <summary>Shared bits for hired helpers: a body with walk/idle animations, a stack on their back, walking along waypoints.</summary>
     public abstract class Worker : MonoBehaviour
     {
         public float Speed = 3.6f;
+        public Yard Yard;
         protected ItemStack Stack;
         protected Transform Model;
         protected CharAnim Anim;
@@ -14,8 +15,11 @@ namespace StackIsland
         Vector3 _routeTarget = new Vector3(9999, 0, 9999);
         float _bob;
 
-        public void Init(string model, Color shirt, int capacity, Vector3 start)
+        public int Carrying => Stack != null ? Stack.Count : 0;
+
+        public void Init(Yard yard, string model, Color cap, int capacity, Vector3 start)
         {
+            Yard = yard;
             transform.position = start;
             Model = new GameObject("model").transform;
             Model.SetParent(transform, false);
@@ -23,8 +27,8 @@ namespace StackIsland
             Visuals.SetShadows(body, true);
             Anim = CharAnim.Attach(body);
             // a coloured cap so helpers stand out from customers
-            var cap = Visuals.Primitive(PrimitiveType.Sphere, Model, new Vector3(0, 1.62f, 0), new Vector3(0.62f, 0.3f, 0.62f), Mats.Lit(shirt), "cap");
-            cap.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            var c = Visuals.Primitive(PrimitiveType.Sphere, Model, new Vector3(0, 1.62f, 0), new Vector3(0.62f, 0.3f, 0.62f), Mats.Lit(cap), "cap");
+            c.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
             var back = new GameObject("back");
             back.transform.SetParent(Model, false);
             back.transform.localPosition = new Vector3(0, 0.74f, -0.48f);
@@ -34,7 +38,9 @@ namespace StackIsland
             Stack.ColumnSpacing = 0.48f;
         }
 
-        /// <summary>Walk toward <paramref name="target"/> (detouring through the pen gate). True once there.</summary>
+        public void SetCapacity(int c) { if (Stack != null) Stack.Capacity = c; }
+
+        /// <summary>Walk toward <paramref name="target"/> (detouring through the source gate). True once there.</summary>
         protected bool WalkTo(Vector3 target, float stopAt = 0.3f)
         {
             target.y = 0;
@@ -75,77 +81,99 @@ namespace StackIsland
         }
     }
 
-    /// <summary>Crab Catcher: hunts crabs in the pen, scoops the meat and carries it to a grill.</summary>
+    /// <summary>
+    /// Gatherer (Crab Catcher, Coconut Picker, Fisher...): catches animals in the pen or sweeps the field,
+    /// then carries the raw items to a station of its yard.
+    /// </summary>
     public class CatcherWorker : Worker
     {
-        enum Mode { Hunt, Deliver }
+        enum Mode { Gather, Deliver }
         Mode _mode;
         float _attack, _transfer;
         LooseItem _claim;
-        Transform _tool;
+        Vector3 _fieldSpot;
+        bool _hasSpot;
+        readonly List<Vector3> _picked = new List<Vector3>();
 
         void Start()
         {
-            _tool = Visuals.Spawn("food-kit/cooking-knife", Model, 0.6f, Color.white).transform;
-            _tool.localPosition = new Vector3(0.42f, 0.72f, 0.12f);
-            _tool.localRotation = Quaternion.Euler(0, 0, -70);
+            if (Yard.Def.Source != SourceKind.Pen) return;
+            var tool = Visuals.Spawn("food-kit/cooking-knife", Model, 0.6f, Color.white).transform;
+            tool.localPosition = new Vector3(0.42f, 0.72f, 0.12f);
+            tool.localRotation = Quaternion.Euler(0, 0, -70);
         }
 
         void Update()
         {
-            var g = Game.I;
-            if (g == null) return;
-            if (_mode == Mode.Hunt) Hunt(g); else Deliver(g);
+            if (Game.I == null) return;
+            if (_mode == Mode.Gather) { if (Yard.Pen != null) Hunt(); else if (Yard.Field != null) Pick(); }
+            else Deliver();
         }
 
-        void Hunt(Game g)
+        void Pick()
         {
-            if (Stack.IsFull) { Release(); _mode = Mode.Deliver; return; }
-            // grab meat on the ground first
-            if (_claim == null || !_claim.enabled || (_claim.ClaimedBy != null && _claim.ClaimedBy != (object)this))
-            {
-                Release();
-                _claim = NearestMeat();
-                if (_claim != null) _claim.ClaimedBy = this;
-            }
-            if (_claim != null)
-            {
-                if (!_claim.Ready) { WalkTo(_claim.transform.position, 0.6f); return; }
-                if (WalkTo(_claim.transform.position, 0.6f))
-                {
-                    var at = _claim.transform.position;
-                    _claim.Consume();
-                    Stack.Add(ItemType.Meat, at);
-                    _claim = null;
-                }
-                return;
-            }
-            // nothing to pick up: go catch a crab (or deliver what we have)
-            var crab = NearestCrab();
-            if (crab == null)
+            if (Stack.IsFull) { _mode = Mode.Deliver; return; }
+            if (!_hasSpot && !(_hasSpot = Yard.Field.NearestItem(transform.position, out _fieldSpot)))
             {
                 if (Stack.Count > 0) _mode = Mode.Deliver;
                 return;
             }
-            if (WalkTo(crab.transform.position, 1.4f) || (crab.transform.position - transform.position).magnitude < 1.6f)
+            WalkTo(_fieldSpot, 0.4f);
+            _transfer -= Time.deltaTime;
+            if (_transfer > 0) return;
+            _transfer = 0.12f;
+            if (Yard.Field.Harvest(transform.position, 1.0f, Mathf.Min(2, Stack.Space), _picked) > 0)
+                foreach (var p in _picked) Stack.Add(Yard.Def.Raw, p);
+            if ((transform.position - _fieldSpot).sqrMagnitude < 0.5f) _hasSpot = false;
+        }
+
+        void Hunt()
+        {
+            if (Stack.IsFull) { Release(); _mode = Mode.Deliver; return; }
+            // grab what's on the ground first
+            if (_claim == null || !_claim.enabled || (_claim.ClaimedBy != null && _claim.ClaimedBy != (object)this))
             {
-                Face(crab.transform.position);
+                Release();
+                _claim = NearestLoose();
+                if (_claim != null) _claim.ClaimedBy = this;
+            }
+            if (_claim != null)
+            {
+                if (WalkTo(_claim.transform.position, 0.6f) && _claim.Ready)
+                {
+                    var at = _claim.transform.position;
+                    var t = _claim.Type;
+                    _claim.Consume();
+                    Stack.Add(t, at);
+                    _claim = null;
+                }
+                return;
+            }
+            var target = NearestAnimal();
+            if (target == null)
+            {
+                if (Stack.Count > 0) _mode = Mode.Deliver;
+                return;
+            }
+            if (WalkTo(target.transform.position, 1.4f) || (target.transform.position - transform.position).magnitude < 1.6f)
+            {
+                Face(target.transform.position);
                 _attack -= Time.deltaTime;
                 if (_attack <= 0)
                 {
                     _attack = 0.5f;
-                    var dir = crab.transform.position - transform.position;
+                    var dir = target.transform.position - transform.position;
                     dir.y = 0;
                     Anim.Attack(2f);
                     Fx.I?.Slash(transform.position + Vector3.up * 0.9f + dir.normalized * 0.7f, dir.normalized);
-                    crab.Hit(1, transform.position);
+                    target.Hit(1, transform.position);
                 }
             }
         }
 
-        void Deliver(Game g)
+        void Deliver()
         {
-            var target = g.BestGrillInput();
+            var target = Yard.BestStationInput(Yard.Def.Raw);
             if (target == null) return;
             if (!WalkTo(target.transform.position, 1.0f)) return;
             _transfer -= Time.deltaTime;
@@ -153,10 +181,10 @@ namespace StackIsland
             _transfer = 0.07f;
             if (Stack.Count > 0 && !target.IsFull)
             {
-                Stack.Remove(ItemType.Meat, out var at);
+                Stack.Remove(Yard.Def.Raw, out var at);
                 target.Add(at);
             }
-            if (Stack.Count == 0 || target.IsFull) _mode = Mode.Hunt;
+            if (Stack.Count == 0 || target.IsFull) { _mode = Mode.Gather; _hasSpot = false; }
         }
 
         void Release()
@@ -165,28 +193,28 @@ namespace StackIsland
             _claim = null;
         }
 
-        LooseItem NearestMeat()
+        LooseItem NearestLoose()
         {
             LooseItem best = null;
             float bd = float.MaxValue;
             foreach (var li in LooseItem.All)
             {
-                if (li.ClaimedBy != null || li.Type != ItemType.Meat) continue;
+                if (li.ClaimedBy != null || li.Yard != Yard) continue;
                 float d = (li.transform.position - transform.position).sqrMagnitude;
                 if (d < bd) { bd = d; best = li; }
             }
             return best;
         }
 
-        Crab NearestCrab()
+        Animal NearestAnimal()
         {
-            Crab best = null;
+            Animal best = null;
             float bd = float.MaxValue;
-            foreach (var c in Crab.All)
+            foreach (var a in Animal.All)
             {
-                if (!c.Alive) continue;
-                float d = (c.transform.position - transform.position).sqrMagnitude;
-                if (d < bd) { bd = d; best = c; }
+                if (!a.Alive || a.Pen != Yard.Pen) continue;
+                float d = (a.transform.position - transform.position).sqrMagnitude;
+                if (d < bd) { bd = d; best = a; }
             }
             return best;
         }
@@ -194,7 +222,7 @@ namespace StackIsland
         void OnDestroy() => Release();
     }
 
-    /// <summary>Waiter: carries crab cakes from the grills to the counter.</summary>
+    /// <summary>Waiter: carries finished products from the yard's stations to its counter.</summary>
     public class WaiterWorker : Worker
     {
         bool _delivering;
@@ -202,12 +230,11 @@ namespace StackIsland
 
         void Update()
         {
-            var g = Game.I;
-            if (g == null) return;
+            if (Game.I == null) return;
             _transfer -= Time.deltaTime;
             if (!_delivering)
             {
-                var src = g.BestGrillOutput();
+                var src = Yard.BestStationOutput();
                 if (src == null)
                 {
                     if (Stack.Count > 0) _delivering = true;
@@ -224,7 +251,7 @@ namespace StackIsland
             }
             else
             {
-                var shelf = g.Counter.Shelf;
+                var shelf = Yard.Counter.Shelf;
                 // stand on the SELL sign like the player does
                 if (!WalkTo(shelf.transform.position, 0.8f)) return;
                 if (_transfer <= 0 && Stack.Count > 0 && !shelf.IsFull)

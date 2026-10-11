@@ -32,9 +32,13 @@ namespace StackIsland
         readonly List<Vector3> _exit = new List<Vector3>();
         public IReadOnlyList<Vector3> ExitPath => _exit;
 
-        public void Build(string id)
+        public Yard Yard { get; private set; }
+
+        public void Build(Yard yard, string id, ItemType sells)
         {
+            Yard = yard;
             Id = id;
+            Sells = sells;
             var table = ProcArt.Table(transform, 6f, 1.3f);
             var col = gameObject.AddComponent<BoxCollider>();
             col.center = new Vector3(0, 0.5f, 0);
@@ -87,13 +91,14 @@ namespace StackIsland
 
             var head = transform.TransformPoint(new Vector3(0, 0, -1.7f));
             _path.Add(head);
-            _path.Add(new Vector3(Yard.EntryGateX, 0, head.z));
-            _path.Add(new Vector3(Yard.EntryGateX, 0, Yard.MinZ - 2f));
-            _path.Add(new Vector3(Yard.EntryGateX, 0, Yard.MinZ - 14f));
+            var o = yard.Origin;
+            _path.Add(new Vector3(o.x + Yard.EntryGateX, 0, head.z));
+            _path.Add(new Vector3(o.x + Yard.EntryGateX, 0, o.z + Yard.MinZ - 2f));
+            _path.Add(new Vector3(o.x + Yard.EntryGateX, 0, o.z + Yard.MinZ - 14f));
             _exit.Add(head + new Vector3(-1.5f, 0, -1.2f));
-            _exit.Add(new Vector3(Yard.ExitGateX, 0, head.z - 1.6f));
-            _exit.Add(new Vector3(Yard.ExitGateX, 0, Yard.MinZ - 2f));
-            _exit.Add(new Vector3(Yard.ExitGateX, 0, Yard.MinZ - 12f));
+            _exit.Add(new Vector3(o.x + Yard.ExitGateX, 0, head.z - 1.6f));
+            _exit.Add(new Vector3(o.x + Yard.ExitGateX, 0, o.z + Yard.MinZ - 2f));
+            _exit.Add(new Vector3(o.x + Yard.ExitGateX, 0, o.z + Yard.MinZ - 12f));
         }
 
         /// <summary>Point <paramref name="d"/> metres back along the queue path.</summary>
@@ -155,7 +160,7 @@ namespace StackIsland
             Visuals.SetShadows(_parrot, true);
         }
 
-        public double PriceEach => Items.Price(Sells) * PriceMultiplier * (Game.I != null ? Game.I.SellBonus : 1.0);
+        public double PriceEach => Items.Price(Sells) * PriceMultiplier * (Game.I != null ? Game.I.PriceBonus(Yard.Def.Index) : 1.0);
 
         public string Info()
         {

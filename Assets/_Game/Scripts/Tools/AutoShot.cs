@@ -73,7 +73,7 @@ namespace StackIsland
             yield return Walk(new Vector3(-6f, 0, 9f));
             for (int k = 0; k < 40; k++)
             {
-                var crab = Crab.All.Where(c => c.Alive).OrderBy(c => (c.transform.position - g.Player.transform.position).sqrMagnitude).FirstOrDefault();
+                var crab = Animal.All.Where(c => c.Alive).OrderBy(c => (c.transform.position - g.Player.transform.position).sqrMagnitude).FirstOrDefault();
                 if (crab != null) yield return Walk(crab.transform.position + (g.Player.transform.position - crab.transform.position).normalized * 1.2f, 1.5f);
                 yield return new WaitForSeconds(0.4f);
                 if (k == 12) yield return Shot("a02_fight");
@@ -97,14 +97,14 @@ namespace StackIsland
 
             // buy a few things, let the helpers run
             g.Grant(3000);
-            var crabPad = BuyPad.All.FirstOrDefault(p => p.Id == "crabs");
+            var crabPad = BuyPad.All.FirstOrDefault(p => p.Id == "y1.src");
             if (crabPad != null)
             {
                 yield return Walk(crabPad.transform.position);
                 yield return new WaitForSeconds(0.3f);
                 yield return Shot("a06b_padinfo");
             }
-            foreach (var id in new[] { "crabs", "backpack", "catcher", "catcher", "waiter", "hotgrill", "grill2", "parrot" })
+            foreach (var id in new[] { "y1.src", "g.backpack", "y1.gather", "y1.gather", "y1.waiter", "y1.speed", "y1.station2", "y1.parrot" })
             {
                 var pad = BuyPad.All.FirstOrDefault(p => p.Id == id && p.Shown);
                 if (pad != null) pad.ForceBuy();
@@ -118,6 +118,35 @@ namespace StackIsland
             g.Cam.Distance = 34;
             yield return new WaitForSecondsRealtime(1.5f);
             yield return Shot("a09_overview");
+
+            // open the next yards and look around
+            g.Cam.Distance = 21;
+            for (int y = 1; y <= 2; y++)
+            {
+                var gate = BuyPad.All.FirstOrDefault(p => p.Id == $"y{y}.gate");
+                if (gate == null) break;
+                gate.ForceBuy();
+                yield return null;
+                foreach (var id in new[] { "src", "gather", "gather", "waiter", "speed", "station2", "parrot" })
+                {
+                    var pad = BuyPad.All.FirstOrDefault(p => p.Id == $"y{y + 1}.{id}" && p.Shown);
+                    if (pad != null) pad.ForceBuy();
+                    yield return null;
+                }
+                var o = Yard.OriginOf(y + 1);
+                g.Player.transform.position = o + new Vector3(-4.5f, 0, 2.5f);
+                yield return new WaitForSeconds(12f);
+                yield return Walk(o + new Vector3(-6f, 0, 9f), 3f);
+                yield return new WaitForSeconds(1f);
+                yield return Shot($"b{y + 1:00}_yard_source");
+                g.Player.transform.position = o + new Vector3(2f, 0, 0f);
+                yield return new WaitForSeconds(2f);
+                yield return Shot($"b{y + 1:00}_yard_busy");
+            }
+            g.Player.transform.position = Yard.OriginOf(1) + new Vector3(12f, 0, 6.2f);
+            g.Cam.Distance = 34;
+            yield return new WaitForSecondsRealtime(2f);
+            yield return Shot("b09_walkway");
 
             var native = Screen.currentResolution;
             Screen.SetResolution(native.width, native.height, FullScreenMode.FullScreenWindow);

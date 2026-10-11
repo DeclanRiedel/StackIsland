@@ -269,7 +269,7 @@ namespace StackIsland
         public static readonly Color CageBlue = new Color(0.22f, 0.56f, 0.92f);
 
         /// <summary>Thick low wall with a light top edge (the bright "tycoon" look), running from a to b in world space.</summary>
-        public static GameObject LowWall(Transform parent, Vector3 a, Vector3 b, float height = 0.9f, float thick = 0.7f)
+        public static GameObject LowWall(Transform parent, Vector3 a, Vector3 b, float height = 0.9f, float thick = 0.7f, Color? wall = null)
         {
             var d = b - a;
             d.y = 0;
@@ -278,15 +278,16 @@ namespace StackIsland
             root.transform.SetParent(parent, false);
             root.transform.position = (a + b) * 0.5f;
             root.transform.rotation = Quaternion.LookRotation(d.normalized);
-            Part(PrimitiveType.Cube, root.transform, new Vector3(0, height * 0.5f, 0), new Vector3(thick, height, len + thick), WallRed);
+            var wc = wall ?? WallRed;
+            Part(PrimitiveType.Cube, root.transform, new Vector3(0, height * 0.5f, 0), new Vector3(thick, height, len + thick), wc);
             Part(PrimitiveType.Cube, root.transform, new Vector3(0, height + 0.06f, 0), new Vector3(thick + 0.12f, 0.12f, len + thick + 0.12f), WallCap);
             // darker band near the floor
-            Part(PrimitiveType.Cube, root.transform, new Vector3(0, 0.08f, 0), new Vector3(thick + 0.04f, 0.16f, len + thick + 0.04f), new Color(0.75f, 0.3f, 0.28f), false);
+            Part(PrimitiveType.Cube, root.transform, new Vector3(0, 0.08f, 0), new Vector3(thick + 0.04f, 0.16f, len + thick + 0.04f), wc * 0.8f, false);
             return root;
         }
 
         /// <summary>Blue grid cage fence from a to b (posts, rails and thin bars).</summary>
-        public static GameObject CageFence(Transform parent, Vector3 a, Vector3 b, float height = 1.6f)
+        public static GameObject CageFence(Transform parent, Vector3 a, Vector3 b, float height = 1.6f, Color? color = null)
         {
             var d = b - a;
             d.y = 0;
@@ -295,8 +296,8 @@ namespace StackIsland
             root.transform.SetParent(parent, false);
             root.transform.position = (a + b) * 0.5f;
             root.transform.rotation = Quaternion.LookRotation(d.normalized);
-            var blue = CageBlue;
-            var light = Color.Lerp(CageBlue, Color.white, 0.25f);
+            var blue = color ?? CageBlue;
+            var light = Color.Lerp(blue, Color.white, 0.25f);
             Part(PrimitiveType.Cube, root.transform, new Vector3(0, height, 0), new Vector3(0.12f, 0.1f, len), blue);
             Part(PrimitiveType.Cube, root.transform, new Vector3(0, height * 0.5f, 0), new Vector3(0.08f, 0.06f, len), light, false);
             Part(PrimitiveType.Cube, root.transform, new Vector3(0, 0.12f, 0), new Vector3(0.1f, 0.08f, len), blue, false);

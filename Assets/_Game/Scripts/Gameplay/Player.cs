@@ -135,8 +135,10 @@ namespace StackIsland
                 _swing = Mathf.MoveTowards(_swing, 0, dt * 6f);
                 _tool.localRotation = Quaternion.Euler(0, -_swing * 120f, -70);
             }
-            if (_attackT > 0 || !Yard.InPen(transform.position)) return;
-            var crab = CrabPen.NearestAlive(transform.position, AttackRange);
+            if (_attackT > 0) return;
+            var yard = Game.I.YardAt(transform.position);
+            if (yard == null || yard.Pen == null || !yard.InSource(transform.position)) return;
+            var crab = AnimalPen.NearestAlive(transform.position, AttackRange);
             if (crab == null) return;
             _attackT = AttackEvery;
             _swing = 1f;
@@ -149,10 +151,27 @@ namespace StackIsland
             crab.Hit(Damage, transform.position);
         }
 
-        /// <summary>Hoover up meat lying on the ground nearby.</summary>
+        readonly System.Collections.Generic.List<Vector3> _picked = new System.Collections.Generic.List<Vector3>();
+        float _fieldT;
+
+        /// <summary>Hoover up items lying on the ground nearby, and gather from a field you walk through.</summary>
         void Scoop()
         {
             if (Stack.IsFull) return;
+            var yard = Game.I.YardAt(transform.position);
+            if (yard != null && yard.Field != null && yard.InSource(transform.position))
+            {
+                _fieldT -= Time.deltaTime;
+                if (_fieldT <= 0)
+                {
+                    _fieldT = 0.05f;
+                    if (yard.Field.Harvest(transform.position, 1.4f, Mathf.Min(2, Stack.Space), _picked) > 0)
+                    {
+                        foreach (var p in _picked) Stack.Add(yard.Def.Raw, p);
+                        Sfx.I?.Play(Sfx.I.Pop, 0.3f, Random.Range(1f, 1.25f));
+                    }
+                }
+            }
             var all = LooseItem.All;
             for (int i = all.Count - 1; i >= 0 && !Stack.IsFull; i--)
             {

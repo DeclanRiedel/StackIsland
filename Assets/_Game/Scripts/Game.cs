@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 namespace StackIsland
 {
     /// <summary>
-    /// Composition root: builds the yard, its stations, the player and camera, the buy pads (all progression
-    /// lives here, as data), the UI, and handles cash and saving.
+    /// Composition root: builds the island and the yards that are open, the player and camera, every buy tile
+    /// (all progression lives here and in <see cref="YardDefs"/>, as data), the UI, and handles cash and saving.
     /// </summary>
     public class Game : MonoBehaviour
     {
@@ -20,20 +20,17 @@ namespace StackIsland
         public SettingsData Settings { get; private set; }
         public Player Player { get; private set; }
         public FollowCamera Cam { get; private set; }
-        public Counter Counter { get; private set; }
-        public CrabPen Pen { get; private set; }
         public Hud Hud { get; private set; }
-        public readonly List<Grill> Grills = new List<Grill>();
-        readonly List<CatcherWorker> _catchers = new List<CatcherWorker>();
-        readonly List<WaiterWorker> _waiters = new List<WaiterWorker>();
+        public readonly Dictionary<int, Yard> Yards = new Dictionary<int, Yard>();
         readonly Dictionary<string, BuyPad> _pads = new Dictionary<string, BuyPad>();
         Transform _world;
         float _autosave;
+        bool _loading;
 
         public double Cash => Save.cash;
         public bool InputBlocked => Hud != null && Hud.IsMenuOpen;
         public bool PointerOverUI => EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
-        public double SellBonus => 1.0 + 0.3 * Level("recipe");
+        public Yard Yard1 => Yards.TryGetValue(1, out var y) ? y : null;
 
         void Awake()
         {
@@ -41,7 +38,7 @@ namespace StackIsland
             PileZone.All.Clear();
             BuyPad.All.Clear();
             LooseItem.All.Clear();
-            Crab.All.Clear();
+            Animal.All.Clear();
             Items.ResetPool();
 
             var art = Resources.Load<ArtLibrary>("ArtLibrary");
@@ -60,20 +57,7 @@ namespace StackIsland
             SetupLighting();
 
             _world = new GameObject("World").transform;
-            var yard = new GameObject("Yard").AddComponent<Yard>();
-            yard.transform.SetParent(_world, false);
-            yard.Build();
-
-            Pen = new GameObject("CrabPen").AddComponent<CrabPen>();
-            Pen.transform.SetParent(_world, false);
-            Pen.SetCount(4);
-
-            AddGrill("grill1", new Vector3(6, 0, 11));
-
-            Counter = new GameObject("Counter").AddComponent<Counter>();
-            Counter.transform.SetParent(_world, false);
-            Counter.transform.position = new Vector3(4.5f, 0, -10f);
-            Counter.Build("counter1");
+            IslandBuilder.Build(_world, YardDefs.All.Count);
 
             var camGo = new GameObject("Main Camera") { tag = "MainCamera" };
             var cam = camGo.AddComponent<Camera>();
@@ -88,11 +72,13 @@ namespace StackIsland
             var pg = new GameObject("Player");
             Player = pg.AddComponent<Player>();
             Player.Init();
-            Player.Teleport(Save.px != 0 || Save.pz != 0 ? new Vector3(Save.px, 0, Save.pz) : new Vector3(0, 0, -3));
             Cam.Target = Player.transform;
 
-            BuildPads();
+            _loading = true;
+            OpenYard(1);
             LoadState();
+            _loading = false;
+            Player.Teleport(Save.px != 0 || Save.pz != 0 ? new Vector3(Save.px, 0, Save.pz) : new Vector3(0, 0, -3));
 
             Hud = new GameObject("UI").AddComponent<Hud>();
             Hud.Init(this);
@@ -105,97 +91,147 @@ namespace StackIsland
             SkipMenuOnce = false;
         }
 
-        // ------------------------------------------------------------------ world pieces
+        // ------------------------------------------------------------------ yards
 
-        Grill AddGrill(string id, Vector3 pos)
+        /// <summary>Build a yard (first time it opens, or on load) with all its tiles.</summary>
+        Yard OpenYard(int index)
         {
-            var g = new GameObject("Grill " + id).AddComponent<Grill>();
-            g.transform.SetParent(_world, false);
-            g.transform.position = pos;
-            g.Build(id);
-            g.CookSeconds = 1.1f * Mathf.Pow(0.78f, Level("hotgrill"));
-            Grills.Add(g);
-            return g;
-        }
-
-        public PileZone BestGrillInput()
-        {
-            PileZone best = null;
-            foreach (var g in Grills)
-                if (best == null || g.Input.Free > best.Free) best = g.Input;
-            return best != null && best.Free > 0 ? best : null;
-        }
-
-        public PileZone BestGrillOutput()
-        {
-            PileZone best = null;
-            foreach (var g in Grills)
-                if (g.Output.Count > 0 && (best == null || g.Output.Count > best.Count)) best = g.Output;
-            return best;
-        }
-
-        // ------------------------------------------------------------------ progression (all pads)
-
-        static double[] Costs(params double[] c) => c;
-
-        void BuildPads()
-        {
-            Pad("crabs", "UPGRADE", "More Crabs", new Vector3(-8.2f, 0, 1.4f), Costs(30, 90, 220, 500),
-                () => true, l => Pen.SetCount(4 + 2 * l),
-                l => $"+2 crabs in the pen ({4 + 2 * l} > {6 + 2 * l})");
-            Pad("backpack", "UPGRADE", "Bigger Stack", new Vector3(-8.2f, 0, -4.6f), Costs(25, 80, 200, 450),
-                () => true, l => Player.Stack.Capacity = 12 + 6 * l,
-                l => $"Carry 6 more items ({12 + 6 * l} > {18 + 6 * l})");
-            Pad("catcher", "HIRE", "Crab Catcher", new Vector3(-2.6f, 0, -1.4f), Costs(50, 150, 400),
-                () => Save.totalEarned >= 15, l => SyncWorkers(),
-                l => $"A helper who catches crabs and carries the meat to the grill ({l} > {l + 1} hired)");
-            Pad("hotgrill", "UPGRADE", "Hotter Grill", new Vector3(10.9f, 0, 13f), Costs(100, 250, 600, 1200),
-                () => Level("catcher") >= 1, l => { foreach (var g in Grills) g.CookSeconds = 1.1f * Mathf.Pow(0.78f, l); },
-                l => $"Grills cook 28% faster ({1.1f * Mathf.Pow(0.78f, l):0.00}s > {1.1f * Mathf.Pow(0.78f, l + 1):0.00}s per cake)");
-            Pad("waiter", "HIRE", "Waiter", new Vector3(10.9f, 0, -3.6f), Costs(120, 350),
-                () => Level("catcher") >= 1, l => SyncWorkers(),
-                l => $"A helper who carries crab cakes from the grills to the counter ({l} > {l + 1} hired)");
-            Pad("parrot", "HIRE", "Cash Parrot", new Vector3(5.6f, 0, -14.8f), Costs(180),
-                () => Level("catcher") >= 1, l => { if (l >= 1) Counter.EnableAutoCash(); },
-                l => "Collects every customer's cash for you, straight into your wallet");
-            Pad("grill2", "UNLOCK", "Second Grill", new Vector3(6f, 0, 3.4f), Costs(400),
-                () => Level("hotgrill") >= 1 || Level("waiter") >= 1, l => { if (l >= 1 && Grills.Count < 2) AddGrill("grill2", new Vector3(6, 0, 3)); },
-                l => "Builds a second grill (doubles how fast meat becomes crab cakes)", 4.2f, 3.2f);
-            Pad("recipe", "UPGRADE", "Secret Recipe", new Vector3(-8.2f, 0, -10.6f), Costs(300, 800, 2000),
-                () => Level("grill2") >= 1, l => { },
-                l => $"Crab cakes sell for 30% more ({Items.Price(ItemType.CrabCake) * (1 + 0.3 * l):0.#} > {Items.Price(ItemType.CrabCake) * (1 + 0.3 * (l + 1)):0.#})");
-        }
-
-        /// <summary>Hover info for whatever is at world point <paramref name="p"/> (null = nothing interesting).</summary>
-        public string InfoAt(Vector3 p)
-        {
-            foreach (var pad in BuyPad.All)
-                if (pad.Shown && pad.PlayerOn(p)) return pad.Info();
-            foreach (var g in Grills)
+            if (Yards.TryGetValue(index, out var existing)) return existing;
+            var def = YardDefs.Get(index);
+            if (def == null) return null;
+            var y = new GameObject("Yard " + index + " " + def.Name).AddComponent<Yard>();
+            y.transform.SetParent(_world, false);
+            y.Build(def);
+            Yards[index] = y;
+            BuildYardPads(y);
+            if (index == 1) BuildGlobalPads(y);
+            // apply already-owned levels (load) and saved piles
+            // (snapshot: a bought gate opens the next yard from inside this loop, which adds more tiles)
+            foreach (var p in new List<BuyPad>(BuyPad.All))
+                if (p.Id.StartsWith($"y{index}.") || (index == 1 && p.Id.StartsWith("g.")))
+                {
+                    var s = Save.Pad(p.Id);
+                    p.Load(s.level, s.paid);
+                    if (s.level > 0) p.OnBought?.Invoke(s.level);
+                }
+            foreach (var z in y.GetComponentsInChildren<PileZone>())
             {
-                var d = g.transform.position - p;
-                d.y = 0;
-                if (d.magnitude < 2.4f || g.Input.InReach(p, -0.3f) || g.Output.InReach(p, -0.3f)) return g.Info();
+                if (string.IsNullOrEmpty(z.Id)) continue;
+                var s = Save.Pile(z.Id);
+                if (s.count > 0) z.SetCount(s.count, s.cash);
             }
-            if (Yard.InPen(p)) return Pen.Info(Player.Damage);
-            var c = Counter.transform.position - p;
-            c.y = 0;
-            if ((Mathf.Abs(c.x) < 3.4f && Mathf.Abs(c.z) < 1.2f) || Counter.Shelf.InReach(p) || Counter.Cash.InReach(p)) return Counter.Info();
+            if (Yards.TryGetValue(index - 1, out var prev)) prev.OpenEastGate();
+            if (!_loading)
+            {
+                Fx.I?.Confetti(y.W(0, 0), 200);
+                Hud?.Toast($"Welcome to {def.Name}!");
+            }
+            foreach (var p in BuyPad.All) p.Refresh();
+            return y;
+        }
+
+        public Yard YardAt(Vector3 p)
+        {
+            foreach (var y in Yards.Values) if (y.Contains(p)) return y;
             return null;
         }
 
-        void Pad(string id, string kind, string title, Vector3 pos, double[] costs, System.Func<bool> available, System.Action<int> apply,
-                 System.Func<int, string> describe, float w = 3.2f, float d = 2.5f)
+        public double PriceBonus(int yard) => 1.0 + 0.2 * Level($"y{yard}.recipe");
+
+        // ------------------------------------------------------------------ progression (all tiles)
+
+        static double Curve(double baseCost, double growth, int level) => baseCost * System.Math.Pow(growth, level);
+
+        void BuildYardPads(Yard y)
+        {
+            var d = y.Def;
+            string k = $"y{d.Index}.";
+            double s = d.Scale;
+            float baseCook = d.CookSeconds;
+
+            Pad(y, k + "src", "UPGRADE", d.SourceTitle, new Vector3(-8.2f, 0, 1.4f), 8, l => Curve(30, 1.7, l) * s, () => true,
+                l => { if (y.Pen != null) { y.Pen.SetCount(4 + 2 * l); y.Pen.RespawnSeconds = 2.5f * Mathf.Pow(0.9f, l); } if (y.Field != null) y.Field.SetLevel(l); },
+                l => y.Pen != null ? $"+2 {d.AnimalName}s, and they come back faster ({4 + 2 * l} > {6 + 2 * l})" : "More of the field fills up, and it regrows faster");
+            Pad(y, k + "gather", "HIRE", d.GathererName, new Vector3(-2.6f, 0, -1.4f), 4, l => Curve(50, 2.6, l) * s, () => Save.totalEarned >= 15 * s || Level(k + "gather") > 0,
+                l => SyncWorkers(y),
+                l => $"A helper who gathers {Items.Name(d.Raw)} and brings it to the {d.StationName} ({l} > {l + 1} hired)");
+            Pad(y, k + "speed", "UPGRADE", d.SpeedTitle, new Vector3(10.9f, 0, 13f), 12, l => Curve(100, 1.55, l) * s, () => Level(k + "gather") >= 1,
+                l => { foreach (var st in y.Stations) st.CookSeconds = baseCook * Mathf.Pow(0.86f, l); },
+                l => $"{d.StationName} works 16% faster ({baseCook * Mathf.Pow(0.86f, l):0.00}s > {baseCook * Mathf.Pow(0.86f, l + 1):0.00}s each)");
+            Pad(y, k + "waiter", "HIRE", "Waiter", new Vector3(10.9f, 0, -3.6f), 3, l => Curve(120, 2.6, l) * s, () => Level(k + "gather") >= 1,
+                l => SyncWorkers(y),
+                l => $"A helper who carries {Items.Name(d.Product)} from the {d.StationName} to the counter ({l} > {l + 1} hired)");
+            Pad(y, k + "parrot", "HIRE", "Cash Parrot", new Vector3(5.6f, 0, -14.8f), 1, l => 180 * s, () => Level(k + "gather") >= 1,
+                l => { if (l >= 1) y.Counter.EnableAutoCash(); },
+                l => "Collects every customer's cash for you, straight into your wallet");
+            Pad(y, k + "station2", "UNLOCK", "Second " + d.StationName, new Vector3(6f, 0, 3.4f), 1, l => 400 * s, () => Level(k + "speed") >= 1 || Level(k + "waiter") >= 1,
+                l => { if (l >= 1 && y.Stations.Count < 2) { var st = y.AddStation(); st.CookSeconds = baseCook * Mathf.Pow(0.86f, Level(k + "speed")); LoadPiles(st.gameObject); } },
+                l => $"Builds a second {d.StationName} (twice the output)", 4.2f, 3.2f);
+            Pad(y, k + "recipe", "UPGRADE", d.RecipeTitle, new Vector3(-8.2f, 0, -10.6f), 12, l => Curve(300, 1.6, l) * s, () => Level(k + "station2") >= 1,
+                l => { },
+                l => $"{Items.Name(d.Product)} sells for 20% more ({Items.Price(d.Product) * (1 + 0.2 * l):0.#} > {Items.Price(d.Product) * (1 + 0.2 * (l + 1)):0.#})");
+            Pad(y, k + "busy", "UPGRADE", "More Customers", new Vector3(-2.6f, 0, -7.0f), 8, l => Curve(150, 1.65, l) * s, () => Level(k + "waiter") >= 1,
+                l => { y.Counter.SpawnEvery = 2.2f * Mathf.Pow(0.88f, l); y.Counter.MaxWant = 2 + (l + 1) / 2; },
+                l => $"Customers arrive 12% more often and buy more (up to {2 + (l + 2) / 2} each)");
+            Pad(y, k + "crew", "UPGRADE", "Helper Shoes", new Vector3(-8.2f, 0, -7.6f), 6, l => Curve(200, 1.8, l) * s, () => Level(k + "waiter") >= 1,
+                l => SyncWorkers(y),
+                l => $"Helpers walk 12% faster and carry 2 more ({8 + 2 * l} > {10 + 2 * l})");
+
+            var next = YardDefs.Get(d.Index + 1);
+            if (next != null)
+                Pad(y, k + "gate", "UNLOCK", "To " + next.Name, new Vector3(10.9f, 0, 6.2f), 1, l => next.GateCost, () => Level(k + "station2") >= 1,
+                    l => { if (l >= 1) OpenYard(next.Index); },
+                    l => $"Opens the gate to the next yard: {next.Name}. {next.Tagline}");
+        }
+
+        void BuildGlobalPads(Yard y)
+        {
+            Pad(y, "g.backpack", "UPGRADE", "Bigger Stack", new Vector3(-8.2f, 0, -4.6f), 15, l => Curve(25, 1.75, l), () => true,
+                l => Player.Stack.Capacity = 12 + 4 * l,
+                l => $"Carry 4 more items ({12 + 4 * l} > {16 + 4 * l})");
+            Pad(y, "g.shoes", "UPGRADE", "Running Shoes", new Vector3(-2.6f, 0, -12.4f), 8, l => Curve(60, 2.2, l), () => Save.totalEarned >= 100,
+                l => Player.Speed = 5.6f * (1 + 0.08f * l),
+                l => $"Walk 8% faster");
+        }
+
+        void SyncWorkers(Yard y)
+        {
+            string k = $"y{y.Def.Index}.";
+            int crew = Level(k + "crew");
+            float speed = 3.6f * (1 + 0.12f * crew);
+            int cap = 8 + 2 * crew;
+            while (y.Gatherers.Count < Level(k + "gather"))
+            {
+                var w = new GameObject("Gatherer").AddComponent<CatcherWorker>();
+                w.transform.SetParent(y.transform, false);
+                w.Init(y, y.Gatherers.Count % 2 == 0 ? "mini-characters/character-male-f" : "mini-characters/character-male-d", new Color(0.95f, 0.3f, 0.3f), cap, y.W(-2.6f, -1.4f));
+                y.Gatherers.Add(w);
+                if (!_loading) Fx.I?.Puff(w.transform.position + Vector3.up, 20);
+            }
+            while (y.Waiters.Count < Level(k + "waiter"))
+            {
+                var w = new GameObject("Waiter").AddComponent<WaiterWorker>();
+                w.transform.SetParent(y.transform, false);
+                w.Init(y, "mini-characters/character-female-f", new Color(0.25f, 0.6f, 1f), cap + 2, y.W(10.9f, -3.6f));
+                y.Waiters.Add(w);
+                if (!_loading) Fx.I?.Puff(w.transform.position + Vector3.up, 20);
+            }
+            foreach (var w in y.Gatherers) { w.Speed = speed; w.SetCapacity(cap); }
+            foreach (var w in y.Waiters) { w.Speed = speed; w.SetCapacity(cap + 2); }
+        }
+
+        void Pad(Yard y, string id, string kind, string title, Vector3 local, int maxLevel, System.Func<int, double> cost, System.Func<bool> available,
+                 System.Action<int> apply, System.Func<int, string> describe, float w = 3.2f, float d = 2.5f)
         {
             var go = new GameObject("Pad " + id);
-            go.transform.SetParent(_world, false);
-            go.transform.position = pos;
+            go.transform.SetParent(y.transform, false);
+            go.transform.position = y.W(local);
             var p = go.AddComponent<BuyPad>();
             p.Id = id;
             p.Kind = kind;
             p.Title = title;
-            p.MaxLevel = costs.Length;
-            p.CostAt = l => costs[Mathf.Clamp(l, 0, costs.Length - 1)];
+            p.MaxLevel = maxLevel;
+            p.CostAt = cost;
             p.Available = available;
             p.OnBought = apply;
             p.Describe = describe;
@@ -206,40 +242,33 @@ namespace StackIsland
         }
 
         public int Level(string id) => _pads.TryGetValue(id, out var p) ? p.Level : 0;
+        public BuyPad PadById(string id) => _pads.TryGetValue(id, out var p) ? p : null;
 
         public void OnPurchase(BuyPad pad)
         {
-            Counter.MaxWant = Mathf.Min(5, 2 + TotalLevels() / 3);
-            Hud?.Toast(pad.Maxed ? $"{pad.Title} maxed!" : $"{pad.Title} {(pad.MaxLevel > 1 ? $"{pad.Level}/{pad.MaxLevel}" : "")}");
+            Hud?.Toast(pad.Maxed && pad.MaxLevel > 1 ? $"{pad.Title} maxed!" : $"{pad.Title} {(pad.MaxLevel > 1 ? $"{pad.Level}/{pad.MaxLevel}" : "")}");
             SaveNow();
         }
 
-        int TotalLevels()
+        /// <summary>Hover info for whatever is at world point <paramref name="p"/> (null = nothing interesting).</summary>
+        public string InfoAt(Vector3 p)
         {
-            int n = 0;
-            foreach (var p in _pads.Values) n += p.Level;
-            return n;
-        }
-
-        void SyncWorkers()
-        {
-            int wantCatchers = Level("catcher"), wantWaiters = Level("waiter");
-            while (_catchers.Count < wantCatchers)
+            foreach (var pad in BuyPad.All)
+                if (pad.Shown && pad.PlayerOn(p)) return pad.Info();
+            var y = YardAt(p);
+            if (y == null) return null;
+            foreach (var st in y.Stations)
             {
-                var w = new GameObject("Catcher").AddComponent<CatcherWorker>();
-                w.transform.SetParent(_world, false);
-                w.Init(_catchers.Count % 2 == 0 ? "mini-characters/character-male-f" : "mini-characters/character-male-d", new Color(0.95f, 0.3f, 0.3f), 8, new Vector3(-2.6f, 0, -1.4f));
-                _catchers.Add(w);
-                Fx.I?.Puff(w.transform.position + Vector3.up, 20);
+                var d = st.transform.position - p;
+                d.y = 0;
+                if (d.magnitude < 2.4f || st.Output.InReach(p, -0.3f)) return st.Info();
+                foreach (var z in st.Inputs) if (z.InReach(p, -0.3f)) return st.Info();
             }
-            while (_waiters.Count < wantWaiters)
-            {
-                var w = new GameObject("Waiter").AddComponent<WaiterWorker>();
-                w.transform.SetParent(_world, false);
-                w.Init("mini-characters/character-female-f", new Color(0.25f, 0.6f, 1f), 10, new Vector3(10.9f, 0, -3.6f));
-                _waiters.Add(w);
-                Fx.I?.Puff(w.transform.position + Vector3.up, 20);
-            }
+            if (y.InSource(p)) return y.SourceInfo(Player.Damage);
+            var c = y.Counter.transform.position - p;
+            c.y = 0;
+            if ((Mathf.Abs(c.x) < 3.4f && Mathf.Abs(c.z) < 1.2f) || y.Counter.Shelf.InReach(p) || y.Counter.Cash.InReach(p)) return y.Counter.Info();
+            return null;
         }
 
         // ------------------------------------------------------------------ cash
@@ -268,21 +297,21 @@ namespace StackIsland
 
         void LoadState()
         {
-            foreach (var p in _pads.Values)
-            {
-                var s = Save.Pad(p.Id);
-                p.Load(s.level, s.paid);
-                if (s.level > 0) p.OnBought?.Invoke(s.level);
-            }
-            foreach (var z in PileZone.All)
+            // yards beyond the first open as their gates were bought (in order)
+            for (int i = 1; i <= YardDefs.All.Count; i++)
+                if (Save.Pad($"y{i}.gate").level > 0) OpenYard(i + 1);
+                else break;
+            foreach (var t in Save.stack) Player.Stack.Add((ItemType)t);
+        }
+
+        void LoadPiles(GameObject root)
+        {
+            foreach (var z in root.GetComponentsInChildren<PileZone>())
             {
                 if (string.IsNullOrEmpty(z.Id)) continue;
                 var s = Save.Pile(z.Id);
-                if (s.count > 0) z.SetCount(s.count, s.cash);
+                if (s.count > 0 && z.Count == 0) z.SetCount(s.count, s.cash);
             }
-            foreach (var t in Save.stack) Player.Stack.Add((ItemType)t);
-            Counter.MaxWant = Mathf.Min(5, 2 + TotalLevels() / 3);
-            foreach (var p in BuyPad.All) p.Refresh();
         }
 
         public void SaveNow()
