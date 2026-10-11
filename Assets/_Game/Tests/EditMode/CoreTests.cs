@@ -47,6 +47,13 @@ namespace StackIsland.Tests
         }
 
         [Test]
+        public void BalanceSimFinishesIn80To100Hours()
+        {
+            BalanceModel.Run();
+            Assert.That(BalanceModel.LastTotalHours, Is.InRange(80.0, 100.0), "full game length (thoughtful player)");
+        }
+
+        [Test]
         public void ItemsHavePricesAndHeights()
         {
             Assert.Greater(Items.Price(ItemType.CrabCake), 0);

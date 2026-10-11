@@ -13,7 +13,7 @@ namespace StackIsland
         const float Cell = 0.62f;
         public Yard Yard { get; private set; }
         public int Level { get; private set; }
-        public float RegrowPerSecond => 3f + 1.6f * Level;
+        public float RegrowPerSecond => Economy.FieldRegrow(Level);
 
         readonly List<Vector3> _cells = new List<Vector3>();
         readonly List<GameObject> _items = new List<GameObject>();   // null = empty cell
@@ -45,7 +45,7 @@ namespace StackIsland
         {
             Level = level;
             // 40% of the field at first, the whole field at level 8
-            _activeCells = Mathf.Clamp(Mathf.RoundToInt(_cells.Count * (0.4f + 0.075f * level)), 1, _cells.Count);
+            _activeCells = Mathf.Clamp(Mathf.RoundToInt(_cells.Count * Economy.FieldShare(level)), 1, _cells.Count);
         }
 
         void Fill(int i)

@@ -326,7 +326,7 @@ namespace StackIsland
                 _take -= dt;
                 if (_take <= 0 && _got < _want && _counter.Shelf.Count > 0)
                 {
-                    _take = 0.22f;
+                    _take = Economy.ServeSeconds;
                     _counter.Shelf.Remove(out var from, out _);
                     _hands.Add(_counter.Sells, from);
                     _got++;

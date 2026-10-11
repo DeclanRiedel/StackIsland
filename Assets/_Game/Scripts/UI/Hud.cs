@@ -25,7 +25,7 @@ namespace StackIsland
         Button _continueBtn;
         Toggle _windowed;
 
-        public bool IsMenuOpen => (_menu != null && _menu.activeSelf) || (_pause != null && _pause.activeSelf);
+        public bool IsMenuOpen => (_menu != null && _menu.activeSelf) || (_pause != null && _pause.activeSelf) || (_welcome != null && _welcome.activeSelf);
 
         public void Init(Game g)
         {
@@ -241,10 +241,51 @@ namespace StackIsland
         {
             _menu.SetActive(false);
             _pause.SetActive(false);
+            if (_welcome != null) _welcome.SetActive(false);
             _hudLayer.SetActive(true);
             _g.Cam.Orbit = false;
             _g.Cam.Yaw = 32f;
             Time.timeScale = 1f;
+            if (_welcomeText != null)
+            {
+                // offline earnings waiting: show them now that the player is back on the island
+                ShowWelcome(_welcomeText);
+                _welcomeText = null;
+            }
+        }
+
+        // ------------------------------------------------------------------ welcome back (offline earnings)
+
+        GameObject _welcome;
+        string _welcomeText;
+
+        public void QueueWelcome(double earned, double away, double counted, double efficiency)
+        {
+            string time(double s) => s >= 3600 ? $"{(int)(s / 3600)}h {(int)(s % 3600 / 60)}m" : $"{(int)(s / 60)}m";
+            _welcomeText = $"You were away for <b>{time(away)}</b>.\nYour helpers earned\n<size=150%><color=#9CFF9A><b>{NumberFormatter.Format(earned)}</b></color></size>\n" +
+                           $"<size=75%><color=#B8C8D4>Counted {time(counted)} at {efficiency * 100:0}% (Night Shift raises both)</color></size>";
+            // shown when the start menu closes (it always opens first when there's a save to continue)
+        }
+
+        void ShowWelcome(string text)
+        {
+            if (_welcome == null)
+            {
+                _welcome = Overlay("welcome", 0.45f);
+                var card = UIKit.Panel(_welcome.transform, new Color(0.1f, 0.14f, 0.2f, 0.96f), "card");
+                UIKit.Place(card.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(640, 440));
+                var title = UIKit.Text(card.rectTransform, "Welcome back!", 52, TextAlignmentOptions.Center, UIKit.Accent, "title");
+                title.fontStyle = FontStyles.Bold;
+                UIKit.Place(title.rectTransform, new Vector2(0.5f, 1), new Vector2(0.5f, 1), new Vector2(0, -26), new Vector2(600, 70));
+                var body = UIKit.Text(card.rectTransform, "", 30, TextAlignmentOptions.Center, Color.white, "body");
+                UIKit.Place(body.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0, 10), new Vector2(580, 220));
+                var ok = UIKit.Button(card.rectTransform, "Collect", () => { _welcome.SetActive(false); Time.timeScale = 1f; Sfx.I?.Play(Sfx.I.Buy, 0.7f, 1.1f); }, 300, 70, new Color(0.3f, 0.75f, 0.35f), 32);
+                UIKit.Place((RectTransform)ok.transform, new Vector2(0.5f, 0), new Vector2(0.5f, 0), new Vector2(0, 30), new Vector2(300, 70));
+            }
+            _welcome.transform.Find("card/body").GetComponent<TextMeshProUGUI>().text = text;
+            _welcome.SetActive(true);
+            _welcome.transform.SetAsLastSibling();
+            Time.timeScale = 0f;
         }
 
         void Update()

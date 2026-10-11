@@ -38,3 +38,7 @@ TestResults*.xml
 
 # screenshots from the autoshot runs
 /[Ss]creenshots/
+
+# balance sim console build output
+/Tools/BalanceSim/console/bin/
+/Tools/BalanceSim/console/obj/

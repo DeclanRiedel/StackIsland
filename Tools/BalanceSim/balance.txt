@@ -1,0 +1,12 @@
+[BalanceSim]   5.0h: 20/526 levels bought, income 3/s
+[BalanceSim]   15.5h: 23/526 levels bought, income 3/s
+[BalanceSim] yard 2 (Coconut Grove) opens at 15.7h  income 34/s
+[BalanceSim] yard 3 (Fish Lagoon) opens at 17.3h  income 652/s
+[BalanceSim] yard 4 (Banana Jungle) opens at 17.4h  income 2.09K/s
+[BalanceSim] yard 5 (Hog Farm) opens at 19.1h  income 27.5K/s
+[BalanceSim] yard 6 (Chicken Coop) opens at 19.2h  income 76.5K/s
+[BalanceSim]   20.5h: 324/526 levels bought, income 883K/s
+[BalanceSim] yard 7 (Pineapple Plantation) opens at 20.8h  income 1.05M/s
+[BalanceSim] yard 8 (Strawberry Patch) opens at 21.7h  income 6.79M/s
+[BalanceSim] yard 9 (Burger Beach) opens at 22.6h  income 48.4M/s
+[BalanceSim] everything maxed after 23.6h (526 purchases, final income 217M/s)

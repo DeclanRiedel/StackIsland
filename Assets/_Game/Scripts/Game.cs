@@ -82,6 +82,25 @@ namespace StackIsland
 
             Hud = new GameObject("UI").AddComponent<Hud>();
             Hud.Init(this);
+            if (!TestMode) PayOffline();
+        }
+
+        /// <summary>Coins per second the helpers earn on their own right now.</summary>
+        public double AutomatedIncome() => BalanceModel.AutomatedIncome(Level, Yards.Count);
+
+        /// <summary>Helpers kept working while the game was closed: pay out what they earned (capped).</summary>
+        void PayOffline()
+        {
+            if (Save.lastSaveUnix <= 0) return;
+            double away = SaveSystem.NowUnix() - Save.lastSaveUnix;
+            if (away < 60) return;
+            int night = Level("g.night");
+            double counted = System.Math.Min(away, Economy.OfflineCapHours(night) * 3600);
+            double earned = AutomatedIncome() * counted * Economy.OfflineEfficiency(night);
+            if (earned <= 0) return;
+            Save.cash += earned;
+            Save.totalEarned += earned;
+            Hud.QueueWelcome(earned, away, counted, Economy.OfflineEfficiency(night));
         }
 
         void Start()
@@ -136,75 +155,122 @@ namespace StackIsland
             return null;
         }
 
-        public double PriceBonus(int yard) => 1.0 + 0.2 * Level($"y{yard}.recipe");
+        public double PriceBonus(int yard) => Economy.PriceMult(Level($"y{yard}.recipe"));
 
-        // ------------------------------------------------------------------ progression (all tiles)
-
-        static double Curve(double baseCost, double growth, int level) => baseCost * System.Math.Pow(growth, level);
+        // ------------------------------------------------------------------ progression (all tiles; numbers in Economy)
 
         void BuildYardPads(Yard y)
         {
             var d = y.Def;
             string k = $"y{d.Index}.";
-            double s = d.Scale;
-            float baseCook = d.CookSeconds;
-
-            Pad(y, k + "src", "UPGRADE", d.SourceTitle, new Vector3(-8.2f, 0, 1.4f), 8, l => Curve(30, 1.7, l) * s, () => true,
-                l => { if (y.Pen != null) { y.Pen.SetCount(4 + 2 * l); y.Pen.RespawnSeconds = 2.5f * Mathf.Pow(0.9f, l); } if (y.Field != null) y.Field.SetLevel(l); },
-                l => y.Pen != null ? $"+2 {d.AnimalName}s, and they come back faster ({4 + 2 * l} > {6 + 2 * l})" : "More of the field fills up, and it regrows faster");
-            Pad(y, k + "gather", "HIRE", d.GathererName, new Vector3(-2.6f, 0, -1.4f), 4, l => Curve(50, 2.6, l) * s, () => Save.totalEarned >= 15 * s || Level(k + "gather") > 0,
-                l => SyncWorkers(y),
-                l => $"A helper who gathers {Items.Name(d.Raw)} and brings it to the {d.StationName} ({l} > {l + 1} hired)");
-            Pad(y, k + "speed", "UPGRADE", d.SpeedTitle, new Vector3(10.9f, 0, 13f), 12, l => Curve(100, 1.55, l) * s, () => Level(k + "gather") >= 1,
-                l => { foreach (var st in y.Stations) st.CookSeconds = baseCook * Mathf.Pow(0.86f, l); },
-                l => $"{d.StationName} works 16% faster ({baseCook * Mathf.Pow(0.86f, l):0.00}s > {baseCook * Mathf.Pow(0.86f, l + 1):0.00}s each)");
-            Pad(y, k + "waiter", "HIRE", "Waiter", new Vector3(10.9f, 0, -3.6f), 3, l => Curve(120, 2.6, l) * s, () => Level(k + "gather") >= 1,
-                l => SyncWorkers(y),
-                l => $"A helper who carries {Items.Name(d.Product)} from the {d.StationName} to the counter ({l} > {l + 1} hired)");
-            Pad(y, k + "parrot", "HIRE", "Cash Parrot", new Vector3(5.6f, 0, -14.8f), 1, l => 180 * s, () => Level(k + "gather") >= 1,
-                l => { if (l >= 1) y.Counter.EnableAutoCash(); },
-                l => "Collects every customer's cash for you, straight into your wallet");
-            Pad(y, k + "station2", "UNLOCK", "Second " + d.StationName, new Vector3(6f, 0, 3.4f), 1, l => 400 * s, () => Level(k + "speed") >= 1 || Level(k + "waiter") >= 1,
-                l => { if (l >= 1 && y.Stations.Count < 2) { var st = y.AddStation(); st.CookSeconds = baseCook * Mathf.Pow(0.86f, Level(k + "speed")); LoadPiles(st.gameObject); } },
-                l => $"Builds a second {d.StationName} (twice the output)", 4.2f, 3.2f);
-            Pad(y, k + "recipe", "UPGRADE", d.RecipeTitle, new Vector3(-8.2f, 0, -10.6f), 12, l => Curve(300, 1.6, l) * s, () => Level(k + "station2") >= 1,
-                l => { },
-                l => $"{Items.Name(d.Product)} sells for 20% more ({Items.Price(d.Product) * (1 + 0.2 * l):0.#} > {Items.Price(d.Product) * (1 + 0.2 * (l + 1)):0.#})");
-            Pad(y, k + "busy", "UPGRADE", "More Customers", new Vector3(-2.6f, 0, -7.0f), 8, l => Curve(150, 1.65, l) * s, () => Level(k + "waiter") >= 1,
-                l => { y.Counter.SpawnEvery = 2.2f * Mathf.Pow(0.88f, l); y.Counter.MaxWant = 2 + (l + 1) / 2; },
-                l => $"Customers arrive 12% more often and buy more (up to {2 + (l + 2) / 2} each)");
-            Pad(y, k + "crew", "UPGRADE", "Helper Shoes", new Vector3(-8.2f, 0, -7.6f), 6, l => Curve(200, 1.8, l) * s, () => Level(k + "waiter") >= 1,
-                l => SyncWorkers(y),
-                l => $"Helpers walk 12% faster and carry 2 more ({8 + 2 * l} > {10 + 2 * l})");
+            int L(string key) => Level(k + key);
+            foreach (var spec in Economy.YardTiles)
+            {
+                var sp = spec;
+                string title = null;
+                System.Action<int> apply = null;
+                System.Func<int, string> describe = null;
+                switch (sp.Key)
+                {
+                    case "src":
+                        title = d.SourceTitle;
+                        apply = l =>
+                        {
+                            if (y.Pen != null) { y.Pen.SetCount(Economy.PenAnimals(l)); y.Pen.RespawnSeconds = Economy.PenRespawn(l); }
+                            if (y.Field != null) y.Field.SetLevel(l);
+                        };
+                        describe = l => y.Pen != null
+                            ? $"+2 {d.AnimalName}s, and they come back faster ({Economy.PenAnimals(l)} > {Economy.PenAnimals(l + 1)})"
+                            : $"More of the field fills up and it regrows faster ({Economy.FieldRegrow(l):0.#} > {Economy.FieldRegrow(l + 1):0.#} per second)";
+                        break;
+                    case "gather":
+                        title = d.GathererName;
+                        apply = l => SyncWorkers(y);
+                        describe = l => $"A helper who gathers {Items.Name(d.Raw)} and brings it to the {d.StationName} ({l} > {l + 1} hired)";
+                        break;
+                    case "speed":
+                        title = d.SpeedTitle;
+                        apply = l => { foreach (var st in y.Stations) st.CookSeconds = Economy.CookSeconds(d, l); };
+                        describe = l => $"{d.StationName} works 10% faster ({Economy.CookSeconds(d, l):0.00}s > {Economy.CookSeconds(d, l + 1):0.00}s each)";
+                        break;
+                    case "waiter":
+                        title = "Waiter";
+                        apply = l => SyncWorkers(y);
+                        describe = l => $"A helper who carries {Items.Name(d.Product)} from the {d.StationName} to the counter ({l} > {l + 1} hired)";
+                        break;
+                    case "parrot":
+                        title = "Cash Parrot";
+                        apply = l => { if (l >= 1) y.Counter.EnableAutoCash(); };
+                        describe = l => "Collects every customer's cash for you, straight into your wallet";
+                        break;
+                    case "station2":
+                        title = "Second " + d.StationName;
+                        apply = l =>
+                        {
+                            if (l < 1 || y.Stations.Count >= 2) return;
+                            var st = y.AddStation();
+                            st.CookSeconds = Economy.CookSeconds(d, L("speed"));
+                            LoadPiles(st.gameObject);
+                        };
+                        describe = l => $"Builds a second {d.StationName} (twice the output)";
+                        break;
+                    case "recipe":
+                        title = d.RecipeTitle;
+                        apply = l => { };
+                        describe = l => $"{Items.Name(d.Product)} sells for more (+15% of base) ({NumberFormatter.Format(Items.Price(d.Product) * Economy.PriceMult(l))} > {NumberFormatter.Format(Items.Price(d.Product) * Economy.PriceMult(l + 1))})";
+                        break;
+                    case "busy":
+                        title = "More Customers";
+                        apply = l => { y.Counter.SpawnEvery = Economy.SpawnEvery(l); y.Counter.MaxWant = Economy.MaxWant(l); };
+                        describe = l => $"Customers arrive 10% more often and buy more (up to {Economy.MaxWant(l + 1)} each)";
+                        break;
+                    case "crew":
+                        title = "Helper Shoes";
+                        apply = l => SyncWorkers(y);
+                        describe = l => $"Helpers walk 8% faster and carry 2 more ({Economy.GathererCarry(l)} > {Economy.GathererCarry(l + 1)})";
+                        break;
+                }
+                Pad(y, k + sp.Key, sp, title, l => sp.Cost(l, d.Scale), () => Economy.Available(sp.Key, L, Save.totalEarned, d.Scale), apply, describe);
+            }
 
             var next = YardDefs.Get(d.Index + 1);
             if (next != null)
-                Pad(y, k + "gate", "UNLOCK", "To " + next.Name, new Vector3(10.9f, 0, 6.2f), 1, l => next.GateCost, () => Level(k + "station2") >= 1,
+                Pad(y, k + "gate", Economy.Gate, "To " + next.Name, l => next.GateCost, () => Economy.Available("gate", L, Save.totalEarned, d.Scale),
                     l => { if (l >= 1) OpenYard(next.Index); },
                     l => $"Opens the gate to the next yard: {next.Name}. {next.Tagline}");
         }
 
         void BuildGlobalPads(Yard y)
         {
-            Pad(y, "g.backpack", "UPGRADE", "Bigger Stack", new Vector3(-8.2f, 0, -4.6f), 15, l => Curve(25, 1.75, l), () => true,
-                l => Player.Stack.Capacity = 12 + 4 * l,
-                l => $"Carry 4 more items ({12 + 4 * l} > {16 + 4 * l})");
-            Pad(y, "g.shoes", "UPGRADE", "Running Shoes", new Vector3(-2.6f, 0, -12.4f), 8, l => Curve(60, 2.2, l), () => Save.totalEarned >= 100,
-                l => Player.Speed = 5.6f * (1 + 0.08f * l),
-                l => $"Walk 8% faster");
+            foreach (var spec in Economy.GlobalTiles)
+            {
+                var sp = spec;
+                if (sp.Key == "backpack")
+                    Pad(y, "g.backpack", sp, "Bigger Stack", l => sp.Cost(l, 1), () => Economy.GlobalAvailable(sp.Key, Save.totalEarned),
+                        l => Player.Stack.Capacity = Economy.Backpack(l),
+                        l => $"Carry 4 more items ({Economy.Backpack(l)} > {Economy.Backpack(l + 1)})");
+                else if (sp.Key == "shoes")
+                    Pad(y, "g.shoes", sp, "Running Shoes", l => sp.Cost(l, 1), () => Economy.GlobalAvailable(sp.Key, Save.totalEarned),
+                        l => Player.Speed = Economy.WalkSpeed(l),
+                        l => "Walk 8% faster");
+                else if (sp.Key == "night")
+                    Pad(y, "g.night", sp, "Night Shift", l => sp.Cost(l, 1), () => Economy.GlobalAvailable(sp.Key, Save.totalEarned),
+                        l => { },
+                        l => $"Helpers earn more while you're away ({Economy.OfflineEfficiency(l) * 100:0}% > {Economy.OfflineEfficiency(l + 1) * 100:0}%, up to {Economy.OfflineCapHours(l + 1):0.#}h)");
+            }
         }
 
         void SyncWorkers(Yard y)
         {
             string k = $"y{y.Def.Index}.";
             int crew = Level(k + "crew");
-            float speed = 3.6f * (1 + 0.12f * crew);
-            int cap = 8 + 2 * crew;
+            float speed = Economy.HelperSpeed(crew);
             while (y.Gatherers.Count < Level(k + "gather"))
             {
                 var w = new GameObject("Gatherer").AddComponent<CatcherWorker>();
                 w.transform.SetParent(y.transform, false);
-                w.Init(y, y.Gatherers.Count % 2 == 0 ? "mini-characters/character-male-f" : "mini-characters/character-male-d", new Color(0.95f, 0.3f, 0.3f), cap, y.W(-2.6f, -1.4f));
+                w.Init(y, y.Gatherers.Count % 2 == 0 ? "mini-characters/character-male-f" : "mini-characters/character-male-d", new Color(0.95f, 0.3f, 0.3f),
+                    Economy.GathererCarry(crew), y.W(-2.6f, -1.4f));
                 y.Gatherers.Add(w);
                 if (!_loading) Fx.I?.Puff(w.transform.position + Vector3.up, 20);
             }
@@ -212,31 +278,31 @@ namespace StackIsland
             {
                 var w = new GameObject("Waiter").AddComponent<WaiterWorker>();
                 w.transform.SetParent(y.transform, false);
-                w.Init(y, "mini-characters/character-female-f", new Color(0.25f, 0.6f, 1f), cap + 2, y.W(10.9f, -3.6f));
+                w.Init(y, "mini-characters/character-female-f", new Color(0.25f, 0.6f, 1f), Economy.WaiterCarry(crew), y.W(10.9f, -3.6f));
                 y.Waiters.Add(w);
                 if (!_loading) Fx.I?.Puff(w.transform.position + Vector3.up, 20);
             }
-            foreach (var w in y.Gatherers) { w.Speed = speed; w.SetCapacity(cap); }
-            foreach (var w in y.Waiters) { w.Speed = speed; w.SetCapacity(cap + 2); }
+            foreach (var w in y.Gatherers) { w.Speed = speed; w.SetCapacity(Economy.GathererCarry(crew)); }
+            foreach (var w in y.Waiters) { w.Speed = speed; w.SetCapacity(Economy.WaiterCarry(crew)); }
         }
 
-        void Pad(Yard y, string id, string kind, string title, Vector3 local, int maxLevel, System.Func<int, double> cost, System.Func<bool> available,
-                 System.Action<int> apply, System.Func<int, string> describe, float w = 3.2f, float d = 2.5f)
+        void Pad(Yard y, string id, Economy.TileSpec spec, string title, System.Func<int, double> cost, System.Func<bool> available,
+                 System.Action<int> apply, System.Func<int, string> describe)
         {
             var go = new GameObject("Pad " + id);
             go.transform.SetParent(y.transform, false);
-            go.transform.position = y.W(local);
+            go.transform.position = y.W(spec.Local);
             var p = go.AddComponent<BuyPad>();
             p.Id = id;
-            p.Kind = kind;
+            p.Kind = spec.Kind;
             p.Title = title;
-            p.MaxLevel = maxLevel;
+            p.MaxLevel = spec.MaxLevel;
             p.CostAt = cost;
             p.Available = available;
             p.OnBought = apply;
             p.Describe = describe;
-            p.Width = w;
-            p.Depth = d;
+            p.Width = spec.Width;
+            p.Depth = spec.Depth;
             p.Build();
             _pads[id] = p;
         }
