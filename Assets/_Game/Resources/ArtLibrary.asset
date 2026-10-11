@@ -1,0 +1,1855 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4d1a5e82ea1f1409b1747ed9a5f569, type: 3}
+  m_Name: ArtLibrary
+  m_EditorClassIdentifier: StackIsland.Runtime::StackIsland.ArtLibrary
+  entries:
+  - key: cube-pets/animal-beaver
+    prefab: {fileID: 919132149155446097, guid: 878293eb75da64c44814a4394ff548c2, type: 3}
+  - key: cube-pets/animal-bee
+    prefab: {fileID: 919132149155446097, guid: 2c38cf29d03a9fb44baa3766acada5bd, type: 3}
+  - key: cube-pets/animal-bunny
+    prefab: {fileID: 919132149155446097, guid: 15b2c306399ba5440bb2957360334a20, type: 3}
+  - key: cube-pets/animal-cat
+    prefab: {fileID: 919132149155446097, guid: a2b36f16fef10104ebbfa09c9e36c26f, type: 3}
+  - key: cube-pets/animal-caterpillar
+    prefab: {fileID: 919132149155446097, guid: ca3f381a23dbb0848a8246fb46ba1f6b, type: 3}
+  - key: cube-pets/animal-chick
+    prefab: {fileID: 919132149155446097, guid: 84bf4ded03a89354d8ae9d64ecff07c6, type: 3}
+  - key: cube-pets/animal-cow
+    prefab: {fileID: 919132149155446097, guid: c6f12fb077b5f8749be04ebe3fb4fae2, type: 3}
+  - key: cube-pets/animal-crab
+    prefab: {fileID: 919132149155446097, guid: a014c7011ee061e40bb170a543bb016d, type: 3}
+  - key: cube-pets/animal-deer
+    prefab: {fileID: 919132149155446097, guid: 8b83b6125d990344ea15471babc2379c, type: 3}
+  - key: cube-pets/animal-dog
+    prefab: {fileID: 919132149155446097, guid: f926dcfdf1d5aba4aa45ef9774be66ec, type: 3}
+  - key: cube-pets/animal-elephant
+    prefab: {fileID: 919132149155446097, guid: 0536daf233f89044b93c1869e24294d0, type: 3}
+  - key: cube-pets/animal-fish
+    prefab: {fileID: 919132149155446097, guid: f725a7385cb1e054eaa7a144d34eb66a, type: 3}
+  - key: cube-pets/animal-fox
+    prefab: {fileID: 919132149155446097, guid: cf43b3ecad5cd834eb73a2b9cc387969, type: 3}
+  - key: cube-pets/animal-giraffe
+    prefab: {fileID: 919132149155446097, guid: 50bf72b13a869e84ca6d68452b6361a4, type: 3}
+  - key: cube-pets/animal-hog
+    prefab: {fileID: 919132149155446097, guid: de4c66b0907c5844aa62a9d03b621613, type: 3}
+  - key: cube-pets/animal-koala
+    prefab: {fileID: 919132149155446097, guid: 1ac1804b0a545c844a2bfa4c94dd3777, type: 3}
+  - key: cube-pets/animal-lion
+    prefab: {fileID: 919132149155446097, guid: adcc84726bcb2384f9bf4e402aba76bb, type: 3}
+  - key: cube-pets/animal-monkey
+    prefab: {fileID: 919132149155446097, guid: d98a84e81070912439689b4666b7040c, type: 3}
+  - key: cube-pets/animal-panda
+    prefab: {fileID: 919132149155446097, guid: fa3f28851cb2b094ab33a4b8d53d1d20, type: 3}
+  - key: cube-pets/animal-parrot
+    prefab: {fileID: 919132149155446097, guid: 544e4afed2c5b0b438b0fcd88643e26f, type: 3}
+  - key: cube-pets/animal-penguin
+    prefab: {fileID: 919132149155446097, guid: d15dfaf97e07b2b4a97115343fd02b0b, type: 3}
+  - key: cube-pets/animal-pig
+    prefab: {fileID: 919132149155446097, guid: ea9944682c482d046aedfe35723010eb, type: 3}
+  - key: cube-pets/animal-polar
+    prefab: {fileID: 919132149155446097, guid: e0a20d29d779b934f9094f49cbedc095, type: 3}
+  - key: cube-pets/animal-tiger
+    prefab: {fileID: 919132149155446097, guid: 8858c7384efe8854abaef3c4e4b7e36f, type: 3}
+  - key: fantasy-town-kit/balcony-wall
+    prefab: {fileID: 919132149155446097, guid: 228603e46e106d440b3ac67aeda05237, type: 3}
+  - key: fantasy-town-kit/balcony-wall-fence
+    prefab: {fileID: 919132149155446097, guid: 3d511ec366e3a2d4e8827f10ddfcc56f, type: 3}
+  - key: fantasy-town-kit/banner-green
+    prefab: {fileID: 919132149155446097, guid: 0e3b0bcba96b6d1469e262022ebb0ff9, type: 3}
+  - key: fantasy-town-kit/banner-red
+    prefab: {fileID: 919132149155446097, guid: c06ac71687b41a54ca77f8cd39830ac3, type: 3}
+  - key: fantasy-town-kit/blade
+    prefab: {fileID: 919132149155446097, guid: 5eb8ea4e235a24e4db0d1dbb5964a89a, type: 3}
+  - key: fantasy-town-kit/cart
+    prefab: {fileID: 919132149155446097, guid: 42d3603b5fcc48646bc56e20925c4473, type: 3}
+  - key: fantasy-town-kit/cart-high
+    prefab: {fileID: 919132149155446097, guid: b412a930073007f40b73e7dc26de6b3c, type: 3}
+  - key: fantasy-town-kit/chimney
+    prefab: {fileID: 919132149155446097, guid: fb375b0ebe43cca448448a10ee8a9b76, type: 3}
+  - key: fantasy-town-kit/chimney-base
+    prefab: {fileID: 919132149155446097, guid: 17ecf7a5b2297de4bb2451512b7d3102, type: 3}
+  - key: fantasy-town-kit/chimney-top
+    prefab: {fileID: 919132149155446097, guid: 7077e0cd127f1b44994a49869574cce7, type: 3}
+  - key: fantasy-town-kit/fence
+    prefab: {fileID: 919132149155446097, guid: 4f375e63a0df9e74f8a5261cc4da8660, type: 3}
+  - key: fantasy-town-kit/fence-broken
+    prefab: {fileID: 919132149155446097, guid: 8295a7c6780f73f489a3ec5db6bae0cd, type: 3}
+  - key: fantasy-town-kit/fence-curved
+    prefab: {fileID: 919132149155446097, guid: 22e243dcf218f4647a4fd9d2f48e7330, type: 3}
+  - key: fantasy-town-kit/fence-gate
+    prefab: {fileID: 919132149155446097, guid: 9daa7556b2ce47c49bd6f2b11752ef24, type: 3}
+  - key: fantasy-town-kit/fountain-center
+    prefab: {fileID: 919132149155446097, guid: ed91edd33df97c547b2d76c67aed5e66, type: 3}
+  - key: fantasy-town-kit/fountain-corner
+    prefab: {fileID: 919132149155446097, guid: e5f8b9f963acb6849b954debe36a16de, type: 3}
+  - key: fantasy-town-kit/fountain-corner-inner
+    prefab: {fileID: 919132149155446097, guid: 84beef69034b90b4bbf5051382b25f3b, type: 3}
+  - key: fantasy-town-kit/fountain-corner-inner-square
+    prefab: {fileID: 919132149155446097, guid: eee842f876982154fa5271ce06664798, type: 3}
+  - key: fantasy-town-kit/fountain-curved
+    prefab: {fileID: 919132149155446097, guid: 820b9df3d99842943bdb8ef06dd4a686, type: 3}
+  - key: fantasy-town-kit/fountain-edge
+    prefab: {fileID: 919132149155446097, guid: d0346df44392cb945a1e2d23abacd7ae, type: 3}
+  - key: fantasy-town-kit/fountain-round
+    prefab: {fileID: 919132149155446097, guid: e1a17b3af6fe16b40983573ef1b56abb, type: 3}
+  - key: fantasy-town-kit/fountain-round-detail
+    prefab: {fileID: 919132149155446097, guid: 6f9d198e7b48b8540ad79e333342ba0c, type: 3}
+  - key: fantasy-town-kit/fountain-square
+    prefab: {fileID: 919132149155446097, guid: 291424bef4c5d0d41a0c973634eaef1a, type: 3}
+  - key: fantasy-town-kit/fountain-square-detail
+    prefab: {fileID: 919132149155446097, guid: 71f9aa1a5321c114182a2ba903a1ea40, type: 3}
+  - key: fantasy-town-kit/hedge
+    prefab: {fileID: 919132149155446097, guid: 212d007d143936e43a1dd5a89ed9cbf8, type: 3}
+  - key: fantasy-town-kit/hedge-curved
+    prefab: {fileID: 919132149155446097, guid: 89b209c8ae464a245af866e2afae486e, type: 3}
+  - key: fantasy-town-kit/hedge-gate
+    prefab: {fileID: 919132149155446097, guid: e40a2b450fdef074b902fc548bf7401e, type: 3}
+  - key: fantasy-town-kit/hedge-large
+    prefab: {fileID: 919132149155446097, guid: e6e5149fd2cddc94388106fc540df789, type: 3}
+  - key: fantasy-town-kit/hedge-large-curved
+    prefab: {fileID: 919132149155446097, guid: 996fdf98603a9c549ac13bf6d67bb8d3, type: 3}
+  - key: fantasy-town-kit/hedge-large-gate
+    prefab: {fileID: 919132149155446097, guid: 00472f16ca7760a4ba82b01b62b6c0e8, type: 3}
+  - key: fantasy-town-kit/lantern
+    prefab: {fileID: 919132149155446097, guid: f12eae8e2601b544983e92fb8002697d, type: 3}
+  - key: fantasy-town-kit/overhang
+    prefab: {fileID: 919132149155446097, guid: 4885659ed9f51bc45b1c1a9f276466d2, type: 3}
+  - key: fantasy-town-kit/pillar-stone
+    prefab: {fileID: 919132149155446097, guid: 252e3c81efc32e24aa4e13b634544c44, type: 3}
+  - key: fantasy-town-kit/pillar-wood
+    prefab: {fileID: 919132149155446097, guid: e7df22011182c2d40a7f33321ac49945, type: 3}
+  - key: fantasy-town-kit/planks
+    prefab: {fileID: 919132149155446097, guid: 824ddaabe881c4844bc0b3e4e1321f22, type: 3}
+  - key: fantasy-town-kit/planks-half
+    prefab: {fileID: 919132149155446097, guid: ee0df34beff38e940ae19e6e8eac4fdf, type: 3}
+  - key: fantasy-town-kit/planks-opening
+    prefab: {fileID: 919132149155446097, guid: 6afb1a821f0b72a419a57ddcb89e6ad6, type: 3}
+  - key: fantasy-town-kit/poles
+    prefab: {fileID: 919132149155446097, guid: cbc8b374772b28c4bbd329b643c24412, type: 3}
+  - key: fantasy-town-kit/poles-horizontal
+    prefab: {fileID: 919132149155446097, guid: 1f24ba04aeaab7941958312745bcc41a, type: 3}
+  - key: fantasy-town-kit/road
+    prefab: {fileID: 919132149155446097, guid: 32e4a00519fdafe41975e802a15137ea, type: 3}
+  - key: fantasy-town-kit/road-bend
+    prefab: {fileID: 919132149155446097, guid: d19ab727ac1004742bd602d6733c9efc, type: 3}
+  - key: fantasy-town-kit/road-corner
+    prefab: {fileID: 919132149155446097, guid: b403c9750ad4b9e4b8ab202401767a77, type: 3}
+  - key: fantasy-town-kit/road-corner-inner
+    prefab: {fileID: 919132149155446097, guid: 4cb6014f7946c5247b20cc166e6def12, type: 3}
+  - key: fantasy-town-kit/road-curb
+    prefab: {fileID: 919132149155446097, guid: e1d5091e76749884ca06fe72f4ba4517, type: 3}
+  - key: fantasy-town-kit/road-curb-end
+    prefab: {fileID: 919132149155446097, guid: 6683431d6ddfcdc4c9b8b1749598bcad, type: 3}
+  - key: fantasy-town-kit/road-edge
+    prefab: {fileID: 919132149155446097, guid: 742586b7fc4b3fe4a99aaff3ea81dccc, type: 3}
+  - key: fantasy-town-kit/road-edge-slope
+    prefab: {fileID: 919132149155446097, guid: d7d51d4956859c943afac48ff1b75e37, type: 3}
+  - key: fantasy-town-kit/road-slope
+    prefab: {fileID: 919132149155446097, guid: c555bd29f8080db4eaede1b1426dfe79, type: 3}
+  - key: fantasy-town-kit/rock-large
+    prefab: {fileID: 919132149155446097, guid: f597c0e139a10d942847fc21ea709b34, type: 3}
+  - key: fantasy-town-kit/rock-small
+    prefab: {fileID: 919132149155446097, guid: 3d9ccd44d89b25e4e9c6af755d5f67a8, type: 3}
+  - key: fantasy-town-kit/rock-wide
+    prefab: {fileID: 919132149155446097, guid: a44f222b63ce2e143b604c9654fa0b8d, type: 3}
+  - key: fantasy-town-kit/roof
+    prefab: {fileID: 919132149155446097, guid: 9fa60fb27030f1545a329ac7e44d5237, type: 3}
+  - key: fantasy-town-kit/roof-corner
+    prefab: {fileID: 919132149155446097, guid: 76071848025f4064d8ccc5f9eb5c0c90, type: 3}
+  - key: fantasy-town-kit/roof-corner-inner
+    prefab: {fileID: 919132149155446097, guid: ba116c39abe87674d8a1cdd7f049a235, type: 3}
+  - key: fantasy-town-kit/roof-corner-round
+    prefab: {fileID: 919132149155446097, guid: 3940ce8022a1ffb42973225a0a370de6, type: 3}
+  - key: fantasy-town-kit/roof-flat
+    prefab: {fileID: 919132149155446097, guid: cd3d9a8eb3ac7aa4cbd06b329b8f6a31, type: 3}
+  - key: fantasy-town-kit/roof-gable
+    prefab: {fileID: 919132149155446097, guid: f0096c7cfd66fe841acb567693a8d2f5, type: 3}
+  - key: fantasy-town-kit/roof-gable-detail
+    prefab: {fileID: 919132149155446097, guid: 5bdf6f594452c8f41939762d799f0f18, type: 3}
+  - key: fantasy-town-kit/roof-gable-end
+    prefab: {fileID: 919132149155446097, guid: 53796a90fca3b9b4d823d5d8c91d61fc, type: 3}
+  - key: fantasy-town-kit/roof-gable-top
+    prefab: {fileID: 919132149155446097, guid: bc7a644c92d362e488b8a4e3954394ee, type: 3}
+  - key: fantasy-town-kit/roof-high
+    prefab: {fileID: 919132149155446097, guid: ce41b6e65cd9e314db55c999b7c436a6, type: 3}
+  - key: fantasy-town-kit/roof-high-corner
+    prefab: {fileID: 919132149155446097, guid: 21e0a3c184a3b074a8e6c596dcbdf420, type: 3}
+  - key: fantasy-town-kit/roof-high-corner-round
+    prefab: {fileID: 919132149155446097, guid: 3e56f4e638b11dd4abf63a37cbddeb86, type: 3}
+  - key: fantasy-town-kit/roof-high-cornerinner
+    prefab: {fileID: 919132149155446097, guid: 34c65a9e7da55e44b9718ff10ef094e2, type: 3}
+  - key: fantasy-town-kit/roof-high-flat
+    prefab: {fileID: 919132149155446097, guid: 5100bd70bae328b4ea6a1214b0af9301, type: 3}
+  - key: fantasy-town-kit/roof-high-gable
+    prefab: {fileID: 919132149155446097, guid: faf528aba37bc5a4f80634d25d063dfa, type: 3}
+  - key: fantasy-town-kit/roof-high-gable-detail
+    prefab: {fileID: 919132149155446097, guid: e96c28190fb427c478245fa2f93d5957, type: 3}
+  - key: fantasy-town-kit/roof-high-gable-end
+    prefab: {fileID: 919132149155446097, guid: 32339dfe77f5f5e4a8e87e59c1495f54, type: 3}
+  - key: fantasy-town-kit/roof-high-gable-top
+    prefab: {fileID: 919132149155446097, guid: df433156a0f6c3a4c94516b4ddc0fa16, type: 3}
+  - key: fantasy-town-kit/roof-high-left
+    prefab: {fileID: 919132149155446097, guid: 186dd4a8f71c00c4a9eb7d827e89147f, type: 3}
+  - key: fantasy-town-kit/roof-high-point
+    prefab: {fileID: 919132149155446097, guid: 20046b2bc4479184d867771a8935e1e0, type: 3}
+  - key: fantasy-town-kit/roof-high-right
+    prefab: {fileID: 919132149155446097, guid: 6ca8a58f48003074e862716ebf07d3a8, type: 3}
+  - key: fantasy-town-kit/roof-high-window
+    prefab: {fileID: 919132149155446097, guid: 38448892ecd80b34fb85fe441d7c0421, type: 3}
+  - key: fantasy-town-kit/roof-left
+    prefab: {fileID: 919132149155446097, guid: d46ed71d0eff83e4ba83ae7436b44d40, type: 3}
+  - key: fantasy-town-kit/roof-point
+    prefab: {fileID: 919132149155446097, guid: 37a42119f7bf07d4aafbbb41f180c1d5, type: 3}
+  - key: fantasy-town-kit/roof-right
+    prefab: {fileID: 919132149155446097, guid: 77d1400a2414c1e46bcff0e56f07288c, type: 3}
+  - key: fantasy-town-kit/roof-window
+    prefab: {fileID: 919132149155446097, guid: 2e860ff46e5996a41940209be85a11df, type: 3}
+  - key: fantasy-town-kit/stairs-full
+    prefab: {fileID: 919132149155446097, guid: 5322c9b0bec537543a73d3943ba379fb, type: 3}
+  - key: fantasy-town-kit/stairs-full-corner-inner
+    prefab: {fileID: 919132149155446097, guid: b37510997552c8849bf6e933d12297a7, type: 3}
+  - key: fantasy-town-kit/stairs-full-corner-outer
+    prefab: {fileID: 919132149155446097, guid: 7ff3c630e2cd39244a88a2ee3bf8bccd, type: 3}
+  - key: fantasy-town-kit/stairs-stone
+    prefab: {fileID: 919132149155446097, guid: e15219ecc7ffe6f40aebc456f1294f7b, type: 3}
+  - key: fantasy-town-kit/stairs-stone-corner
+    prefab: {fileID: 919132149155446097, guid: f037866761bfcec4ba1f78f79f33f03c, type: 3}
+  - key: fantasy-town-kit/stairs-stone-handrail
+    prefab: {fileID: 919132149155446097, guid: 066a457954bedb641a31c46febae16af, type: 3}
+  - key: fantasy-town-kit/stairs-stone-round
+    prefab: {fileID: 919132149155446097, guid: 94f22f1c6289131408ea70a43de11b38, type: 3}
+  - key: fantasy-town-kit/stairs-wide-stone
+    prefab: {fileID: 919132149155446097, guid: ad52663b5c77fd54497e0d1194bff231, type: 3}
+  - key: fantasy-town-kit/stairs-wide-stone-handrail
+    prefab: {fileID: 919132149155446097, guid: 3058d9d5627e89a4c90da4803ff9ee59, type: 3}
+  - key: fantasy-town-kit/stairs-wide-wood
+    prefab: {fileID: 919132149155446097, guid: d048e8b7c1064a640aa2cc086e1cde4d, type: 3}
+  - key: fantasy-town-kit/stairs-wide-wood-handrail
+    prefab: {fileID: 919132149155446097, guid: b39eef45318d05443b240479fa33a45a, type: 3}
+  - key: fantasy-town-kit/stairs-wood
+    prefab: {fileID: 919132149155446097, guid: e2bd7b8c35a5dc44b97d18703295feaa, type: 3}
+  - key: fantasy-town-kit/stairs-wood-handrail
+    prefab: {fileID: 919132149155446097, guid: ad7945ab8cda6da48968a376909d243f, type: 3}
+  - key: fantasy-town-kit/stall
+    prefab: {fileID: 919132149155446097, guid: a0801cdd5da257e4b90d081812e248e7, type: 3}
+  - key: fantasy-town-kit/stall-bench
+    prefab: {fileID: 919132149155446097, guid: e3d075606953c464689795f8d27a4811, type: 3}
+  - key: fantasy-town-kit/stall-green
+    prefab: {fileID: 919132149155446097, guid: 8a7beb9163fbb5b449ab85f7f1c6275c, type: 3}
+  - key: fantasy-town-kit/stall-red
+    prefab: {fileID: 919132149155446097, guid: 72d50c923956ae248a078e9d49ab666f, type: 3}
+  - key: fantasy-town-kit/stall-stool
+    prefab: {fileID: 919132149155446097, guid: e78018c12c85f714593e4bf9e32dfec3, type: 3}
+  - key: fantasy-town-kit/tree
+    prefab: {fileID: 919132149155446097, guid: 519171f8b1d80d24d9e455c07ccfd825, type: 3}
+  - key: fantasy-town-kit/tree-crooked
+    prefab: {fileID: 919132149155446097, guid: 24509235f805f41458ee1c64b0561248, type: 3}
+  - key: fantasy-town-kit/tree-high
+    prefab: {fileID: 919132149155446097, guid: 6029b93730cff8e48a417ac51ce5f4ca, type: 3}
+  - key: fantasy-town-kit/tree-high-crooked
+    prefab: {fileID: 919132149155446097, guid: bfa94fbf40f880a4b95615420e0c8ca6, type: 3}
+  - key: fantasy-town-kit/tree-high-round
+    prefab: {fileID: 919132149155446097, guid: 7656c0fe9709ca1439442b9e6b50375d, type: 3}
+  - key: fantasy-town-kit/wall
+    prefab: {fileID: 919132149155446097, guid: eb8b849f3869ee443b77e8a3ce6a1160, type: 3}
+  - key: fantasy-town-kit/wall-arch
+    prefab: {fileID: 919132149155446097, guid: 6e207b108977920468804d04eab02fea, type: 3}
+  - key: fantasy-town-kit/wall-arch-top
+    prefab: {fileID: 919132149155446097, guid: b89bef5a5adb5e542bb3f824c02b4bdf, type: 3}
+  - key: fantasy-town-kit/wall-arch-top-detail
+    prefab: {fileID: 919132149155446097, guid: 5f69de4303a0b004f9a7a43a280ec13e, type: 3}
+  - key: fantasy-town-kit/wall-block
+    prefab: {fileID: 919132149155446097, guid: a903c7632203a3f46bec3d9ac8204a1b, type: 3}
+  - key: fantasy-town-kit/wall-block-half
+    prefab: {fileID: 919132149155446097, guid: d25eafdb2f156b043ab493d63123d133, type: 3}
+  - key: fantasy-town-kit/wall-broken
+    prefab: {fileID: 919132149155446097, guid: 732e504eca2101c478ee3bc45c5fe905, type: 3}
+  - key: fantasy-town-kit/wall-corner
+    prefab: {fileID: 919132149155446097, guid: 3cad3181ccf560d4a8861bda0f3dedf8, type: 3}
+  - key: fantasy-town-kit/wall-corner-detail
+    prefab: {fileID: 919132149155446097, guid: 7bc043dcd4a106a4aaf49d1a79d3cd9e, type: 3}
+  - key: fantasy-town-kit/wall-corner-diagonal
+    prefab: {fileID: 919132149155446097, guid: 96b6e0be35080de48befe435cfcbcd61, type: 3}
+  - key: fantasy-town-kit/wall-corner-diagonal-half
+    prefab: {fileID: 919132149155446097, guid: 19d74fbedbb8777439df52afd851fe56, type: 3}
+  - key: fantasy-town-kit/wall-corner-edge
+    prefab: {fileID: 919132149155446097, guid: 0913a1458d661894ab4730f6d10285cf, type: 3}
+  - key: fantasy-town-kit/wall-curved
+    prefab: {fileID: 919132149155446097, guid: 11743c87a89e038448328126c7da507c, type: 3}
+  - key: fantasy-town-kit/wall-detail-cross
+    prefab: {fileID: 919132149155446097, guid: b7bce0576a234184a935072c66e1b875, type: 3}
+  - key: fantasy-town-kit/wall-detail-diagonal
+    prefab: {fileID: 919132149155446097, guid: fcac4c2f9e3b5a743afabb777c33d22e, type: 3}
+  - key: fantasy-town-kit/wall-detail-horizontal
+    prefab: {fileID: 919132149155446097, guid: 3d237c710181a1946b3793cce6b01bfd, type: 3}
+  - key: fantasy-town-kit/wall-diagonal
+    prefab: {fileID: 919132149155446097, guid: 28a12699f01cbc54eb8b6504c6c90660, type: 3}
+  - key: fantasy-town-kit/wall-door
+    prefab: {fileID: 919132149155446097, guid: 5d0d3f6885823544aaab3b11f884e60d, type: 3}
+  - key: fantasy-town-kit/wall-doorway-base
+    prefab: {fileID: 919132149155446097, guid: 3264f507a9a975e41b739e2c3556049b, type: 3}
+  - key: fantasy-town-kit/wall-doorway-round
+    prefab: {fileID: 919132149155446097, guid: bfb1a353f7d71914fb94a935ea0048f7, type: 3}
+  - key: fantasy-town-kit/wall-doorway-square
+    prefab: {fileID: 919132149155446097, guid: e2213e50b181059459abd953891f189e, type: 3}
+  - key: fantasy-town-kit/wall-doorway-square-wide
+    prefab: {fileID: 919132149155446097, guid: 1eaf799841dc43f489a886e113cdc0c9, type: 3}
+  - key: fantasy-town-kit/wall-doorway-square-wide-curved
+    prefab: {fileID: 919132149155446097, guid: 7397f5d0ac05c854fa95375d57eacacf, type: 3}
+  - key: fantasy-town-kit/wall-half
+    prefab: {fileID: 919132149155446097, guid: 268a4257c17e3494ea5906046490e231, type: 3}
+  - key: fantasy-town-kit/wall-rounded
+    prefab: {fileID: 919132149155446097, guid: eb1f07785bf90004989f0fdf606871c2, type: 3}
+  - key: fantasy-town-kit/wall-side
+    prefab: {fileID: 919132149155446097, guid: a3ce343eaf566ba45b2da70afcf69f65, type: 3}
+  - key: fantasy-town-kit/wall-slope
+    prefab: {fileID: 919132149155446097, guid: 6ec768b87a00b8145b69aa5143ab1eaa, type: 3}
+  - key: fantasy-town-kit/wall-window-glass
+    prefab: {fileID: 919132149155446097, guid: c58cc226d5705994b85738460ad1047f, type: 3}
+  - key: fantasy-town-kit/wall-window-round
+    prefab: {fileID: 919132149155446097, guid: 9644cec16ea80b947933ca32567b0f1e, type: 3}
+  - key: fantasy-town-kit/wall-window-shutters
+    prefab: {fileID: 919132149155446097, guid: b1db18374366d8c49888c2531186e013, type: 3}
+  - key: fantasy-town-kit/wall-window-small
+    prefab: {fileID: 919132149155446097, guid: 31a2ef9f3dffb0f4181eb556fbd8b47d, type: 3}
+  - key: fantasy-town-kit/wall-window-stone
+    prefab: {fileID: 919132149155446097, guid: 2d362865ed954f34e9ddd0b7f367dfec, type: 3}
+  - key: fantasy-town-kit/wall-wood
+    prefab: {fileID: 919132149155446097, guid: b1f0931b086890647916d96f794f0e19, type: 3}
+  - key: fantasy-town-kit/wall-wood-arch
+    prefab: {fileID: 919132149155446097, guid: 98f41698120b45b49af16c4b05a000f7, type: 3}
+  - key: fantasy-town-kit/wall-wood-arch-top
+    prefab: {fileID: 919132149155446097, guid: de5d90e95eb4a0f45abadcb388b272dc, type: 3}
+  - key: fantasy-town-kit/wall-wood-arch-top-detail
+    prefab: {fileID: 919132149155446097, guid: 14ae4fec979e4f04dad51f661bce6e36, type: 3}
+  - key: fantasy-town-kit/wall-wood-block
+    prefab: {fileID: 919132149155446097, guid: d7cfdf4a254f44c42b7faf79be3b3087, type: 3}
+  - key: fantasy-town-kit/wall-wood-block-half
+    prefab: {fileID: 919132149155446097, guid: d04acb53bb5bf094795bb5d84e4bef74, type: 3}
+  - key: fantasy-town-kit/wall-wood-broken
+    prefab: {fileID: 919132149155446097, guid: 49967006aea01bd4ba758ad1fa6f8f25, type: 3}
+  - key: fantasy-town-kit/wall-wood-corner
+    prefab: {fileID: 919132149155446097, guid: ac21813ffb9cbd9428f4c308c0748d56, type: 3}
+  - key: fantasy-town-kit/wall-wood-corner-diagonal
+    prefab: {fileID: 919132149155446097, guid: c0d802a40aabe3741aa930c816382cd0, type: 3}
+  - key: fantasy-town-kit/wall-wood-corner-diagonal-half
+    prefab: {fileID: 919132149155446097, guid: ac20f008945fed6459f777742d7170c5, type: 3}
+  - key: fantasy-town-kit/wall-wood-corner-edge
+    prefab: {fileID: 919132149155446097, guid: 5f9234a620b8b314690b0d2b8df29330, type: 3}
+  - key: fantasy-town-kit/wall-wood-curved
+    prefab: {fileID: 919132149155446097, guid: 4366d1e8d9087ce41971fcc9b97a404f, type: 3}
+  - key: fantasy-town-kit/wall-wood-detail-cross
+    prefab: {fileID: 919132149155446097, guid: 9c66a86ad65ae4343adfb8595f6f0b57, type: 3}
+  - key: fantasy-town-kit/wall-wood-detail-diagonal
+    prefab: {fileID: 919132149155446097, guid: f7148ae60a59f9b4097f8565c180ee5a, type: 3}
+  - key: fantasy-town-kit/wall-wood-detail-horizontal
+    prefab: {fileID: 919132149155446097, guid: d708645fcefa7a74199141d869a777d3, type: 3}
+  - key: fantasy-town-kit/wall-wood-diagonal
+    prefab: {fileID: 919132149155446097, guid: c82a8759ed565884e919d90137782d1d, type: 3}
+  - key: fantasy-town-kit/wall-wood-door
+    prefab: {fileID: 919132149155446097, guid: 7f4551cac3358744f8850b26c59170d8, type: 3}
+  - key: fantasy-town-kit/wall-wood-doorway-base
+    prefab: {fileID: 919132149155446097, guid: 89bb6e13b80c5bd4cbcf7b18b61a8dea, type: 3}
+  - key: fantasy-town-kit/wall-wood-doorway-round
+    prefab: {fileID: 919132149155446097, guid: 1cba4075f98880e489e9cb6cde14f584, type: 3}
+  - key: fantasy-town-kit/wall-wood-doorway-square
+    prefab: {fileID: 919132149155446097, guid: d530d9669bc908a458ca970d917d8cce, type: 3}
+  - key: fantasy-town-kit/wall-wood-doorway-square-wide
+    prefab: {fileID: 919132149155446097, guid: 4b1e010833a4218449b5662e4dcddf15, type: 3}
+  - key: fantasy-town-kit/wall-wood-doorway-square-wide-curved
+    prefab: {fileID: 919132149155446097, guid: f0c453388d49b3c4f9a664786ca8998d, type: 3}
+  - key: fantasy-town-kit/wall-wood-half
+    prefab: {fileID: 919132149155446097, guid: 8350f524b97fff340bd0c2dd33302c76, type: 3}
+  - key: fantasy-town-kit/wall-wood-rounded
+    prefab: {fileID: 919132149155446097, guid: 368c37ade6b3c4145bc47b93e7636809, type: 3}
+  - key: fantasy-town-kit/wall-wood-side
+    prefab: {fileID: 919132149155446097, guid: dd11ab55e3f2b2e458343e4036ce9ab0, type: 3}
+  - key: fantasy-town-kit/wall-wood-slope
+    prefab: {fileID: 919132149155446097, guid: cee77f064f18f204e87df573326949db, type: 3}
+  - key: fantasy-town-kit/wall-wood-window-glass
+    prefab: {fileID: 919132149155446097, guid: fd710530a60baa442b5c5c6ae525e435, type: 3}
+  - key: fantasy-town-kit/wall-wood-window-round
+    prefab: {fileID: 919132149155446097, guid: 6b793be09a739f74487e37daaeff5b0e, type: 3}
+  - key: fantasy-town-kit/wall-wood-window-shutters
+    prefab: {fileID: 919132149155446097, guid: 4b3a40de7bb9f3743a039551f92e7cc6, type: 3}
+  - key: fantasy-town-kit/wall-wood-window-small
+    prefab: {fileID: 919132149155446097, guid: 60224b911086cec478c8aca9a354530d, type: 3}
+  - key: fantasy-town-kit/wall-wood-window-stone
+    prefab: {fileID: 919132149155446097, guid: 35b9f2dfbf181ea41892dfa062d4ad80, type: 3}
+  - key: fantasy-town-kit/watermill
+    prefab: {fileID: 919132149155446097, guid: 46eb361ba6b27d141991538ee7e1594a, type: 3}
+  - key: fantasy-town-kit/watermill-wide
+    prefab: {fileID: 919132149155446097, guid: 8939f1e569aa17e449b6ce1b34703a2a, type: 3}
+  - key: fantasy-town-kit/wheel
+    prefab: {fileID: 919132149155446097, guid: 212d8024d37855c4cb6d44656df8369d, type: 3}
+  - key: fantasy-town-kit/windmill
+    prefab: {fileID: 919132149155446097, guid: 226e044333cece641bb3eeb38bb98638, type: 3}
+  - key: food-kit/advocado-half
+    prefab: {fileID: 919132149155446097, guid: 8d25ddd45bead4548aacd66ac92d6782, type: 3}
+  - key: food-kit/apple
+    prefab: {fileID: 919132149155446097, guid: a9527079dc31d2b43bbccd2f58e8da90, type: 3}
+  - key: food-kit/apple-half
+    prefab: {fileID: 919132149155446097, guid: 2b5ef31a63fde9f468aca4591f65db4a, type: 3}
+  - key: food-kit/avocado
+    prefab: {fileID: 919132149155446097, guid: 46b1f6d8085e65c4ba4325f4cd5adfb5, type: 3}
+  - key: food-kit/bacon
+    prefab: {fileID: 919132149155446097, guid: 479f550b20156f444b0bd2947ab40aee, type: 3}
+  - key: food-kit/bacon-raw
+    prefab: {fileID: 919132149155446097, guid: 2257917dbb1fbd94fba681239237f4c3, type: 3}
+  - key: food-kit/bag
+    prefab: {fileID: 919132149155446097, guid: 6148ab0f524659f41922951155245228, type: 3}
+  - key: food-kit/bag-flat
+    prefab: {fileID: 919132149155446097, guid: 978d34578eb39024d8fe69de9ec5616a, type: 3}
+  - key: food-kit/banana
+    prefab: {fileID: 919132149155446097, guid: fc61c9d0cf30abf4fbb912f992138543, type: 3}
+  - key: food-kit/barrel
+    prefab: {fileID: 919132149155446097, guid: e28e3bd144fca7b47875caa704680053, type: 3}
+  - key: food-kit/beet
+    prefab: {fileID: 919132149155446097, guid: 7e52600755625f647a5b6f271b4510b3, type: 3}
+  - key: food-kit/bottle-ketchup
+    prefab: {fileID: 919132149155446097, guid: 9f16c291fc9feb14e82eb6f45cb49b14, type: 3}
+  - key: food-kit/bottle-musterd
+    prefab: {fileID: 919132149155446097, guid: 09a33adca83e0394ca8cfe724cf6c10d, type: 3}
+  - key: food-kit/bottle-oil
+    prefab: {fileID: 919132149155446097, guid: 76b7dda190883644d87bb4fc7a40cdfd, type: 3}
+  - key: food-kit/bowl
+    prefab: {fileID: 919132149155446097, guid: 8db2c37648572324884af0982eb6d360, type: 3}
+  - key: food-kit/bowl-broth
+    prefab: {fileID: 919132149155446097, guid: 64e1d1afbafe60b408a049b07530611b, type: 3}
+  - key: food-kit/bowl-cereal
+    prefab: {fileID: 919132149155446097, guid: 4a64945a18aefa140ba3f56c9cd9bde1, type: 3}
+  - key: food-kit/bowl-soup
+    prefab: {fileID: 919132149155446097, guid: 4e245853d00af12448e61af3442969ef, type: 3}
+  - key: food-kit/bread
+    prefab: {fileID: 919132149155446097, guid: 8ce11f5f6868bce4f9a694ab368f3a98, type: 3}
+  - key: food-kit/broccoli
+    prefab: {fileID: 919132149155446097, guid: 9eb7c09401880ca4d818bdec8b171ff9, type: 3}
+  - key: food-kit/burger
+    prefab: {fileID: 919132149155446097, guid: 13403616af6aa5745bcffbfbef83a001, type: 3}
+  - key: food-kit/burger-cheese
+    prefab: {fileID: 919132149155446097, guid: 51c97559407c02940b2964d111545982, type: 3}
+  - key: food-kit/burger-cheese-double
+    prefab: {fileID: 919132149155446097, guid: 4188140e4c2546141ad5ec3821465e8e, type: 3}
+  - key: food-kit/burger-double
+    prefab: {fileID: 919132149155446097, guid: 13d18e159ce4daa49be3a80c6a7206b7, type: 3}
+  - key: food-kit/cabbage
+    prefab: {fileID: 919132149155446097, guid: c3ac74a2982822443b4bbe806ad4b343, type: 3}
+  - key: food-kit/cake
+    prefab: {fileID: 919132149155446097, guid: dc13ede26a9370d47ba2fec744baedd8, type: 3}
+  - key: food-kit/cake-birthday
+    prefab: {fileID: 919132149155446097, guid: 95f102918da49b64f8d5b0ac16caab1d, type: 3}
+  - key: food-kit/cake-slicer
+    prefab: {fileID: 919132149155446097, guid: 1d571775075ba744580f9f2ad4a33170, type: 3}
+  - key: food-kit/can
+    prefab: {fileID: 919132149155446097, guid: 74d774d21ecb0534a9703a150e33d925, type: 3}
+  - key: food-kit/can-open
+    prefab: {fileID: 919132149155446097, guid: 17f8ecc5b0f0d9b418458b7d227a217d, type: 3}
+  - key: food-kit/can-small
+    prefab: {fileID: 919132149155446097, guid: 7010779402c3fbf449360f66628860c7, type: 3}
+  - key: food-kit/candy-bar
+    prefab: {fileID: 919132149155446097, guid: 2351c8fc1789a174584bcabdab3cdba5, type: 3}
+  - key: food-kit/candy-bar-wrapper
+    prefab: {fileID: 919132149155446097, guid: 0c2eee14f7901564d85b1fc3d8564716, type: 3}
+  - key: food-kit/carrot
+    prefab: {fileID: 919132149155446097, guid: ae0aef9522e005541b2533b919c2db10, type: 3}
+  - key: food-kit/carton
+    prefab: {fileID: 919132149155446097, guid: 992fd25c6a5475c40bb0a764e8e46bb6, type: 3}
+  - key: food-kit/carton-small
+    prefab: {fileID: 919132149155446097, guid: dd8b16086fe192c47a289c2c56f6d8dd, type: 3}
+  - key: food-kit/cauliflower
+    prefab: {fileID: 919132149155446097, guid: f7956cb065f3b694f893b2be669ba9e7, type: 3}
+  - key: food-kit/celery-stick
+    prefab: {fileID: 919132149155446097, guid: 5408102712fc1ec4d9bbb9c9cb8abd52, type: 3}
+  - key: food-kit/cheese
+    prefab: {fileID: 919132149155446097, guid: 4deed0b5af3e2a347ac79ef4ba20990e, type: 3}
+  - key: food-kit/cheese-cut
+    prefab: {fileID: 919132149155446097, guid: 017aa0a7d2046624980764aa6dcc4883, type: 3}
+  - key: food-kit/cheese-slicer
+    prefab: {fileID: 919132149155446097, guid: 8ea3912476a3320469619e419b0e4777, type: 3}
+  - key: food-kit/cherries
+    prefab: {fileID: 919132149155446097, guid: a8e2fb077e3d4e641a63fa85c94acbba, type: 3}
+  - key: food-kit/chinese
+    prefab: {fileID: 919132149155446097, guid: 1222eebea1f8ffa4cac8eddf9053432e, type: 3}
+  - key: food-kit/chocolate
+    prefab: {fileID: 919132149155446097, guid: b1f99f34813ecdd4ea1b7967ee779d57, type: 3}
+  - key: food-kit/chocolate-wrapper
+    prefab: {fileID: 919132149155446097, guid: 7d0bda02e89c3c8419bfa32d005a62c4, type: 3}
+  - key: food-kit/chopstic-decorative
+    prefab: {fileID: 919132149155446097, guid: c0a9ba3126824c34aa57c1b47006069c, type: 3}
+  - key: food-kit/chopstick
+    prefab: {fileID: 919132149155446097, guid: 531cc19ec515a1e4ba9738e795c80e0e, type: 3}
+  - key: food-kit/cocktail
+    prefab: {fileID: 919132149155446097, guid: 5914bea8298044645b53f941a550b987, type: 3}
+  - key: food-kit/coconut
+    prefab: {fileID: 919132149155446097, guid: 9938adb1ac9422044a0e828672d815f6, type: 3}
+  - key: food-kit/coconut-half
+    prefab: {fileID: 919132149155446097, guid: 145f53f66c5127c47a4d34ce8c0178a4, type: 3}
+  - key: food-kit/cookie
+    prefab: {fileID: 919132149155446097, guid: 4e72fc446aa4c354f82490fdbbfba9ff, type: 3}
+  - key: food-kit/cookie-chocolate
+    prefab: {fileID: 919132149155446097, guid: f8d7d6577db0e4440b0e0993ffe466dc, type: 3}
+  - key: food-kit/cooking-fork
+    prefab: {fileID: 919132149155446097, guid: 2bfdc632c49797242a19a1f49994fb1a, type: 3}
+  - key: food-kit/cooking-knife
+    prefab: {fileID: 919132149155446097, guid: f3a2c37a27159c5459a47ed7f3983eb6, type: 3}
+  - key: food-kit/cooking-knife-chopping
+    prefab: {fileID: 919132149155446097, guid: ac56234b70739704eb9eea56ccca00f4, type: 3}
+  - key: food-kit/cooking-spatula
+    prefab: {fileID: 919132149155446097, guid: 135a00e614e7cd5459f88993fcdb8825, type: 3}
+  - key: food-kit/cooking-spoon
+    prefab: {fileID: 919132149155446097, guid: e7aa08d863f639f49b8a3c97786e784e, type: 3}
+  - key: food-kit/corn
+    prefab: {fileID: 919132149155446097, guid: 7af1a0d59dfd9994eaf2aa9d4ee233f7, type: 3}
+  - key: food-kit/corn-dog
+    prefab: {fileID: 919132149155446097, guid: fa5119efb1614af438fc4f8bab329f2b, type: 3}
+  - key: food-kit/croissant
+    prefab: {fileID: 919132149155446097, guid: 9b2f7d81496a47948b2b970a783a4663, type: 3}
+  - key: food-kit/cup
+    prefab: {fileID: 919132149155446097, guid: 7dfb999b09d740241bc140e14b1fc488, type: 3}
+  - key: food-kit/cup-coffee
+    prefab: {fileID: 919132149155446097, guid: c32b860b861d6f8498647d28fe913c30, type: 3}
+  - key: food-kit/cup-saucer
+    prefab: {fileID: 919132149155446097, guid: 01dd6bb1165623442bb60a71245063d5, type: 3}
+  - key: food-kit/cup-tea
+    prefab: {fileID: 919132149155446097, guid: c2c8cfe7b6bdf2e46842af82acb9ec16, type: 3}
+  - key: food-kit/cupcake
+    prefab: {fileID: 919132149155446097, guid: 4cbf1a07771b885409de97b356f7153b, type: 3}
+  - key: food-kit/cutting-board
+    prefab: {fileID: 919132149155446097, guid: b7b44ef764784634da33ed8a4db897c9, type: 3}
+  - key: food-kit/cutting-board-japanese
+    prefab: {fileID: 919132149155446097, guid: a2e832e88b2997e4780bab805ce2acc0, type: 3}
+  - key: food-kit/cutting-board-round
+    prefab: {fileID: 919132149155446097, guid: f6424e2520921dc41927ff6147bf7e13, type: 3}
+  - key: food-kit/dim-sum
+    prefab: {fileID: 919132149155446097, guid: 1ffa72b10c9bfd94b8e07355a3417c9c, type: 3}
+  - key: food-kit/donut
+    prefab: {fileID: 919132149155446097, guid: b3c1ddbe28edc1f4fb732a2736aff5f1, type: 3}
+  - key: food-kit/donut-chocolate
+    prefab: {fileID: 919132149155446097, guid: 1087daa369e71bf4a9e88e582b3ad538, type: 3}
+  - key: food-kit/donut-sprinkles
+    prefab: {fileID: 919132149155446097, guid: a931712486e076a44b56ee73c0f9a212, type: 3}
+  - key: food-kit/egg
+    prefab: {fileID: 919132149155446097, guid: b56884d39d3026e439c2daa1f284bbef, type: 3}
+  - key: food-kit/egg-cooked
+    prefab: {fileID: 919132149155446097, guid: 7a31d14b22a1dc244a8b953c079e5834, type: 3}
+  - key: food-kit/egg-cup
+    prefab: {fileID: 919132149155446097, guid: 4f11dbfe3c7b44845b0f60ba362fbbd8, type: 3}
+  - key: food-kit/egg-half
+    prefab: {fileID: 919132149155446097, guid: 1465695fd83eabf45b6f904b84d029c1, type: 3}
+  - key: food-kit/eggplant
+    prefab: {fileID: 919132149155446097, guid: 74499ac2ba10b4b47b73a71e8119d855, type: 3}
+  - key: food-kit/fish
+    prefab: {fileID: 919132149155446097, guid: 2a9849711180bd84da5b20356def020d, type: 3}
+  - key: food-kit/fish-bones
+    prefab: {fileID: 919132149155446097, guid: f862c9639b862f946b7833a2a79b8f38, type: 3}
+  - key: food-kit/frappe
+    prefab: {fileID: 919132149155446097, guid: 3ffecb495cfd31f42b66159489a1617f, type: 3}
+  - key: food-kit/fries
+    prefab: {fileID: 919132149155446097, guid: 316c27b9e905b2c4b9d55477a788f8d0, type: 3}
+  - key: food-kit/fries-empty
+    prefab: {fileID: 919132149155446097, guid: 8b760e7fdf50c774889a1d6831c55a90, type: 3}
+  - key: food-kit/frikandel-speciaal
+    prefab: {fileID: 919132149155446097, guid: 05011c5d571353d429acbb9e24d04bc9, type: 3}
+  - key: food-kit/frying-pan
+    prefab: {fileID: 919132149155446097, guid: bfdb4fd06ccb31d4ba58a62b97509889, type: 3}
+  - key: food-kit/frying-pan-lid
+    prefab: {fileID: 919132149155446097, guid: 155370d1c45c12846b4b8ddbaa06601c, type: 3}
+  - key: food-kit/ginger-bread
+    prefab: {fileID: 919132149155446097, guid: ad0dfd5b642f53e4bb2131f068ba58d1, type: 3}
+  - key: food-kit/ginger-bread-cutter
+    prefab: {fileID: 919132149155446097, guid: bf3fe15b835b0dc41a5508ae5e2b4853, type: 3}
+  - key: food-kit/glass
+    prefab: {fileID: 919132149155446097, guid: ef7df24c85de08e4e97b8504fb2f7616, type: 3}
+  - key: food-kit/glass-wine
+    prefab: {fileID: 919132149155446097, guid: e888633de7dc2e34c8e4b782d26d8e28, type: 3}
+  - key: food-kit/grapes
+    prefab: {fileID: 919132149155446097, guid: b50519bd9569e394e87694dbd71ba1bd, type: 3}
+  - key: food-kit/honey
+    prefab: {fileID: 919132149155446097, guid: d7e2869219874904d86c9ae1d3bf428b, type: 3}
+  - key: food-kit/hot-dog
+    prefab: {fileID: 919132149155446097, guid: 227cf00fc39c73046840c5a609c9a8ca, type: 3}
+  - key: food-kit/hot-dog-raw
+    prefab: {fileID: 919132149155446097, guid: f1ab9134bd7d1434e892780fe4a6d849, type: 3}
+  - key: food-kit/ice-cream
+    prefab: {fileID: 919132149155446097, guid: 9356c30926136d447883ae19099a2e3b, type: 3}
+  - key: food-kit/ice-cream-cne
+    prefab: {fileID: 919132149155446097, guid: 6c0317b35b37f6c4eb35a676a70268fb, type: 3}
+  - key: food-kit/ice-cream-cup
+    prefab: {fileID: 919132149155446097, guid: 6d3ee2003e63c4f448fedc8bee7d4b58, type: 3}
+  - key: food-kit/ice-cream-scoop-chocolate
+    prefab: {fileID: 919132149155446097, guid: f1beaa4e3880a8346a6ca6ed6bd2cf57, type: 3}
+  - key: food-kit/ice-cream-scoop-mint
+    prefab: {fileID: 919132149155446097, guid: b3760e98b98aad345919ddcb9b9c9798, type: 3}
+  - key: food-kit/knife-block
+    prefab: {fileID: 919132149155446097, guid: 28ba52274f9eced4db251e0f9cf83b47, type: 3}
+  - key: food-kit/leek
+    prefab: {fileID: 919132149155446097, guid: ba1ce1dc1ef1c4346b1f643632bab6e6, type: 3}
+  - key: food-kit/lemon
+    prefab: {fileID: 919132149155446097, guid: 24661f82fc94d0d41b38f9504a9b2377, type: 3}
+  - key: food-kit/lemon-half
+    prefab: {fileID: 919132149155446097, guid: dcbfac6c3533c7b45887222e554fd0d8, type: 3}
+  - key: food-kit/loaf
+    prefab: {fileID: 919132149155446097, guid: 2a54e47d10bfd5d439ccae70984d3c1b, type: 3}
+  - key: food-kit/loaf-baguette
+    prefab: {fileID: 919132149155446097, guid: 0c929888306f6a94fbadcd766a4fa785, type: 3}
+  - key: food-kit/loaf-round
+    prefab: {fileID: 919132149155446097, guid: 32c12c165656e53419b58df5ffb5456b, type: 3}
+  - key: food-kit/lollypop
+    prefab: {fileID: 919132149155446097, guid: a74ba54e76a801240875506173814181, type: 3}
+  - key: food-kit/maki-roe
+    prefab: {fileID: 919132149155446097, guid: e8b48ba063e6426468cdd261d491d6d8, type: 3}
+  - key: food-kit/maki-salmon
+    prefab: {fileID: 919132149155446097, guid: e773881ba02af044085dbe112db81d81, type: 3}
+  - key: food-kit/maki-vegetable
+    prefab: {fileID: 919132149155446097, guid: ec22cb54f2dfec940970c90716e4374e, type: 3}
+  - key: food-kit/meat-cooked
+    prefab: {fileID: 919132149155446097, guid: b02bf15d6179b6b4485c36f6411a70ad, type: 3}
+  - key: food-kit/meat-patty
+    prefab: {fileID: 919132149155446097, guid: 7c78ee92e3ceaf14c9c637dba55d11b6, type: 3}
+  - key: food-kit/meat-raw
+    prefab: {fileID: 919132149155446097, guid: 3778c0087c33506469f54f9a9739fcf8, type: 3}
+  - key: food-kit/meat-ribs
+    prefab: {fileID: 919132149155446097, guid: 64018349beca02e47b9e76c696104fa6, type: 3}
+  - key: food-kit/meat-sausage
+    prefab: {fileID: 919132149155446097, guid: ce8d6218adfc11d4a98e809bafd7a445, type: 3}
+  - key: food-kit/meat-tenderizer
+    prefab: {fileID: 919132149155446097, guid: 0cd6de866c6175a44bf762635e65c822, type: 3}
+  - key: food-kit/mincemeat-pie
+    prefab: {fileID: 919132149155446097, guid: cb22859cd15fe0c49927ddd142243aad, type: 3}
+  - key: food-kit/mortar
+    prefab: {fileID: 919132149155446097, guid: ebd2ee6c0aa977846aec27d26e976a9b, type: 3}
+  - key: food-kit/mortar-pestle
+    prefab: {fileID: 919132149155446097, guid: 7af1b00bea239f54487de200c3d80d53, type: 3}
+  - key: food-kit/muffin
+    prefab: {fileID: 919132149155446097, guid: 1a7f7f11ee5705d41948ffe1f123ee94, type: 3}
+  - key: food-kit/mug
+    prefab: {fileID: 919132149155446097, guid: f3ffb6f3516bc424bb5a6721d43ec530, type: 3}
+  - key: food-kit/mushroom
+    prefab: {fileID: 919132149155446097, guid: c929f5e3734125749a5d42547f4b4ea4, type: 3}
+  - key: food-kit/mushroom-half
+    prefab: {fileID: 919132149155446097, guid: f89b85102055db144a46c0e72ee0c98f, type: 3}
+  - key: food-kit/mussel
+    prefab: {fileID: 919132149155446097, guid: 9a256198c2165ab4695ed9c7cebf210d, type: 3}
+  - key: food-kit/mussel-open
+    prefab: {fileID: 919132149155446097, guid: 5243003678bd4354ebcf4238d501029f, type: 3}
+  - key: food-kit/onion
+    prefab: {fileID: 919132149155446097, guid: eb8f178957634e4409eb782e9fff55f5, type: 3}
+  - key: food-kit/onion-half
+    prefab: {fileID: 919132149155446097, guid: 5a343ad707abc204dac506b6478d1f17, type: 3}
+  - key: food-kit/orange
+    prefab: {fileID: 919132149155446097, guid: df97148fefd6c29409d170071fe03f22, type: 3}
+  - key: food-kit/pan
+    prefab: {fileID: 919132149155446097, guid: e21fab0e52706854e9ad0f5fb2f1f468, type: 3}
+  - key: food-kit/pan-stew
+    prefab: {fileID: 919132149155446097, guid: f4d9ab41c7f17dd4ba7ed9a918bcaa75, type: 3}
+  - key: food-kit/pancakes
+    prefab: {fileID: 919132149155446097, guid: b55a2e803c3689d4cb828350f857974a, type: 3}
+  - key: food-kit/paprika
+    prefab: {fileID: 919132149155446097, guid: e52310cb1fcc2c1458c5395d8d16d698, type: 3}
+  - key: food-kit/paprika-slice
+    prefab: {fileID: 919132149155446097, guid: 52a0cc3f4d0eb2d4b87d760658dab822, type: 3}
+  - key: food-kit/peanut-butter
+    prefab: {fileID: 919132149155446097, guid: 931400b1580eb9e4cbaa7a3297be314d, type: 3}
+  - key: food-kit/pear
+    prefab: {fileID: 919132149155446097, guid: 663ab25368407ac45a83f7cbc92eb584, type: 3}
+  - key: food-kit/pear-half
+    prefab: {fileID: 919132149155446097, guid: 16122f7e6669b9949872580701dfe264, type: 3}
+  - key: food-kit/pepper
+    prefab: {fileID: 919132149155446097, guid: 19b65d8bc5692554996166e7279be669, type: 3}
+  - key: food-kit/pepper-mill
+    prefab: {fileID: 919132149155446097, guid: 1dc6d0760ec5fee4fa38e17564a62ca9, type: 3}
+  - key: food-kit/pie
+    prefab: {fileID: 919132149155446097, guid: e81f0291b6e8b454086b2d52b47fed87, type: 3}
+  - key: food-kit/pineapple
+    prefab: {fileID: 919132149155446097, guid: e52d7aa79ed0cba42906177935cca13d, type: 3}
+  - key: food-kit/pizza
+    prefab: {fileID: 919132149155446097, guid: f8be643adfa925f43bf893ab391079f6, type: 3}
+  - key: food-kit/pizza-box
+    prefab: {fileID: 919132149155446097, guid: 1eb375f984956c04b9b1fe5bb1eede8a, type: 3}
+  - key: food-kit/pizza-cutter
+    prefab: {fileID: 919132149155446097, guid: 06a821b492004a14692342d4f12d9fec, type: 3}
+  - key: food-kit/plate
+    prefab: {fileID: 919132149155446097, guid: 073b689db73689c42a3013ab516f8db0, type: 3}
+  - key: food-kit/plate-broken
+    prefab: {fileID: 919132149155446097, guid: fc1a16055bc6f55479dcf65bddc1adde, type: 3}
+  - key: food-kit/plate-deep
+    prefab: {fileID: 919132149155446097, guid: a8da14d7befd5954fa6dd7213ee5c8d1, type: 3}
+  - key: food-kit/plate-dinner
+    prefab: {fileID: 919132149155446097, guid: d1fb64e5424187f44b267684f1edc48e, type: 3}
+  - key: food-kit/plate-rectangle
+    prefab: {fileID: 919132149155446097, guid: be0054879c16967458ecd50986c2a10d, type: 3}
+  - key: food-kit/plate-sauerkraut
+    prefab: {fileID: 919132149155446097, guid: ffc127ace0ff4a94ea1ffbffdb291ca5, type: 3}
+  - key: food-kit/popsicle
+    prefab: {fileID: 919132149155446097, guid: 00bb0cba9a97cb641a67e9546389dc2c, type: 3}
+  - key: food-kit/popsicle-chocolate
+    prefab: {fileID: 919132149155446097, guid: e55892bfa180db84c98e333b7d94390c, type: 3}
+  - key: food-kit/popsicle-stick
+    prefab: {fileID: 919132149155446097, guid: 3b049a7a209946b44b82ef2f97f8a423, type: 3}
+  - key: food-kit/pot
+    prefab: {fileID: 919132149155446097, guid: 843ed03c7e2977e4eae5948613547e3b, type: 3}
+  - key: food-kit/pot-lid
+    prefab: {fileID: 919132149155446097, guid: 49be4bfe1d5955e45b0ce77074b8a47c, type: 3}
+  - key: food-kit/pot-stew
+    prefab: {fileID: 919132149155446097, guid: 0e1527b042a75aa4fa7e87f83d76b570, type: 3}
+  - key: food-kit/pot-stew-lid
+    prefab: {fileID: 919132149155446097, guid: e60fa219038d54d49a87d711b4d2c696, type: 3}
+  - key: food-kit/pudding
+    prefab: {fileID: 919132149155446097, guid: ebda79b4134bd4f4f8a49231f9923888, type: 3}
+  - key: food-kit/pumpkin
+    prefab: {fileID: 919132149155446097, guid: e5cfc491c54f1a54e9ef4026c34e1588, type: 3}
+  - key: food-kit/pumpkin-basic
+    prefab: {fileID: 919132149155446097, guid: 85552a0d0cf6dee4c8e508bfc0f9fc0c, type: 3}
+  - key: food-kit/radish
+    prefab: {fileID: 919132149155446097, guid: 484f9c9de2f6bf24093abf7c101f723e, type: 3}
+  - key: food-kit/rice-ball
+    prefab: {fileID: 919132149155446097, guid: 9071500fdfa9e88458bc2c187e46e4a2, type: 3}
+  - key: food-kit/rollingPin
+    prefab: {fileID: 919132149155446097, guid: c05cc08b85a86bc4fa04d3186ee9e1e6, type: 3}
+  - key: food-kit/salad
+    prefab: {fileID: 919132149155446097, guid: 7392125452a1247419145675c6db56a2, type: 3}
+  - key: food-kit/sandwich
+    prefab: {fileID: 919132149155446097, guid: 2a75df23696860540bafa8c8ab6ab678, type: 3}
+  - key: food-kit/sausage
+    prefab: {fileID: 919132149155446097, guid: 8088ad05697ba4d42b8700c9c5375b94, type: 3}
+  - key: food-kit/sausage-half
+    prefab: {fileID: 919132149155446097, guid: 20b9111289bf89e4a97b93798c6223aa, type: 3}
+  - key: food-kit/shaker-pepper
+    prefab: {fileID: 919132149155446097, guid: 0eb26abcc78009f4f85980ee08c79b21, type: 3}
+  - key: food-kit/shaker-salt
+    prefab: {fileID: 919132149155446097, guid: 3ac6121373542f048a7eaf2f2e1c9bba, type: 3}
+  - key: food-kit/skewer
+    prefab: {fileID: 919132149155446097, guid: 1202ec6caffc54d478f646e0b94e601d, type: 3}
+  - key: food-kit/skewer-vegetables
+    prefab: {fileID: 919132149155446097, guid: 6b674102457e8b04eabe2b44685aadfa, type: 3}
+  - key: food-kit/soda
+    prefab: {fileID: 919132149155446097, guid: 3cb99db9048e5d049b0d6bf30256d094, type: 3}
+  - key: food-kit/soda-bottle
+    prefab: {fileID: 919132149155446097, guid: 1633fb9a6b768d94293c252aa1a3bb48, type: 3}
+  - key: food-kit/soda-can
+    prefab: {fileID: 919132149155446097, guid: 582ad733c2e3dd04e9133f9222222478, type: 3}
+  - key: food-kit/soda-can-crushed
+    prefab: {fileID: 919132149155446097, guid: 898f9bb700a35f34781afd1c5742bb0d, type: 3}
+  - key: food-kit/soda-glass
+    prefab: {fileID: 919132149155446097, guid: f9357ed45b5eded45aff7f6830037567, type: 3}
+  - key: food-kit/soy
+    prefab: {fileID: 919132149155446097, guid: fe2cb752d43529941b3e94b222113a1f, type: 3}
+  - key: food-kit/steamer
+    prefab: {fileID: 919132149155446097, guid: c134b13cadfdbe349b5ad580025754fd, type: 3}
+  - key: food-kit/strawberry
+    prefab: {fileID: 919132149155446097, guid: 2ac6b92e7ba14754e9c06a1637a3f7e9, type: 3}
+  - key: food-kit/styrofoam
+    prefab: {fileID: 919132149155446097, guid: ca2475157dca4ab49860516f777dba74, type: 3}
+  - key: food-kit/styrofoam-dinner
+    prefab: {fileID: 919132149155446097, guid: 5742d6fc6d500fe4ca304bfb64db0f49, type: 3}
+  - key: food-kit/sub
+    prefab: {fileID: 919132149155446097, guid: eab3700c3ea3ec8429ebeb946e091001, type: 3}
+  - key: food-kit/sundae
+    prefab: {fileID: 919132149155446097, guid: c3dfbf49ec14f5744bc74dfb268bfb6d, type: 3}
+  - key: food-kit/sushi-egg
+    prefab: {fileID: 919132149155446097, guid: 49fa239de8e8d1f4f8803ae176249bf0, type: 3}
+  - key: food-kit/sushi-salmon
+    prefab: {fileID: 919132149155446097, guid: 001bf90fb8086314bbc10356a6260fb4, type: 3}
+  - key: food-kit/taco
+    prefab: {fileID: 919132149155446097, guid: 996884353f5d5714eb77bef7f81aa10d, type: 3}
+  - key: food-kit/tajine
+    prefab: {fileID: 919132149155446097, guid: 4dadef22c50c15f4d9dd4d2af7eda34a, type: 3}
+  - key: food-kit/tajine-lid
+    prefab: {fileID: 919132149155446097, guid: e33d1e83cef05544c8a7182516e8e5a6, type: 3}
+  - key: food-kit/tomato
+    prefab: {fileID: 919132149155446097, guid: 6eca7c2c249f9ab4bb938d67a108e478, type: 3}
+  - key: food-kit/tomato-slice
+    prefab: {fileID: 919132149155446097, guid: 5a78179e3fbd5d64a9633063880120c2, type: 3}
+  - key: food-kit/turkey
+    prefab: {fileID: 919132149155446097, guid: cb8a8e2e3f976f24291bb109f7d427de, type: 3}
+  - key: food-kit/utensil-fork
+    prefab: {fileID: 919132149155446097, guid: f34c4eb3f7b61ac4d87bc2ef14ee7a7d, type: 3}
+  - key: food-kit/utensil-knife
+    prefab: {fileID: 919132149155446097, guid: b34008485de2b6f4a930ee3b34ac6459, type: 3}
+  - key: food-kit/utensil-spoon
+    prefab: {fileID: 919132149155446097, guid: b2cb8eb44c3c0ce4d99eeece94c40c46, type: 3}
+  - key: food-kit/waffle
+    prefab: {fileID: 919132149155446097, guid: 4350f74dd0c306348a25ae24a738df45, type: 3}
+  - key: food-kit/watermelon
+    prefab: {fileID: 919132149155446097, guid: 756dc94a22a3d2943af1f5778eb44386, type: 3}
+  - key: food-kit/whipped-cream
+    prefab: {fileID: 919132149155446097, guid: bec9abde94c7b0644b7914dc041b6e8e, type: 3}
+  - key: food-kit/whisk
+    prefab: {fileID: 919132149155446097, guid: a2b78f2c87df0004d8c55fd388f299c3, type: 3}
+  - key: food-kit/whole-ham
+    prefab: {fileID: 919132149155446097, guid: b59bc3c69210e7946b8a1703d777ffa8, type: 3}
+  - key: food-kit/wholer-ham
+    prefab: {fileID: 919132149155446097, guid: eecab4671ca36b4458d6d7622b0e1ec4, type: 3}
+  - key: food-kit/wine-red
+    prefab: {fileID: 919132149155446097, guid: 985900b37c8e7054aa526bf50177b304, type: 3}
+  - key: food-kit/wine-white
+    prefab: {fileID: 919132149155446097, guid: 21edd82a09fd95e4a9f681e57fcfd211, type: 3}
+  - key: mini-characters/aid-cane
+    prefab: {fileID: 919132149155446097, guid: fcfe909834749754789a1118440866ad, type: 3}
+  - key: mini-characters/aid-cane-blind
+    prefab: {fileID: 919132149155446097, guid: 83baf8b3c64b22b4e90c247e4ca4614b, type: 3}
+  - key: mini-characters/aid-cane-low-vision
+    prefab: {fileID: 919132149155446097, guid: 3c73b8703db9f9048ab836252fe9099e, type: 3}
+  - key: mini-characters/aid-crutch
+    prefab: {fileID: 919132149155446097, guid: c7f99821ba7a7dd4fa66278e14dc28e3, type: 3}
+  - key: mini-characters/aid-defibrillator-green
+    prefab: {fileID: 919132149155446097, guid: eb1d62a188aedc14dba4a6ec4b807706, type: 3}
+  - key: mini-characters/aid-defibrillator-red
+    prefab: {fileID: 919132149155446097, guid: e7c110ccf9c0b464c80abc84f0148a00, type: 3}
+  - key: mini-characters/aid-glasses
+    prefab: {fileID: 919132149155446097, guid: ed1850320ef477a48861d997cb20a504, type: 3}
+  - key: mini-characters/aid-mask
+    prefab: {fileID: 919132149155446097, guid: 6412585411a422b40808423b1ae8701f, type: 3}
+  - key: mini-characters/aid-sunglasses
+    prefab: {fileID: 919132149155446097, guid: 6561a0aacb382a7448ff24b9423307b4, type: 3}
+  - key: mini-characters/aid_hearing
+    prefab: {fileID: 919132149155446097, guid: ad7c6c53df29f73499d0a3d594923b7a, type: 3}
+  - key: mini-characters/character-female-a
+    prefab: {fileID: 919132149155446097, guid: 603b06d1f71bcba4c95ab595e4e0272c, type: 3}
+  - key: mini-characters/character-female-b
+    prefab: {fileID: 919132149155446097, guid: a0e2584d4e2ca2b448c03ffebd4cf7c5, type: 3}
+  - key: mini-characters/character-female-c
+    prefab: {fileID: 919132149155446097, guid: d23e67d486f7a2f4bb6de794eb8cf22e, type: 3}
+  - key: mini-characters/character-female-d
+    prefab: {fileID: 919132149155446097, guid: 9d149ce6ba5400044887fc594612ed60, type: 3}
+  - key: mini-characters/character-female-e
+    prefab: {fileID: 919132149155446097, guid: 7128137b9793e3540a4539ac81f8e91e, type: 3}
+  - key: mini-characters/character-female-f
+    prefab: {fileID: 919132149155446097, guid: 14892f55aeb4a0447a6e4fe2b9a5b820, type: 3}
+  - key: mini-characters/character-male-a
+    prefab: {fileID: 919132149155446097, guid: 9fb813f9ff53e304a8d46848c00f9ee1, type: 3}
+  - key: mini-characters/character-male-b
+    prefab: {fileID: 919132149155446097, guid: 1d0a9a3b6b09d2a419a3965b361b3aff, type: 3}
+  - key: mini-characters/character-male-c
+    prefab: {fileID: 919132149155446097, guid: a3dadbe6400bd6b44b237c477752d988, type: 3}
+  - key: mini-characters/character-male-d
+    prefab: {fileID: 919132149155446097, guid: 8444b3fff426c6f4b8dde5480964e608, type: 3}
+  - key: mini-characters/character-male-e
+    prefab: {fileID: 919132149155446097, guid: 55769a303b3514349b410c9088ace968, type: 3}
+  - key: mini-characters/character-male-f
+    prefab: {fileID: 919132149155446097, guid: c88cf7251e51f884ba575c8016308024, type: 3}
+  - key: mini-characters/wheelchair
+    prefab: {fileID: 919132149155446097, guid: 8ef7f4af8d4c37a4f843d06c91fad311, type: 3}
+  - key: mini-characters/wheelchair-deluxe
+    prefab: {fileID: 919132149155446097, guid: 0f6bea0d38c8a104aa0514c270e869ec, type: 3}
+  - key: mini-characters/wheelchair-power
+    prefab: {fileID: 919132149155446097, guid: 04ad9216bcbadf44ca14ff963d761e83, type: 3}
+  - key: mini-characters/wheelchair-power-deluxe
+    prefab: {fileID: 919132149155446097, guid: d400c0378bd7eef46b29b77dfae26c0f, type: 3}
+  - key: mini-market/bottle-return
+    prefab: {fileID: 919132149155446097, guid: 28e117932e6caf041bc81a24ed91d963, type: 3}
+  - key: mini-market/cash-register
+    prefab: {fileID: 919132149155446097, guid: c081ee8975aadbd46b48039b9e20925d, type: 3}
+  - key: mini-market/character-employee
+    prefab: {fileID: 919132149155446097, guid: ae716dd40487bec43a0fb606062f4674, type: 3}
+  - key: mini-market/column
+    prefab: {fileID: 919132149155446097, guid: 7661a256191e028489d60029224587b7, type: 3}
+  - key: mini-market/display-bread
+    prefab: {fileID: 919132149155446097, guid: 3b19c63d0d588584fb83135272c3e3f9, type: 3}
+  - key: mini-market/display-fruit
+    prefab: {fileID: 919132149155446097, guid: 7e6c38b4162f477419269ab2a26098d2, type: 3}
+  - key: mini-market/fence
+    prefab: {fileID: 919132149155446097, guid: c73a6aac3fba60f4390e6aa0f1e92bbf, type: 3}
+  - key: mini-market/fence-door-rotate
+    prefab: {fileID: 919132149155446097, guid: 1f64c8b4e49c83c44ba03af4624fd789, type: 3}
+  - key: mini-market/floor
+    prefab: {fileID: 919132149155446097, guid: 790ebf8880e85d54c9732d1643cb4a91, type: 3}
+  - key: mini-market/freezer
+    prefab: {fileID: 919132149155446097, guid: 1f13c0128c4983c4ca88db9dee2da4a2, type: 3}
+  - key: mini-market/freezers-standing
+    prefab: {fileID: 919132149155446097, guid: a36e96172cb6c5b4fb3817d390212090, type: 3}
+  - key: mini-market/shelf-bags
+    prefab: {fileID: 919132149155446097, guid: 430a43f668bf6ba48a07efb411abc84a, type: 3}
+  - key: mini-market/shelf-boxes
+    prefab: {fileID: 919132149155446097, guid: ac6a359b5f1e6b84fae5b2e07f583ff3, type: 3}
+  - key: mini-market/shelf-end
+    prefab: {fileID: 919132149155446097, guid: 8155582c99459e2498eddcc39bd75ed1, type: 3}
+  - key: mini-market/shopping-basket
+    prefab: {fileID: 919132149155446097, guid: d31484646648a9d429d596801dce09ef, type: 3}
+  - key: mini-market/shopping-cart
+    prefab: {fileID: 919132149155446097, guid: 6cad93853018fca47a677321887f03fd, type: 3}
+  - key: mini-market/wall
+    prefab: {fileID: 919132149155446097, guid: 368be399a01bc0a4a89b87ba0fb8afef, type: 3}
+  - key: mini-market/wall-corner
+    prefab: {fileID: 919132149155446097, guid: dbe04a00ebfe0ea429876c0576c88bb7, type: 3}
+  - key: mini-market/wall-door-rotate
+    prefab: {fileID: 919132149155446097, guid: c1f6a4c9de8bc644da185c922139120e, type: 3}
+  - key: mini-market/wall-window
+    prefab: {fileID: 919132149155446097, guid: ad4c6a0d178a35a458aa8edab206b180, type: 3}
+  - key: nature-kit/bed
+    prefab: {fileID: 919132149155446097, guid: 73cbd2b77bc1bf44fb2dd5798d6efa72, type: 3}
+  - key: nature-kit/bed_floor
+    prefab: {fileID: 919132149155446097, guid: c3eb878399d8d2a4bbdd171ab1f213f5, type: 3}
+  - key: nature-kit/bridge_center_stone
+    prefab: {fileID: 919132149155446097, guid: e1254fe271d7fd645b1a2a6ed2e55ea9, type: 3}
+  - key: nature-kit/bridge_center_stoneRound
+    prefab: {fileID: 919132149155446097, guid: 1c255218f962b9f4f8f1654b608da133, type: 3}
+  - key: nature-kit/bridge_center_wood
+    prefab: {fileID: 919132149155446097, guid: d0bd6a84a0d669b41afbd0450b4bdd99, type: 3}
+  - key: nature-kit/bridge_center_woodRound
+    prefab: {fileID: 919132149155446097, guid: d86aa90fcf7e46c47a4b8187deff824e, type: 3}
+  - key: nature-kit/bridge_side_stone
+    prefab: {fileID: 919132149155446097, guid: 78b2e1ada76f31849a90e0394e1ced6a, type: 3}
+  - key: nature-kit/bridge_side_stoneRound
+    prefab: {fileID: 919132149155446097, guid: ef7b1bb215ea83f419411c9fd4ebd70d, type: 3}
+  - key: nature-kit/bridge_side_wood
+    prefab: {fileID: 919132149155446097, guid: 66b1ad01eb386c14f9dedaa7ec597f3e, type: 3}
+  - key: nature-kit/bridge_side_woodRound
+    prefab: {fileID: 919132149155446097, guid: 1563cb6acb85b86418a0be7334706db9, type: 3}
+  - key: nature-kit/bridge_stone
+    prefab: {fileID: 919132149155446097, guid: 770169f98acce3849a4dee655a5fcff0, type: 3}
+  - key: nature-kit/bridge_stoneNarrow
+    prefab: {fileID: 919132149155446097, guid: 84f0c450983f5e34cb32ab4512af3634, type: 3}
+  - key: nature-kit/bridge_stoneRound
+    prefab: {fileID: 919132149155446097, guid: c88ba74f53c1c9443bdee983f2e4acee, type: 3}
+  - key: nature-kit/bridge_stoneRoundNarrow
+    prefab: {fileID: 919132149155446097, guid: 8dc5f13c92f8dfe4493633359b27385b, type: 3}
+  - key: nature-kit/bridge_wood
+    prefab: {fileID: 919132149155446097, guid: b60a4ad33a3a309449be7d89c1b22b09, type: 3}
+  - key: nature-kit/bridge_woodNarrow
+    prefab: {fileID: 919132149155446097, guid: 169a2debc8405a4449412f254b4e2cea, type: 3}
+  - key: nature-kit/bridge_woodRound
+    prefab: {fileID: 919132149155446097, guid: 5c51e698fe3449c4d832ef63aed7d2b8, type: 3}
+  - key: nature-kit/bridge_woodRoundNarrow
+    prefab: {fileID: 919132149155446097, guid: a6fa4b39543f5814b834f45cc6e24069, type: 3}
+  - key: nature-kit/cactus_short
+    prefab: {fileID: 919132149155446097, guid: afc07dbf3834cec439f7adca5deab4da, type: 3}
+  - key: nature-kit/cactus_tall
+    prefab: {fileID: 919132149155446097, guid: c55d991942c4d594e8142eee0f8ca923, type: 3}
+  - key: nature-kit/campfire_bricks
+    prefab: {fileID: 919132149155446097, guid: e5e8e4ca87c3a724fb031d114ed5e9c0, type: 3}
+  - key: nature-kit/campfire_logs
+    prefab: {fileID: 919132149155446097, guid: 009a9439d2c5ad54ca7bc56232b3630e, type: 3}
+  - key: nature-kit/campfire_planks
+    prefab: {fileID: 919132149155446097, guid: 662798230f3ca70478c8601391f4ab58, type: 3}
+  - key: nature-kit/campfire_stones
+    prefab: {fileID: 919132149155446097, guid: 04f61d9a8513f8646bf4d5df703a4ed9, type: 3}
+  - key: nature-kit/canoe
+    prefab: {fileID: 919132149155446097, guid: c1d353d2f13407f44ac81562bc04c718, type: 3}
+  - key: nature-kit/canoe_paddle
+    prefab: {fileID: 919132149155446097, guid: 53005adf57e77e04a974ae9eceeffa6b, type: 3}
+  - key: nature-kit/cliff_blockCave_rock
+    prefab: {fileID: 919132149155446097, guid: 0a849044681e23243a940f038764acd3, type: 3}
+  - key: nature-kit/cliff_blockCave_stone
+    prefab: {fileID: 919132149155446097, guid: 5f15e4d368d78e243a6dd4e1a246fad3, type: 3}
+  - key: nature-kit/cliff_blockDiagonal_rock
+    prefab: {fileID: 919132149155446097, guid: c229730670a5b5540b75b77593d2e99d, type: 3}
+  - key: nature-kit/cliff_blockDiagonal_stone
+    prefab: {fileID: 919132149155446097, guid: 3c049232b6a16d141b952eda367b9e93, type: 3}
+  - key: nature-kit/cliff_blockHalf_rock
+    prefab: {fileID: 919132149155446097, guid: 8bb5e0df009b9c0468367d22076ac6db, type: 3}
+  - key: nature-kit/cliff_blockHalf_stone
+    prefab: {fileID: 919132149155446097, guid: 47466c46bee1c6d44b9e9fe977bd7b62, type: 3}
+  - key: nature-kit/cliff_blockQuarter_rock
+    prefab: {fileID: 919132149155446097, guid: 11389cf776ab68f4bbc4b7f4f8226eb7, type: 3}
+  - key: nature-kit/cliff_blockQuarter_stone
+    prefab: {fileID: 919132149155446097, guid: 9479dfd8f1e8bef479adb84f5bcdefcb, type: 3}
+  - key: nature-kit/cliff_blockSlopeHalfWalls_rock
+    prefab: {fileID: 919132149155446097, guid: f7c490c114ba1bf42845db0ad515e4bc, type: 3}
+  - key: nature-kit/cliff_blockSlopeHalfWalls_stone
+    prefab: {fileID: 919132149155446097, guid: 153e40aa17a98224784d81fbe37df77f, type: 3}
+  - key: nature-kit/cliff_blockSlopeWalls_rock
+    prefab: {fileID: 919132149155446097, guid: b78b4146c74495441ad8ea4e04b50f27, type: 3}
+  - key: nature-kit/cliff_blockSlopeWalls_stone
+    prefab: {fileID: 919132149155446097, guid: 363c5ec1387583a4d85ba4bae1076231, type: 3}
+  - key: nature-kit/cliff_blockSlope_rock
+    prefab: {fileID: 919132149155446097, guid: 4641bcf381800614cb7fa909e09b085b, type: 3}
+  - key: nature-kit/cliff_blockSlope_stone
+    prefab: {fileID: 919132149155446097, guid: 95fed14ba45f6da44b4dab95f91cdb62, type: 3}
+  - key: nature-kit/cliff_block_rock
+    prefab: {fileID: 919132149155446097, guid: 9d068944b5e25074db0f98128e3b2120, type: 3}
+  - key: nature-kit/cliff_block_stone
+    prefab: {fileID: 919132149155446097, guid: f2fd8055f1d162c43b4ceb9d3d10af00, type: 3}
+  - key: nature-kit/cliff_cave_rock
+    prefab: {fileID: 919132149155446097, guid: 8202b8b84cc5eb648926ddf0e9ab5852, type: 3}
+  - key: nature-kit/cliff_cave_stone
+    prefab: {fileID: 919132149155446097, guid: 6fa50b6baaeb3d7418ff62e9238e23a8, type: 3}
+  - key: nature-kit/cliff_cornerInnerLarge_rock
+    prefab: {fileID: 919132149155446097, guid: 71b08912ee4fd0741a87c0d23736b626, type: 3}
+  - key: nature-kit/cliff_cornerInnerLarge_stone
+    prefab: {fileID: 919132149155446097, guid: f3fbb1784346d6f48a10b2c783c39038, type: 3}
+  - key: nature-kit/cliff_cornerInnerTop_rock
+    prefab: {fileID: 919132149155446097, guid: a95aeb8c331d8484995c6da5869fd6bf, type: 3}
+  - key: nature-kit/cliff_cornerInnerTop_stone
+    prefab: {fileID: 919132149155446097, guid: dd4a6d360af90264c94d7723e359cbed, type: 3}
+  - key: nature-kit/cliff_cornerInner_rock
+    prefab: {fileID: 919132149155446097, guid: f3c091bdfbab84b478282e9dc85c4f40, type: 3}
+  - key: nature-kit/cliff_cornerInner_stone
+    prefab: {fileID: 919132149155446097, guid: cbef71c787b40484796223e67e9abe62, type: 3}
+  - key: nature-kit/cliff_cornerLarge_rock
+    prefab: {fileID: 919132149155446097, guid: da1a05e007ea0bf46884afb2b4ee580f, type: 3}
+  - key: nature-kit/cliff_cornerLarge_stone
+    prefab: {fileID: 919132149155446097, guid: 46d048f58196f8848b7a0baa162400ee, type: 3}
+  - key: nature-kit/cliff_cornerTop_rock
+    prefab: {fileID: 919132149155446097, guid: a87ba08dad83ac7428d679796f0fb453, type: 3}
+  - key: nature-kit/cliff_cornerTop_stone
+    prefab: {fileID: 919132149155446097, guid: 24789a399fed4dc4d83592907c7edbbb, type: 3}
+  - key: nature-kit/cliff_corner_rock
+    prefab: {fileID: 919132149155446097, guid: 63ebba54a6762a64191e8fe029383d11, type: 3}
+  - key: nature-kit/cliff_corner_stone
+    prefab: {fileID: 919132149155446097, guid: 7a646d3bac41f1643af798825a58c962, type: 3}
+  - key: nature-kit/cliff_diagonal_rock
+    prefab: {fileID: 919132149155446097, guid: 4af1ec6add003db4da3076138c46e0df, type: 3}
+  - key: nature-kit/cliff_diagonal_stone
+    prefab: {fileID: 919132149155446097, guid: 7f24ea7e40e53d14ca5ece675c4ed6fc, type: 3}
+  - key: nature-kit/cliff_halfCornerInner_rock
+    prefab: {fileID: 919132149155446097, guid: 21db5f19ecb0f64448acd990e952f587, type: 3}
+  - key: nature-kit/cliff_halfCornerInner_stone
+    prefab: {fileID: 919132149155446097, guid: c9099a5297fab6d4a9fe7707b7ed414d, type: 3}
+  - key: nature-kit/cliff_halfCorner_rock
+    prefab: {fileID: 919132149155446097, guid: 0365da20253e002418926de6f0e621e9, type: 3}
+  - key: nature-kit/cliff_halfCorner_stone
+    prefab: {fileID: 919132149155446097, guid: 94b2cf9faae12b843b495442f4445b64, type: 3}
+  - key: nature-kit/cliff_half_rock
+    prefab: {fileID: 919132149155446097, guid: 1fddec3677938ca469745f0ffc034024, type: 3}
+  - key: nature-kit/cliff_half_stone
+    prefab: {fileID: 919132149155446097, guid: 0fb6ca74076c3564e98f17fe8a0ae740, type: 3}
+  - key: nature-kit/cliff_large_rock
+    prefab: {fileID: 919132149155446097, guid: 3920879a73bbda342b204cba57d1ffdb, type: 3}
+  - key: nature-kit/cliff_large_stone
+    prefab: {fileID: 919132149155446097, guid: c9d584536f65473489b258644170f906, type: 3}
+  - key: nature-kit/cliff_rock
+    prefab: {fileID: 919132149155446097, guid: 3f5a9e8a9eda14249b82da3a69bb6764, type: 3}
+  - key: nature-kit/cliff_stepsCornerInner_rock
+    prefab: {fileID: 919132149155446097, guid: 15a1a799f2058f24580dd09739e78db9, type: 3}
+  - key: nature-kit/cliff_stepsCornerInner_stone
+    prefab: {fileID: 919132149155446097, guid: 7b6282f4bc786504899a8a639dfc7fe5, type: 3}
+  - key: nature-kit/cliff_stepsCorner_rock
+    prefab: {fileID: 919132149155446097, guid: 32024902f8cd62a4f89f783197a11993, type: 3}
+  - key: nature-kit/cliff_stepsCorner_stone
+    prefab: {fileID: 919132149155446097, guid: ced613dcb2c2fe7479b3740f363a32eb, type: 3}
+  - key: nature-kit/cliff_steps_rock
+    prefab: {fileID: 919132149155446097, guid: 3b664bfa6e9d8c64ca0bc11c0fe5bc45, type: 3}
+  - key: nature-kit/cliff_steps_stone
+    prefab: {fileID: 919132149155446097, guid: 2ede8af0279b40a41963ae9613d962db, type: 3}
+  - key: nature-kit/cliff_stone
+    prefab: {fileID: 919132149155446097, guid: 9a326298fd2bffb4189a04bd6147d32d, type: 3}
+  - key: nature-kit/cliff_topDiagonal_rock
+    prefab: {fileID: 919132149155446097, guid: ca3cdf1ff90feec428206ca343e9d572, type: 3}
+  - key: nature-kit/cliff_topDiagonal_stone
+    prefab: {fileID: 919132149155446097, guid: 4e507f667f0d6524993be90d1ce8a912, type: 3}
+  - key: nature-kit/cliff_top_rock
+    prefab: {fileID: 919132149155446097, guid: 6d60e2642693248468d0eb2423a2b264, type: 3}
+  - key: nature-kit/cliff_top_stone
+    prefab: {fileID: 919132149155446097, guid: 36814b435ec1a1443af55bb0b49ef0e6, type: 3}
+  - key: nature-kit/cliff_waterfallTop_rock
+    prefab: {fileID: 919132149155446097, guid: f79b61b5b0b2ea24ea85387270fa9528, type: 3}
+  - key: nature-kit/cliff_waterfallTop_stone
+    prefab: {fileID: 919132149155446097, guid: 7cc0e54b4fa4c1248bc8fda1e6d3cdf0, type: 3}
+  - key: nature-kit/cliff_waterfall_rock
+    prefab: {fileID: 919132149155446097, guid: 15091f26f51a961468008b3c68840416, type: 3}
+  - key: nature-kit/cliff_waterfall_stone
+    prefab: {fileID: 919132149155446097, guid: f9f90e9b37f13414fba3dcf01373e9d8, type: 3}
+  - key: nature-kit/crop_carrot
+    prefab: {fileID: 919132149155446097, guid: c0f656e93cdd25645a930032ff3348a7, type: 3}
+  - key: nature-kit/crop_melon
+    prefab: {fileID: 919132149155446097, guid: 1d55585e20dc85544b063fdeeaa4876c, type: 3}
+  - key: nature-kit/crop_pumpkin
+    prefab: {fileID: 919132149155446097, guid: 2075adcfa9815a940a73d8c9530cc0d1, type: 3}
+  - key: nature-kit/crop_turnip
+    prefab: {fileID: 919132149155446097, guid: 280e8947881cdab48a73dee174035973, type: 3}
+  - key: nature-kit/crops_bambooStageA
+    prefab: {fileID: 919132149155446097, guid: 42b5a17ece3e45d48a274ddaa8e5fbbc, type: 3}
+  - key: nature-kit/crops_bambooStageB
+    prefab: {fileID: 919132149155446097, guid: e0d93d10d85a44248968dae97a66e41e, type: 3}
+  - key: nature-kit/crops_cornStageA
+    prefab: {fileID: 919132149155446097, guid: ddb901b8dd3025c4dae9d32821f7b957, type: 3}
+  - key: nature-kit/crops_cornStageB
+    prefab: {fileID: 919132149155446097, guid: bc74cbb699c4b2b449569e3c774f1b11, type: 3}
+  - key: nature-kit/crops_cornStageC
+    prefab: {fileID: 919132149155446097, guid: 9bf918c28f84687488831702d847b54d, type: 3}
+  - key: nature-kit/crops_cornStageD
+    prefab: {fileID: 919132149155446097, guid: 8d40d9c2829cd6a469372748b0b105b8, type: 3}
+  - key: nature-kit/crops_dirtDoubleRow
+    prefab: {fileID: 919132149155446097, guid: df6f525d62552b940a58c78785c8a0f5, type: 3}
+  - key: nature-kit/crops_dirtDoubleRowCorner
+    prefab: {fileID: 919132149155446097, guid: e185f4ebd268fe341a2aa979d7aac441, type: 3}
+  - key: nature-kit/crops_dirtDoubleRowEnd
+    prefab: {fileID: 919132149155446097, guid: aaf804462e5ab794a82ea0328f453b29, type: 3}
+  - key: nature-kit/crops_dirtRow
+    prefab: {fileID: 919132149155446097, guid: f54f505e05a16de4bbebd95d65aefea0, type: 3}
+  - key: nature-kit/crops_dirtRowCorner
+    prefab: {fileID: 919132149155446097, guid: 13c3a0955769c564b9ef08ae6ca2df48, type: 3}
+  - key: nature-kit/crops_dirtRowEnd
+    prefab: {fileID: 919132149155446097, guid: 838d6bb639e94344fb4431c8091eebbe, type: 3}
+  - key: nature-kit/crops_dirtSingle
+    prefab: {fileID: 919132149155446097, guid: 4071f456a5e19c64794f4f64501a3d59, type: 3}
+  - key: nature-kit/crops_leafsStageA
+    prefab: {fileID: 919132149155446097, guid: 4d1002dbc584a874d9a75c9869041e33, type: 3}
+  - key: nature-kit/crops_leafsStageB
+    prefab: {fileID: 919132149155446097, guid: e063d1d0c242ac54f8896a8df66da41e, type: 3}
+  - key: nature-kit/crops_wheatStageA
+    prefab: {fileID: 919132149155446097, guid: 6068cd8403c97c44aae9ca1c737e304b, type: 3}
+  - key: nature-kit/crops_wheatStageB
+    prefab: {fileID: 919132149155446097, guid: d5f6233b181156140948bd081e889617, type: 3}
+  - key: nature-kit/fence_bend
+    prefab: {fileID: 919132149155446097, guid: c0045ac3fac9d5843b51ee0315459cc5, type: 3}
+  - key: nature-kit/fence_bendCenter
+    prefab: {fileID: 919132149155446097, guid: d32c9227e4684334393d12ea6c3e9e54, type: 3}
+  - key: nature-kit/fence_corner
+    prefab: {fileID: 919132149155446097, guid: a0203473aadfa974d9cb23d90cce8430, type: 3}
+  - key: nature-kit/fence_gate
+    prefab: {fileID: 919132149155446097, guid: e79497aa84a0b2f4aba7cecfd0e7e9f8, type: 3}
+  - key: nature-kit/fence_planks
+    prefab: {fileID: 919132149155446097, guid: aa2c589e6764ee74a814b3788326abf7, type: 3}
+  - key: nature-kit/fence_planksDouble
+    prefab: {fileID: 919132149155446097, guid: 70d9d24dc77a30644a4a86af365ec2f7, type: 3}
+  - key: nature-kit/fence_simple
+    prefab: {fileID: 919132149155446097, guid: 49ba725b3748fd34bbd78a02dc4ce674, type: 3}
+  - key: nature-kit/fence_simpleCenter
+    prefab: {fileID: 919132149155446097, guid: e7c1b58276c422a48821c1a828220097, type: 3}
+  - key: nature-kit/fence_simpleDiagonal
+    prefab: {fileID: 919132149155446097, guid: b39f10913046c204786cfc481791326d, type: 3}
+  - key: nature-kit/fence_simpleDiagonalCenter
+    prefab: {fileID: 919132149155446097, guid: 0f866bb0f51abaf45aec53b5f2f59b15, type: 3}
+  - key: nature-kit/fence_simpleHigh
+    prefab: {fileID: 919132149155446097, guid: 1d36d76fab2ae6542998d224796a8bc9, type: 3}
+  - key: nature-kit/fence_simpleLow
+    prefab: {fileID: 919132149155446097, guid: f861561a8f87d354baaef6241b2c70c6, type: 3}
+  - key: nature-kit/flower_purpleA
+    prefab: {fileID: 919132149155446097, guid: e28eb8dbd78a43c4fa1a898e7e13c1cd, type: 3}
+  - key: nature-kit/flower_purpleB
+    prefab: {fileID: 919132149155446097, guid: 126796d9e871c304aaa895dd1d0a1df6, type: 3}
+  - key: nature-kit/flower_purpleC
+    prefab: {fileID: 919132149155446097, guid: e4f462505664d13498d90c938b6606ea, type: 3}
+  - key: nature-kit/flower_redA
+    prefab: {fileID: 919132149155446097, guid: e392a42dbae32284ab4f48519ed77547, type: 3}
+  - key: nature-kit/flower_redB
+    prefab: {fileID: 919132149155446097, guid: d7213961f8ac37d4ea80bfc39d06e8f9, type: 3}
+  - key: nature-kit/flower_redC
+    prefab: {fileID: 919132149155446097, guid: bac23ec42f9a22947bd9fa083bd4550d, type: 3}
+  - key: nature-kit/flower_yellowA
+    prefab: {fileID: 919132149155446097, guid: 2db65c84500caa449ba73519776196da, type: 3}
+  - key: nature-kit/flower_yellowB
+    prefab: {fileID: 919132149155446097, guid: f692f6fa644f3b04a88bd989f48ca414, type: 3}
+  - key: nature-kit/flower_yellowC
+    prefab: {fileID: 919132149155446097, guid: 514a07b9ef4f4da40b2f20c60dc13f50, type: 3}
+  - key: nature-kit/grass
+    prefab: {fileID: 919132149155446097, guid: cf202261135f6c548beadc0bf22799c7, type: 3}
+  - key: nature-kit/grass_large
+    prefab: {fileID: 919132149155446097, guid: c389a9ceaf6cd32478973f77b6db218c, type: 3}
+  - key: nature-kit/grass_leafs
+    prefab: {fileID: 919132149155446097, guid: 3b8a8528cb0b0d645b2cb5969649d190, type: 3}
+  - key: nature-kit/grass_leafsLarge
+    prefab: {fileID: 919132149155446097, guid: af7bcb96d35e60a48b9e64cfbb92a443, type: 3}
+  - key: nature-kit/ground_grass
+    prefab: {fileID: 919132149155446097, guid: efb99963dff28624e98dc84722eca4c9, type: 3}
+  - key: nature-kit/ground_pathBend
+    prefab: {fileID: 919132149155446097, guid: c1d2441aebb599b4ab23bd7c61a47b10, type: 3}
+  - key: nature-kit/ground_pathBendBank
+    prefab: {fileID: 919132149155446097, guid: dcaaa6bd865f7314da7fb82d609c8b02, type: 3}
+  - key: nature-kit/ground_pathCorner
+    prefab: {fileID: 919132149155446097, guid: 4ca46e794a7462a47ac341c75f3e70eb, type: 3}
+  - key: nature-kit/ground_pathCornerSmall
+    prefab: {fileID: 919132149155446097, guid: 7d6e0e42f81c7a643a193bff4c2a31a5, type: 3}
+  - key: nature-kit/ground_pathCross
+    prefab: {fileID: 919132149155446097, guid: b7b2548eac159554c93e05da6dfe84d2, type: 3}
+  - key: nature-kit/ground_pathEnd
+    prefab: {fileID: 919132149155446097, guid: 010b63d33e57e1c4e96fd3af5a60fc2a, type: 3}
+  - key: nature-kit/ground_pathEndClosed
+    prefab: {fileID: 919132149155446097, guid: 5b8cf8426b85d9e4891ea5c781455544, type: 3}
+  - key: nature-kit/ground_pathOpen
+    prefab: {fileID: 919132149155446097, guid: 56111065ac45a1147938606fc4cc31c4, type: 3}
+  - key: nature-kit/ground_pathRocks
+    prefab: {fileID: 919132149155446097, guid: 971c94501cd41d246bac353d48efa7c8, type: 3}
+  - key: nature-kit/ground_pathSide
+    prefab: {fileID: 919132149155446097, guid: b8661f8b4700e2a4ca476a1ef84ed26c, type: 3}
+  - key: nature-kit/ground_pathSideOpen
+    prefab: {fileID: 919132149155446097, guid: 8f34eceee1548c04eb36c2c57bfffbd1, type: 3}
+  - key: nature-kit/ground_pathSplit
+    prefab: {fileID: 919132149155446097, guid: 0e06a2dbff655a946a4c5f613ef45507, type: 3}
+  - key: nature-kit/ground_pathStraight
+    prefab: {fileID: 919132149155446097, guid: 5317a71aa4f093e43998aeb22cc851c2, type: 3}
+  - key: nature-kit/ground_pathTile
+    prefab: {fileID: 919132149155446097, guid: 19e35e643580b7540bd60acf59f7cb02, type: 3}
+  - key: nature-kit/ground_riverBend
+    prefab: {fileID: 919132149155446097, guid: d1d394480b0e3c44f985afe3b3628e28, type: 3}
+  - key: nature-kit/ground_riverBendBank
+    prefab: {fileID: 919132149155446097, guid: 92f33a2fc8614444596abdcfc6918c43, type: 3}
+  - key: nature-kit/ground_riverCorner
+    prefab: {fileID: 919132149155446097, guid: b7fac4656d17c4a4a8dc01513d8259ae, type: 3}
+  - key: nature-kit/ground_riverCornerSmall
+    prefab: {fileID: 919132149155446097, guid: ca5466e526374dd4db32d0c0582c1656, type: 3}
+  - key: nature-kit/ground_riverCross
+    prefab: {fileID: 919132149155446097, guid: 7ed41eccb22e0d64c9e1a0cdb1be724a, type: 3}
+  - key: nature-kit/ground_riverEnd
+    prefab: {fileID: 919132149155446097, guid: 162faeda2f3270b43acbe2eec738bb96, type: 3}
+  - key: nature-kit/ground_riverEndClosed
+    prefab: {fileID: 919132149155446097, guid: 2bd7ef12d17a01849a24f502eca24bec, type: 3}
+  - key: nature-kit/ground_riverOpen
+    prefab: {fileID: 919132149155446097, guid: e6b1ffec63aa6a34ab65259495a590f3, type: 3}
+  - key: nature-kit/ground_riverRocks
+    prefab: {fileID: 919132149155446097, guid: 8253d4ba6eeabea42a1ca247957c6965, type: 3}
+  - key: nature-kit/ground_riverSide
+    prefab: {fileID: 919132149155446097, guid: 9d19f74d360f3d240bcc6d770c3baf0f, type: 3}
+  - key: nature-kit/ground_riverSideOpen
+    prefab: {fileID: 919132149155446097, guid: e4fc6437feddac446b1583c1ca241724, type: 3}
+  - key: nature-kit/ground_riverSplit
+    prefab: {fileID: 919132149155446097, guid: 546277ca830273d4f9a14975312defb6, type: 3}
+  - key: nature-kit/ground_riverStraight
+    prefab: {fileID: 919132149155446097, guid: 44deee8d9e32b0e42bf73fd6a6ccbdfe, type: 3}
+  - key: nature-kit/ground_riverTile
+    prefab: {fileID: 919132149155446097, guid: f2b89f03511729547882066b21a0f40d, type: 3}
+  - key: nature-kit/hanging_moss
+    prefab: {fileID: 919132149155446097, guid: de59772248c688f46b2f4f4d0eda0563, type: 3}
+  - key: nature-kit/lily_large
+    prefab: {fileID: 919132149155446097, guid: ed82bd0d4c894f944a2207491362674a, type: 3}
+  - key: nature-kit/lily_small
+    prefab: {fileID: 919132149155446097, guid: 5b7398d043cd48e42a65f615348aed84, type: 3}
+  - key: nature-kit/log
+    prefab: {fileID: 919132149155446097, guid: d657c2bbe4b579648bc14ea4ed10d42c, type: 3}
+  - key: nature-kit/log_large
+    prefab: {fileID: 919132149155446097, guid: 4cc106d7788e9bb4f9a07d98b143d620, type: 3}
+  - key: nature-kit/log_stack
+    prefab: {fileID: 919132149155446097, guid: 8c6e4490d24be714eb3d9e15438fcd71, type: 3}
+  - key: nature-kit/log_stackLarge
+    prefab: {fileID: 919132149155446097, guid: bc8359617ae3441409e0b51851bdddf9, type: 3}
+  - key: nature-kit/mushroom_red
+    prefab: {fileID: 919132149155446097, guid: 16969358f1634344486107e87052cf39, type: 3}
+  - key: nature-kit/mushroom_redGroup
+    prefab: {fileID: 919132149155446097, guid: dc4b0229cb3b0e24daf35c552c37c2e0, type: 3}
+  - key: nature-kit/mushroom_redTall
+    prefab: {fileID: 919132149155446097, guid: 5e22dfa73e1ed754dbe2947afe5f70d7, type: 3}
+  - key: nature-kit/mushroom_tan
+    prefab: {fileID: 919132149155446097, guid: 957aa02eee916d2429374208d190fb52, type: 3}
+  - key: nature-kit/mushroom_tanGroup
+    prefab: {fileID: 919132149155446097, guid: 54dbeb9f8086b6d4fb89a2cada5f20b4, type: 3}
+  - key: nature-kit/mushroom_tanTall
+    prefab: {fileID: 919132149155446097, guid: bd1d81685ad86b748bce181f31127319, type: 3}
+  - key: nature-kit/path_stone
+    prefab: {fileID: 919132149155446097, guid: e1deebfd5cf611c48a230d7ad4392a8b, type: 3}
+  - key: nature-kit/path_stoneCircle
+    prefab: {fileID: 919132149155446097, guid: 9e1652fefb6a5034596ce32004ae5aec, type: 3}
+  - key: nature-kit/path_stoneCorner
+    prefab: {fileID: 919132149155446097, guid: 049adbd76010c6841813bac689c8bd99, type: 3}
+  - key: nature-kit/path_stoneEnd
+    prefab: {fileID: 919132149155446097, guid: 7544799343a527748802ffe7762bfcdc, type: 3}
+  - key: nature-kit/path_wood
+    prefab: {fileID: 919132149155446097, guid: 69f15066e2ea38b40bce46837e9e884f, type: 3}
+  - key: nature-kit/path_woodCorner
+    prefab: {fileID: 919132149155446097, guid: c78c3bd9982f17b4eb0d79f02d032211, type: 3}
+  - key: nature-kit/path_woodEnd
+    prefab: {fileID: 919132149155446097, guid: 8b329059bebcc094c8af2d2247e0b55c, type: 3}
+  - key: nature-kit/plant_bush
+    prefab: {fileID: 919132149155446097, guid: 6d73954dc7f58d34796f3be7752920c2, type: 3}
+  - key: nature-kit/plant_bushDetailed
+    prefab: {fileID: 919132149155446097, guid: 05fe93b9352b21d43aae271a7c40b423, type: 3}
+  - key: nature-kit/plant_bushLarge
+    prefab: {fileID: 919132149155446097, guid: 2b7ce0f377b84c044b7312e2ec31bfc1, type: 3}
+  - key: nature-kit/plant_bushLargeTriangle
+    prefab: {fileID: 919132149155446097, guid: bf4c1d5e8efbab844ad55b511b4c9e90, type: 3}
+  - key: nature-kit/plant_bushSmall
+    prefab: {fileID: 919132149155446097, guid: 19cd1f059b2225d4fb1a9d2a8c684766, type: 3}
+  - key: nature-kit/plant_bushTriangle
+    prefab: {fileID: 919132149155446097, guid: 1410a5bba190c254aa13571e6fc0d5f9, type: 3}
+  - key: nature-kit/plant_flatShort
+    prefab: {fileID: 919132149155446097, guid: 2799730357f139245950e78c5350b3ae, type: 3}
+  - key: nature-kit/plant_flatTall
+    prefab: {fileID: 919132149155446097, guid: 3845341960ee96241a3c21adea9ad221, type: 3}
+  - key: nature-kit/platform_beach
+    prefab: {fileID: 919132149155446097, guid: 607ddca4c4cea2b45bb8d028a67b3893, type: 3}
+  - key: nature-kit/platform_grass
+    prefab: {fileID: 919132149155446097, guid: 8c9a146f44e58f64998ae242c57155fa, type: 3}
+  - key: nature-kit/platform_stone
+    prefab: {fileID: 919132149155446097, guid: f9fe8e3c64e5fe44db16786a420e311a, type: 3}
+  - key: nature-kit/pot_large
+    prefab: {fileID: 919132149155446097, guid: db48c01e693b8774f9931c5f1bd13c74, type: 3}
+  - key: nature-kit/pot_small
+    prefab: {fileID: 919132149155446097, guid: 0c783cf0bc59f05439166e6e889a58d8, type: 3}
+  - key: nature-kit/rock_largeA
+    prefab: {fileID: 919132149155446097, guid: 0bcf812a6a6893d44b760b09fd16caeb, type: 3}
+  - key: nature-kit/rock_largeB
+    prefab: {fileID: 919132149155446097, guid: 8935517da637e5f44b0f4d14b1fbfd12, type: 3}
+  - key: nature-kit/rock_largeC
+    prefab: {fileID: 919132149155446097, guid: 5e436720847b9074989c539c9f2997c8, type: 3}
+  - key: nature-kit/rock_largeD
+    prefab: {fileID: 919132149155446097, guid: c1bb5b1f1977d9a4aad3a1fa961aba0d, type: 3}
+  - key: nature-kit/rock_largeE
+    prefab: {fileID: 919132149155446097, guid: 80267b5b7577d7f44b8a46088010b0bb, type: 3}
+  - key: nature-kit/rock_largeF
+    prefab: {fileID: 919132149155446097, guid: 4dd896a4bd3ba3d43ba539657fd8c81c, type: 3}
+  - key: nature-kit/rock_smallA
+    prefab: {fileID: 919132149155446097, guid: ec4a7c09602dff145be43f3bb73d63e3, type: 3}
+  - key: nature-kit/rock_smallB
+    prefab: {fileID: 919132149155446097, guid: 2c461aff137c33a4c8bf8db93508ce1c, type: 3}
+  - key: nature-kit/rock_smallC
+    prefab: {fileID: 919132149155446097, guid: 660e28e05834d4d419106b5690383306, type: 3}
+  - key: nature-kit/rock_smallD
+    prefab: {fileID: 919132149155446097, guid: 6b9689d832ab877479ab899e31dfecef, type: 3}
+  - key: nature-kit/rock_smallE
+    prefab: {fileID: 919132149155446097, guid: 6ebff2703dc99a245bad7e9dca67314b, type: 3}
+  - key: nature-kit/rock_smallF
+    prefab: {fileID: 919132149155446097, guid: 5fb2a1f6ab39af342b4af790a6ee45e9, type: 3}
+  - key: nature-kit/rock_smallFlatA
+    prefab: {fileID: 919132149155446097, guid: 70b4c818acf9e0848a56b167ba86791d, type: 3}
+  - key: nature-kit/rock_smallFlatB
+    prefab: {fileID: 919132149155446097, guid: c16f0a3cc09a7f04fb8c35a486e8238c, type: 3}
+  - key: nature-kit/rock_smallFlatC
+    prefab: {fileID: 919132149155446097, guid: c527c0bfe9003c14cad99d836262a317, type: 3}
+  - key: nature-kit/rock_smallG
+    prefab: {fileID: 919132149155446097, guid: 84aac3230c0685a43919b854269f7e35, type: 3}
+  - key: nature-kit/rock_smallH
+    prefab: {fileID: 919132149155446097, guid: 571b1a47faa70294698256b2248ec0ae, type: 3}
+  - key: nature-kit/rock_smallI
+    prefab: {fileID: 919132149155446097, guid: f6807d83d1966ed4f9d648d6828adfd6, type: 3}
+  - key: nature-kit/rock_smallTopA
+    prefab: {fileID: 919132149155446097, guid: ae4432c4993405442b3666d640ce50ad, type: 3}
+  - key: nature-kit/rock_smallTopB
+    prefab: {fileID: 919132149155446097, guid: cc54934a6d319784dbf40622437d3b22, type: 3}
+  - key: nature-kit/rock_tallA
+    prefab: {fileID: 919132149155446097, guid: 6742a57e1c86aeb4cad9f580f96b05a9, type: 3}
+  - key: nature-kit/rock_tallB
+    prefab: {fileID: 919132149155446097, guid: 75542767aabf7f24696d953aa9254de0, type: 3}
+  - key: nature-kit/rock_tallC
+    prefab: {fileID: 919132149155446097, guid: 422af3d1c04c8b743b1cfd064a60a1a0, type: 3}
+  - key: nature-kit/rock_tallD
+    prefab: {fileID: 919132149155446097, guid: f500dbb0a323ea445a054a7bb27d30a6, type: 3}
+  - key: nature-kit/rock_tallE
+    prefab: {fileID: 919132149155446097, guid: adb9dbae4859b2c4cbd32d4beee30a79, type: 3}
+  - key: nature-kit/rock_tallF
+    prefab: {fileID: 919132149155446097, guid: a0c81c28523307c4e97eaff0fa2334bf, type: 3}
+  - key: nature-kit/rock_tallG
+    prefab: {fileID: 919132149155446097, guid: a1a9070dc1fc97f4d931052bf0a93cae, type: 3}
+  - key: nature-kit/rock_tallH
+    prefab: {fileID: 919132149155446097, guid: 990d73ce3d7c5524cba413c9c5d57b00, type: 3}
+  - key: nature-kit/rock_tallI
+    prefab: {fileID: 919132149155446097, guid: 7a993f882209aa94080f6a2bc8298d5d, type: 3}
+  - key: nature-kit/rock_tallJ
+    prefab: {fileID: 919132149155446097, guid: 5a350ab153de69046ba6835ec722bca0, type: 3}
+  - key: nature-kit/sign
+    prefab: {fileID: 919132149155446097, guid: a4903d29c02709a4897ae56a10862592, type: 3}
+  - key: nature-kit/statue_block
+    prefab: {fileID: 919132149155446097, guid: a7703d132ca2c7745aa368d8d33035cc, type: 3}
+  - key: nature-kit/statue_column
+    prefab: {fileID: 919132149155446097, guid: 968eab41e436c384d9593feeb61feecd, type: 3}
+  - key: nature-kit/statue_columnDamaged
+    prefab: {fileID: 919132149155446097, guid: 0c19ccaf94002e34cb5c81787cbcbd7d, type: 3}
+  - key: nature-kit/statue_head
+    prefab: {fileID: 919132149155446097, guid: 3a0388de7079e274f8c6e4d940148ee5, type: 3}
+  - key: nature-kit/statue_obelisk
+    prefab: {fileID: 919132149155446097, guid: dd1b08a20dc15c64a9079dd122f0bc10, type: 3}
+  - key: nature-kit/statue_ring
+    prefab: {fileID: 919132149155446097, guid: a580202741b9bce49bad1aa2f5e231a7, type: 3}
+  - key: nature-kit/stone_largeA
+    prefab: {fileID: 919132149155446097, guid: 691d20c441c167c40b2b9e4bf0960e90, type: 3}
+  - key: nature-kit/stone_largeB
+    prefab: {fileID: 919132149155446097, guid: 8179b0c4b7879d04dacb1ead05873149, type: 3}
+  - key: nature-kit/stone_largeC
+    prefab: {fileID: 919132149155446097, guid: dbd41201b9444d3408413bc2354b9767, type: 3}
+  - key: nature-kit/stone_largeD
+    prefab: {fileID: 919132149155446097, guid: 9f0e274d94a10dd40b12a32b9c802c7c, type: 3}
+  - key: nature-kit/stone_largeE
+    prefab: {fileID: 919132149155446097, guid: 0722a3b2f50ea124381664fdd56bf912, type: 3}
+  - key: nature-kit/stone_largeF
+    prefab: {fileID: 919132149155446097, guid: b9420f56744a4914596a0be30d682fb6, type: 3}
+  - key: nature-kit/stone_smallA
+    prefab: {fileID: 919132149155446097, guid: ccee69627bec643409aa8cd67bfdab9a, type: 3}
+  - key: nature-kit/stone_smallB
+    prefab: {fileID: 919132149155446097, guid: a8aebd70094f57e4c94f827f5efc41a6, type: 3}
+  - key: nature-kit/stone_smallC
+    prefab: {fileID: 919132149155446097, guid: 7c380dd72f9204340b4e55eb9f1f6032, type: 3}
+  - key: nature-kit/stone_smallD
+    prefab: {fileID: 919132149155446097, guid: 59a6e76ca723346429453b5f7363b585, type: 3}
+  - key: nature-kit/stone_smallE
+    prefab: {fileID: 919132149155446097, guid: 4bb5adbb730f1a84db4ab7905bfd2b67, type: 3}
+  - key: nature-kit/stone_smallF
+    prefab: {fileID: 919132149155446097, guid: c436f54d7c41282438230a4cda0afbc7, type: 3}
+  - key: nature-kit/stone_smallFlatA
+    prefab: {fileID: 919132149155446097, guid: 1e3c5b7c78b1b664c9cece5219427ffc, type: 3}
+  - key: nature-kit/stone_smallFlatB
+    prefab: {fileID: 919132149155446097, guid: 96cf89bce35dccf4b878bd2d2c2d60ea, type: 3}
+  - key: nature-kit/stone_smallFlatC
+    prefab: {fileID: 919132149155446097, guid: fe6b894d460969d42ac2a33e3cb4ecf0, type: 3}
+  - key: nature-kit/stone_smallG
+    prefab: {fileID: 919132149155446097, guid: 9880f923021efec4c9b57474bff652da, type: 3}
+  - key: nature-kit/stone_smallH
+    prefab: {fileID: 919132149155446097, guid: d26176713aa19cd42b71a442026747e1, type: 3}
+  - key: nature-kit/stone_smallI
+    prefab: {fileID: 919132149155446097, guid: ef0db38a64670e64a803ea220a9fda10, type: 3}
+  - key: nature-kit/stone_smallTopA
+    prefab: {fileID: 919132149155446097, guid: f959e5ddaccc16a4c83caa0b3c72498a, type: 3}
+  - key: nature-kit/stone_smallTopB
+    prefab: {fileID: 919132149155446097, guid: 1f2a9cb9cc24e5b4c981f7f9f773f300, type: 3}
+  - key: nature-kit/stone_tallA
+    prefab: {fileID: 919132149155446097, guid: 4573a1b2732826947a391bf08bfc4bb3, type: 3}
+  - key: nature-kit/stone_tallB
+    prefab: {fileID: 919132149155446097, guid: 71450904352748042a4695078a60459f, type: 3}
+  - key: nature-kit/stone_tallC
+    prefab: {fileID: 919132149155446097, guid: cc5d515f24ed23444a77d03ca1b93b19, type: 3}
+  - key: nature-kit/stone_tallD
+    prefab: {fileID: 919132149155446097, guid: 9753cfef1d735a54885d9f7633dee5b8, type: 3}
+  - key: nature-kit/stone_tallE
+    prefab: {fileID: 919132149155446097, guid: 8b3cf6dcec8344e4f95d7ae4f85788df, type: 3}
+  - key: nature-kit/stone_tallF
+    prefab: {fileID: 919132149155446097, guid: f363d209ba72fd94f9e4617f4b5b4aac, type: 3}
+  - key: nature-kit/stone_tallG
+    prefab: {fileID: 919132149155446097, guid: afa389740f48adc408d7f7688b8daa4b, type: 3}
+  - key: nature-kit/stone_tallH
+    prefab: {fileID: 919132149155446097, guid: 120620843e38ea74e92a05e4d1ab0553, type: 3}
+  - key: nature-kit/stone_tallI
+    prefab: {fileID: 919132149155446097, guid: 0a8b510319d530b41ae508b266acadbd, type: 3}
+  - key: nature-kit/stone_tallJ
+    prefab: {fileID: 919132149155446097, guid: cda538df8a802844f9d890d1b88f9104, type: 3}
+  - key: nature-kit/stump_old
+    prefab: {fileID: 919132149155446097, guid: a7eb4d9b8e3303e4cac5bbcc18e19162, type: 3}
+  - key: nature-kit/stump_oldTall
+    prefab: {fileID: 919132149155446097, guid: 9cebad8c941936048a3b5bc983db6a01, type: 3}
+  - key: nature-kit/stump_round
+    prefab: {fileID: 919132149155446097, guid: c406f0bb5e9464e4699feda35f3b6189, type: 3}
+  - key: nature-kit/stump_roundDetailed
+    prefab: {fileID: 919132149155446097, guid: f149c79a4ebb69949a4a5f98b2de1802, type: 3}
+  - key: nature-kit/stump_square
+    prefab: {fileID: 919132149155446097, guid: 2fb7b8453a8a743428e46232c656d414, type: 3}
+  - key: nature-kit/stump_squareDetailed
+    prefab: {fileID: 919132149155446097, guid: c2f5ab4cfcbf2e24d908f6f06b0f5ca2, type: 3}
+  - key: nature-kit/stump_squareDetailedWide
+    prefab: {fileID: 919132149155446097, guid: a42b8d32fde910140b5f6c822790a942, type: 3}
+  - key: nature-kit/tent_detailedClosed
+    prefab: {fileID: 919132149155446097, guid: 8fcfd9f0100cdfa49a46a26b09faac72, type: 3}
+  - key: nature-kit/tent_detailedOpen
+    prefab: {fileID: 919132149155446097, guid: 2b82d541368f8b54099f67a76354076b, type: 3}
+  - key: nature-kit/tent_smallClosed
+    prefab: {fileID: 919132149155446097, guid: b1817e0e5c03f554e9d915a4d5fbc5b0, type: 3}
+  - key: nature-kit/tent_smallOpen
+    prefab: {fileID: 919132149155446097, guid: d6a1fe1c90f50fe41a11cd1113adc483, type: 3}
+  - key: nature-kit/tree_blocks
+    prefab: {fileID: 919132149155446097, guid: f57a11222a654d84282b0d96327e3fe4, type: 3}
+  - key: nature-kit/tree_blocks_dark
+    prefab: {fileID: 919132149155446097, guid: ba8f6a8b650f3744b90b737b2f36b900, type: 3}
+  - key: nature-kit/tree_blocks_fall
+    prefab: {fileID: 919132149155446097, guid: b58d26a0b28dacf42b29fae249eccc5a, type: 3}
+  - key: nature-kit/tree_cone
+    prefab: {fileID: 919132149155446097, guid: f8c81df9315962e46a423168e41cdae5, type: 3}
+  - key: nature-kit/tree_cone_dark
+    prefab: {fileID: 919132149155446097, guid: c0995fbdd19bb4449a7a522b6f4a4831, type: 3}
+  - key: nature-kit/tree_cone_fall
+    prefab: {fileID: 919132149155446097, guid: c6d219e5303ac44459585e2602238f6e, type: 3}
+  - key: nature-kit/tree_default
+    prefab: {fileID: 919132149155446097, guid: a1202524d3e4ce04e925fa3b73fb8d32, type: 3}
+  - key: nature-kit/tree_default_dark
+    prefab: {fileID: 919132149155446097, guid: 7405290e3b1b76049ba701e856e21908, type: 3}
+  - key: nature-kit/tree_default_fall
+    prefab: {fileID: 919132149155446097, guid: 80381c636a38e9f4d84f19c44829fa83, type: 3}
+  - key: nature-kit/tree_detailed
+    prefab: {fileID: 919132149155446097, guid: 9307aeeec426d674a95e534908b7186f, type: 3}
+  - key: nature-kit/tree_detailed_dark
+    prefab: {fileID: 919132149155446097, guid: 304c1658214fc804d85183b96ead1123, type: 3}
+  - key: nature-kit/tree_detailed_fall
+    prefab: {fileID: 919132149155446097, guid: 0fc514350c667274c88023c1583d4486, type: 3}
+  - key: nature-kit/tree_fat
+    prefab: {fileID: 919132149155446097, guid: 088fe3baf622b4846b67ba9f0a6fa14e, type: 3}
+  - key: nature-kit/tree_fat_darkh
+    prefab: {fileID: 919132149155446097, guid: 5aa0ba60d244ad349b96f88481b32f9a, type: 3}
+  - key: nature-kit/tree_fat_fall
+    prefab: {fileID: 919132149155446097, guid: 21b8a8503d911ad49afef4292147a069, type: 3}
+  - key: nature-kit/tree_oak
+    prefab: {fileID: 919132149155446097, guid: 3aa8284032dd5464aa4c8c5aa3ada1fc, type: 3}
+  - key: nature-kit/tree_oak_dark
+    prefab: {fileID: 919132149155446097, guid: c684f5c5d72fb6c4498750664b0b1e7f, type: 3}
+  - key: nature-kit/tree_oak_fall
+    prefab: {fileID: 919132149155446097, guid: df7f63baf06e42843874d310686e1bd7, type: 3}
+  - key: nature-kit/tree_palm
+    prefab: {fileID: 919132149155446097, guid: a96eb06adc1250a4983002d6a84c397e, type: 3}
+  - key: nature-kit/tree_palmBend
+    prefab: {fileID: 919132149155446097, guid: 82ba6aa0c994674408c3fcddc44d3f20, type: 3}
+  - key: nature-kit/tree_palmDetailedShort
+    prefab: {fileID: 919132149155446097, guid: 08878b3a32b715f499541b069ba2ed3d, type: 3}
+  - key: nature-kit/tree_palmDetailedTall
+    prefab: {fileID: 919132149155446097, guid: 4cdb6cef30d5dc64b9df632b976081ed, type: 3}
+  - key: nature-kit/tree_palmShort
+    prefab: {fileID: 919132149155446097, guid: 37c5714ba87e57a40b55451bad312a59, type: 3}
+  - key: nature-kit/tree_palmTall
+    prefab: {fileID: 919132149155446097, guid: 3303275ccf4856b44b4c94f8a2c36585, type: 3}
+  - key: nature-kit/tree_pineDefaultA
+    prefab: {fileID: 919132149155446097, guid: 8b92f957692700e40b729b2ce922f815, type: 3}
+  - key: nature-kit/tree_pineDefaultB
+    prefab: {fileID: 919132149155446097, guid: 8d06e24d14df5114f8b6fcccc3a28748, type: 3}
+  - key: nature-kit/tree_pineGroundA
+    prefab: {fileID: 919132149155446097, guid: 8bb395e20c8d58c4db297b2c67c7da1f, type: 3}
+  - key: nature-kit/tree_pineGroundB
+    prefab: {fileID: 919132149155446097, guid: 93d6da7ee3eab7043a944acae772ee4a, type: 3}
+  - key: nature-kit/tree_pineRoundA
+    prefab: {fileID: 919132149155446097, guid: 8741556af3550314193258c5574b2055, type: 3}
+  - key: nature-kit/tree_pineRoundB
+    prefab: {fileID: 919132149155446097, guid: 9a893261a2b1fc345a0294fe3dc1d48f, type: 3}
+  - key: nature-kit/tree_pineRoundC
+    prefab: {fileID: 919132149155446097, guid: c1e57c1884982a242b4f4f8382d68329, type: 3}
+  - key: nature-kit/tree_pineRoundD
+    prefab: {fileID: 919132149155446097, guid: 1420c7dc739fec344819cfc4e4176431, type: 3}
+  - key: nature-kit/tree_pineRoundE
+    prefab: {fileID: 919132149155446097, guid: 90cdc2bf0d6f84a48a04176604662703, type: 3}
+  - key: nature-kit/tree_pineRoundF
+    prefab: {fileID: 919132149155446097, guid: f52653007afaf60429ab7bf730a5cb71, type: 3}
+  - key: nature-kit/tree_pineSmallA
+    prefab: {fileID: 919132149155446097, guid: 31f16e641c5e4364aa5be9d0f47af589, type: 3}
+  - key: nature-kit/tree_pineSmallB
+    prefab: {fileID: 919132149155446097, guid: 8cf178127100fc94c99970c95fa67624, type: 3}
+  - key: nature-kit/tree_pineSmallC
+    prefab: {fileID: 919132149155446097, guid: 6ac785e6ed4a6004495a2c29ed6dc3e6, type: 3}
+  - key: nature-kit/tree_pineSmallD
+    prefab: {fileID: 919132149155446097, guid: 5f4b6c8e4eadc524ebfa1060269b8d03, type: 3}
+  - key: nature-kit/tree_pineTallA
+    prefab: {fileID: 919132149155446097, guid: b6493c4bfe25c6c4b9de930f0e0f9e41, type: 3}
+  - key: nature-kit/tree_pineTallA_detailed
+    prefab: {fileID: 919132149155446097, guid: 2f97e0caa375c8c41b238047d2b01329, type: 3}
+  - key: nature-kit/tree_pineTallB
+    prefab: {fileID: 919132149155446097, guid: 7673cb1e06beef84c8feaec4797ccccc, type: 3}
+  - key: nature-kit/tree_pineTallB_detailed
+    prefab: {fileID: 919132149155446097, guid: 27155996d397c1a47a0987fc2aa9f3e2, type: 3}
+  - key: nature-kit/tree_pineTallC
+    prefab: {fileID: 919132149155446097, guid: 7732b7fe2cd55a44680f82c6074fb7ed, type: 3}
+  - key: nature-kit/tree_pineTallC_detailed
+    prefab: {fileID: 919132149155446097, guid: 1c295495311f6c74ba0c5ae6de064048, type: 3}
+  - key: nature-kit/tree_pineTallD
+    prefab: {fileID: 919132149155446097, guid: c71fa75674e53b548976231c37a40fed, type: 3}
+  - key: nature-kit/tree_pineTallD_detailed
+    prefab: {fileID: 919132149155446097, guid: b746e17babb481445ba305e06b39d543, type: 3}
+  - key: nature-kit/tree_plateau
+    prefab: {fileID: 919132149155446097, guid: 56620c3cd2f853147817d1af1fbcbd9b, type: 3}
+  - key: nature-kit/tree_plateau_dark
+    prefab: {fileID: 919132149155446097, guid: 5eef13bfe8a9bce418f3b6e19cd28437, type: 3}
+  - key: nature-kit/tree_plateau_fall
+    prefab: {fileID: 919132149155446097, guid: 5ec58197c7c21e643b2468d6293a16d3, type: 3}
+  - key: nature-kit/tree_simple
+    prefab: {fileID: 919132149155446097, guid: 08f04fff2fb2c954bb50ff194cb57ad2, type: 3}
+  - key: nature-kit/tree_simple_dark
+    prefab: {fileID: 919132149155446097, guid: 9852f8d18e7c8c8468fe5fd84d954f22, type: 3}
+  - key: nature-kit/tree_simple_fall
+    prefab: {fileID: 919132149155446097, guid: 137d38c2f832a0a4d99664694f4d4d83, type: 3}
+  - key: nature-kit/tree_small
+    prefab: {fileID: 919132149155446097, guid: d4fa1cab69238d646bd53f4721229f92, type: 3}
+  - key: nature-kit/tree_small_dark
+    prefab: {fileID: 919132149155446097, guid: 03c4f4196a62e8347913c0b063cd8049, type: 3}
+  - key: nature-kit/tree_small_fall
+    prefab: {fileID: 919132149155446097, guid: 96901adc38740e145b15b12563aaae73, type: 3}
+  - key: nature-kit/tree_tall
+    prefab: {fileID: 919132149155446097, guid: be05c02b61b2f10418fbba6f595a29dc, type: 3}
+  - key: nature-kit/tree_tall_dark
+    prefab: {fileID: 919132149155446097, guid: f6a00ea4a0e529e47ab2967dde49e598, type: 3}
+  - key: nature-kit/tree_tall_fall
+    prefab: {fileID: 919132149155446097, guid: 27beff8a7b78ba240ae0d6bc3ebca7e0, type: 3}
+  - key: nature-kit/tree_thin
+    prefab: {fileID: 919132149155446097, guid: a513c8f49673c33478df7662d4a42524, type: 3}
+  - key: nature-kit/tree_thin_dark
+    prefab: {fileID: 919132149155446097, guid: 41d7a2f3cf637b641a38f1337228f46f, type: 3}
+  - key: nature-kit/tree_thin_fall
+    prefab: {fileID: 919132149155446097, guid: c74630b9f2df0b945bff2d5857986a9b, type: 3}
+  - key: pirate-kit/barrel
+    prefab: {fileID: 919132149155446097, guid: 88d7d607fdfd8be42a3d6235a68410c4, type: 3}
+  - key: pirate-kit/boat-row-large
+    prefab: {fileID: 919132149155446097, guid: 0139ca565392c6c4b9a6cdcae3ecb023, type: 3}
+  - key: pirate-kit/boat-row-small
+    prefab: {fileID: 919132149155446097, guid: 4116eb04d160413409ad18947973859e, type: 3}
+  - key: pirate-kit/bottle
+    prefab: {fileID: 919132149155446097, guid: 18dc32c4ca856b94bb8c64b019900326, type: 3}
+  - key: pirate-kit/bottle-large
+    prefab: {fileID: 919132149155446097, guid: ce951af7228d4f640abd2408cffbbb45, type: 3}
+  - key: pirate-kit/cannon
+    prefab: {fileID: 919132149155446097, guid: 3ba9fcc6dc5518a479f6ef0c48d0e878, type: 3}
+  - key: pirate-kit/cannon-ball
+    prefab: {fileID: 919132149155446097, guid: af87a9b159aca6445a30a0ac09ad1b3d, type: 3}
+  - key: pirate-kit/cannon-mobile
+    prefab: {fileID: 919132149155446097, guid: 55c91197e1723194b9edd2f44006b617, type: 3}
+  - key: pirate-kit/castle-door
+    prefab: {fileID: 919132149155446097, guid: 18d85d678163b824d8fbd9244d1a9249, type: 3}
+  - key: pirate-kit/castle-gate
+    prefab: {fileID: 919132149155446097, guid: c631431bf80c2e6488d35bbfcc65afbc, type: 3}
+  - key: pirate-kit/castle-wall
+    prefab: {fileID: 919132149155446097, guid: 7473c0310ccdf6f47a7ec6d856c1bbc1, type: 3}
+  - key: pirate-kit/castle-window
+    prefab: {fileID: 919132149155446097, guid: ead245a030724774984b8db94fed7f1a, type: 3}
+  - key: pirate-kit/chest
+    prefab: {fileID: 919132149155446097, guid: a727c0c0d84c8614ca59cdb3bd0d5075, type: 3}
+  - key: pirate-kit/crate
+    prefab: {fileID: 919132149155446097, guid: b7d2bcbdeaf93f84ba9741e5cbd93a8b, type: 3}
+  - key: pirate-kit/crate-bottles
+    prefab: {fileID: 919132149155446097, guid: 4fbad5344ef7bca4391a1fbabf01fe74, type: 3}
+  - key: pirate-kit/flag
+    prefab: {fileID: 919132149155446097, guid: ff01f2367a662784aba084739b002e96, type: 3}
+  - key: pirate-kit/flag-high
+    prefab: {fileID: 919132149155446097, guid: bb09f889bac2c144688d4f547ddce7d1, type: 3}
+  - key: pirate-kit/flag-high-pennant
+    prefab: {fileID: 919132149155446097, guid: 7c48dc2b5b720f443907413863b64629, type: 3}
+  - key: pirate-kit/flag-pennant
+    prefab: {fileID: 919132149155446097, guid: 9818d4327a95c824fb1e3a6aa3230c38, type: 3}
+  - key: pirate-kit/flag-pirate
+    prefab: {fileID: 919132149155446097, guid: 77dde59c3ab86a744b07f8b6ce490dba, type: 3}
+  - key: pirate-kit/flag-pirate-high
+    prefab: {fileID: 919132149155446097, guid: 484d177a26f40274b8386b9d660bf949, type: 3}
+  - key: pirate-kit/flag-pirate-high-pennant
+    prefab: {fileID: 919132149155446097, guid: 0445ac50040dc7f4aa3d964128bffc53, type: 3}
+  - key: pirate-kit/flag-pirate-pennant
+    prefab: {fileID: 919132149155446097, guid: 1e55a8d3b0335ff44a812c25bcccc450, type: 3}
+  - key: pirate-kit/grass
+    prefab: {fileID: 919132149155446097, guid: 0ebc8273fe37af74094c2c1df8bc1c95, type: 3}
+  - key: pirate-kit/grass-patch
+    prefab: {fileID: 919132149155446097, guid: d3167df00b600ad43a5845b6fa0f7f5e, type: 3}
+  - key: pirate-kit/grass-plant
+    prefab: {fileID: 919132149155446097, guid: f5a5e90486829d149a39b98f4136205c, type: 3}
+  - key: pirate-kit/hole
+    prefab: {fileID: 919132149155446097, guid: 81d038ae6abf1ed4cba09d45f460f3dc, type: 3}
+  - key: pirate-kit/mast
+    prefab: {fileID: 919132149155446097, guid: 05729dd518612ab45adf7343e0328fa7, type: 3}
+  - key: pirate-kit/mast-ropes
+    prefab: {fileID: 919132149155446097, guid: 48d021f4e06f7854bb871d9c99682110, type: 3}
+  - key: pirate-kit/palm-bend
+    prefab: {fileID: 919132149155446097, guid: c626b09ae110b11488ec5c1bd22b72c1, type: 3}
+  - key: pirate-kit/palm-detailed-bend
+    prefab: {fileID: 919132149155446097, guid: 0508cb0eddfd8c2498b0757d4b9c22e9, type: 3}
+  - key: pirate-kit/palm-detailed-straight
+    prefab: {fileID: 919132149155446097, guid: c520b86e45ff65f41b0a78e570942fa6, type: 3}
+  - key: pirate-kit/palm-straight
+    prefab: {fileID: 919132149155446097, guid: 51994f8bcd98bd841aea5e2c30054717, type: 3}
+  - key: pirate-kit/patch-grass
+    prefab: {fileID: 919132149155446097, guid: 7f1e640af682f454099b4b30d7965d21, type: 3}
+  - key: pirate-kit/patch-grass-foliage
+    prefab: {fileID: 919132149155446097, guid: e997519379b31e64083ea870aed01a77, type: 3}
+  - key: pirate-kit/patch-sand
+    prefab: {fileID: 919132149155446097, guid: 8078c7c567a47124e9df19770b16657c, type: 3}
+  - key: pirate-kit/patch-sand-foliage
+    prefab: {fileID: 919132149155446097, guid: d594875cfe5d6a243bc5db486df738f2, type: 3}
+  - key: pirate-kit/platform
+    prefab: {fileID: 919132149155446097, guid: 8d1234d98d44d2745baa1bbbea5f6208, type: 3}
+  - key: pirate-kit/platform-planks
+    prefab: {fileID: 919132149155446097, guid: ce870318238db864cb611187023d6da4, type: 3}
+  - key: pirate-kit/rocks-a
+    prefab: {fileID: 919132149155446097, guid: 85646a0d4ee38bc43a0fcf1d65bc0f31, type: 3}
+  - key: pirate-kit/rocks-b
+    prefab: {fileID: 919132149155446097, guid: eb1bab45030a1154690999de3d8ae4cd, type: 3}
+  - key: pirate-kit/rocks-c
+    prefab: {fileID: 919132149155446097, guid: a90fd07fd521d6148a8da2ecbb269af5, type: 3}
+  - key: pirate-kit/rocks-sand-a
+    prefab: {fileID: 919132149155446097, guid: ede167c3dcdd05142804e4348e3d1424, type: 3}
+  - key: pirate-kit/rocks-sand-b
+    prefab: {fileID: 919132149155446097, guid: 9f3d4c90d4d2cf34bb355688b4fdeea1, type: 3}
+  - key: pirate-kit/rocks-sand-c
+    prefab: {fileID: 919132149155446097, guid: f8c6e04beb170cf46ab63415007af8cd, type: 3}
+  - key: pirate-kit/ship-ghost
+    prefab: {fileID: 919132149155446097, guid: 4b1b9faba76aedd4fbb1d5805cb51f38, type: 3}
+  - key: pirate-kit/ship-large
+    prefab: {fileID: 919132149155446097, guid: f1d695476279cc0488918e80e64bc3cf, type: 3}
+  - key: pirate-kit/ship-medium
+    prefab: {fileID: 919132149155446097, guid: b65c3db9ad84e17489448a509756ebb5, type: 3}
+  - key: pirate-kit/ship-pirate-large
+    prefab: {fileID: 919132149155446097, guid: 50bb17186e70a094ea7109adc4585bff, type: 3}
+  - key: pirate-kit/ship-pirate-medium
+    prefab: {fileID: 919132149155446097, guid: ae7a39d5171024145a79de84342caf27, type: 3}
+  - key: pirate-kit/ship-pirate-small
+    prefab: {fileID: 919132149155446097, guid: 07cdd7da3dfed754e8d1ca6a591fc7b7, type: 3}
+  - key: pirate-kit/ship-small
+    prefab: {fileID: 919132149155446097, guid: 00ce7c8946db3934da1119f80ca5ebf6, type: 3}
+  - key: pirate-kit/ship-wreck
+    prefab: {fileID: 919132149155446097, guid: a19900b7ea047e643900fbf1126f718f, type: 3}
+  - key: pirate-kit/structure
+    prefab: {fileID: 919132149155446097, guid: 721746f8d63062c449882f0ae3f80039, type: 3}
+  - key: pirate-kit/structure-fence
+    prefab: {fileID: 919132149155446097, guid: c5c2bd167c407224fa815689cd3655da, type: 3}
+  - key: pirate-kit/structure-fence-sides
+    prefab: {fileID: 919132149155446097, guid: 9dc41e7014bfb8842ab5e2fe2735aec1, type: 3}
+  - key: pirate-kit/structure-platform
+    prefab: {fileID: 919132149155446097, guid: 77762c191728a7945945361fdfea503e, type: 3}
+  - key: pirate-kit/structure-platform-dock
+    prefab: {fileID: 919132149155446097, guid: 0eb0f8198212362449b5aba009d646ad, type: 3}
+  - key: pirate-kit/structure-platform-dock-small
+    prefab: {fileID: 919132149155446097, guid: f14255a6262cd374ebd490bee1cd3f8b, type: 3}
+  - key: pirate-kit/structure-platform-small
+    prefab: {fileID: 919132149155446097, guid: 64775cc51c9cab94b8d8638703d56d33, type: 3}
+  - key: pirate-kit/structure-roof
+    prefab: {fileID: 919132149155446097, guid: 267ca95b7fb1a2c4b848b9c1b3ae1ee0, type: 3}
+  - key: pirate-kit/tool-paddle
+    prefab: {fileID: 919132149155446097, guid: 28c1d7143de55484f863bed50d90298c, type: 3}
+  - key: pirate-kit/tool-shovel
+    prefab: {fileID: 919132149155446097, guid: 25dd0e54f96052c4f92a7ad6cec529d9, type: 3}
+  - key: pirate-kit/tower-base
+    prefab: {fileID: 919132149155446097, guid: 623c5c2e75bf5ea4d954d3ec381318b4, type: 3}
+  - key: pirate-kit/tower-base-door
+    prefab: {fileID: 919132149155446097, guid: a9c13f2585ab5c44584212e3376fb8ee, type: 3}
+  - key: pirate-kit/tower-complete-large
+    prefab: {fileID: 919132149155446097, guid: 006b7d0c178b46748bf78aa12a299003, type: 3}
+  - key: pirate-kit/tower-complete-small
+    prefab: {fileID: 919132149155446097, guid: 8964bb37442a78d49ad13a718200dbb2, type: 3}
+  - key: pirate-kit/tower-middle
+    prefab: {fileID: 919132149155446097, guid: dd6720e9b28c80b4da3999e27f24b098, type: 3}
+  - key: pirate-kit/tower-middle-windows
+    prefab: {fileID: 919132149155446097, guid: 0c98f2e11c1c5fb459582c48137b8961, type: 3}
+  - key: pirate-kit/tower-roof
+    prefab: {fileID: 919132149155446097, guid: 70be1799dae12284db1994e029c150f0, type: 3}
+  - key: pirate-kit/tower-top
+    prefab: {fileID: 919132149155446097, guid: f227b01331dd0d8449e0d3a900fabe8d, type: 3}
+  - key: pirate-kit/tower-watch
+    prefab: {fileID: 919132149155446097, guid: 44412028a4e22bd4c923280a00e77b75, type: 3}
+  - key: survival-kit/barrel
+    prefab: {fileID: 919132149155446097, guid: 1e6ff37151fb5d14e8005cb876fa4d99, type: 3}
+  - key: survival-kit/barrel-open
+    prefab: {fileID: 919132149155446097, guid: c616f9b3b111ee14792f4f518decc6e1, type: 3}
+  - key: survival-kit/bedroll
+    prefab: {fileID: 919132149155446097, guid: 76249b2b62d61734abcbe22522c4cfeb, type: 3}
+  - key: survival-kit/bedroll-frame
+    prefab: {fileID: 919132149155446097, guid: ea1c51e570b91e24b833617884d419aa, type: 3}
+  - key: survival-kit/bedroll-packed
+    prefab: {fileID: 919132149155446097, guid: 6af3d9f9e43220c4e9b395ec89666b46, type: 3}
+  - key: survival-kit/bottle
+    prefab: {fileID: 919132149155446097, guid: 933184384b3324b4fa0d2cedce4b4293, type: 3}
+  - key: survival-kit/bottle-large
+    prefab: {fileID: 919132149155446097, guid: 4ffb03b072dda4243bef60845a468630, type: 3}
+  - key: survival-kit/box
+    prefab: {fileID: 919132149155446097, guid: a4538e3fdfa591b42b65773794b62d79, type: 3}
+  - key: survival-kit/box-large
+    prefab: {fileID: 919132149155446097, guid: 62f902af9d1dd30419fc5b3e9f330621, type: 3}
+  - key: survival-kit/box-large-open
+    prefab: {fileID: 919132149155446097, guid: e2a3d3f024c63404383ca54c8fdeca29, type: 3}
+  - key: survival-kit/box-open
+    prefab: {fileID: 919132149155446097, guid: 4149a9631977ad54a8ecd6d63556b8d0, type: 3}
+  - key: survival-kit/bucket
+    prefab: {fileID: 919132149155446097, guid: 85c5b74f90a68d04fa179f9fc220a9f5, type: 3}
+  - key: survival-kit/campfire-fishing-stand
+    prefab: {fileID: 919132149155446097, guid: c776aadd6af5d894998e10764929a5a7, type: 3}
+  - key: survival-kit/campfire-pit
+    prefab: {fileID: 919132149155446097, guid: 98044c0ce9591414393509074a4af81a, type: 3}
+  - key: survival-kit/campfire-stand
+    prefab: {fileID: 919132149155446097, guid: 5eb1938ef41e76444a7a732128d4122f, type: 3}
+  - key: survival-kit/chest
+    prefab: {fileID: 919132149155446097, guid: 524bd5331c1a2c74c8e8ef27625bd4b2, type: 3}
+  - key: survival-kit/fence
+    prefab: {fileID: 919132149155446097, guid: b89b92ca9fe929c499f346343e6ff980, type: 3}
+  - key: survival-kit/fence-doorway
+    prefab: {fileID: 919132149155446097, guid: 8ef51b278b441ac41aed9808379320db, type: 3}
+  - key: survival-kit/fence-fortified
+    prefab: {fileID: 919132149155446097, guid: 431ba99e81bf5bc40932cdebc7d45ffd, type: 3}
+  - key: survival-kit/fish
+    prefab: {fileID: 919132149155446097, guid: f7f8996d393f12e42904e64e590efb19, type: 3}
+  - key: survival-kit/fish-large
+    prefab: {fileID: 919132149155446097, guid: a51493f252e77394f97503823b6dd495, type: 3}
+  - key: survival-kit/floor
+    prefab: {fileID: 919132149155446097, guid: 5db55dc34612b8749ab03d523576fe13, type: 3}
+  - key: survival-kit/floor-hole
+    prefab: {fileID: 919132149155446097, guid: 2f14207129b77b4498b8999487c417f9, type: 3}
+  - key: survival-kit/floor-old
+    prefab: {fileID: 919132149155446097, guid: 031453a34b20a1a4186c81a52754e8ab, type: 3}
+  - key: survival-kit/grass
+    prefab: {fileID: 919132149155446097, guid: 87209079b50d4164daa25bd754aeca8f, type: 3}
+  - key: survival-kit/grass-large
+    prefab: {fileID: 919132149155446097, guid: dc11aa5e7b3d82b49bc02ca1c5f308f0, type: 3}
+  - key: survival-kit/metal-panel
+    prefab: {fileID: 919132149155446097, guid: bca3ebfc93df62f40a727fe51c626434, type: 3}
+  - key: survival-kit/metal-panel-narrow
+    prefab: {fileID: 919132149155446097, guid: 22b0146c76d4ef949b6fe1f0e0bdc54b, type: 3}
+  - key: survival-kit/metal-panel-screws
+    prefab: {fileID: 919132149155446097, guid: 55608909c7f70954c80f4d394eabe793, type: 3}
+  - key: survival-kit/metal-panel-screws-half
+    prefab: {fileID: 919132149155446097, guid: c80268dc01b848d428c4735945f05b81, type: 3}
+  - key: survival-kit/metal-panel-screws-narrow
+    prefab: {fileID: 919132149155446097, guid: 8ebd331439bf7e04bb594d73ca76dedb, type: 3}
+  - key: survival-kit/patch-grass
+    prefab: {fileID: 919132149155446097, guid: 06d415abc0c0d794597dba8b5c41f3c7, type: 3}
+  - key: survival-kit/patch-grass-large
+    prefab: {fileID: 919132149155446097, guid: 5c0c7b8ca8185d64e9e2f5a91802d409, type: 3}
+  - key: survival-kit/resource-planks
+    prefab: {fileID: 919132149155446097, guid: 5f14b8fe4830b4d4eb2501b67911f6d5, type: 3}
+  - key: survival-kit/resource-stone
+    prefab: {fileID: 919132149155446097, guid: 8bcb7e4e4a84f1243a2e7a5957b09748, type: 3}
+  - key: survival-kit/resource-stone-large
+    prefab: {fileID: 919132149155446097, guid: 0d2ad891ecc97aa41b75d5420034901b, type: 3}
+  - key: survival-kit/resource-wood
+    prefab: {fileID: 919132149155446097, guid: 0c033ea4184cc1a44bb52610ad5a4bd3, type: 3}
+  - key: survival-kit/rock-a
+    prefab: {fileID: 919132149155446097, guid: 0a302e3e57d86994bb3e1ac16bed1e15, type: 3}
+  - key: survival-kit/rock-b
+    prefab: {fileID: 919132149155446097, guid: c8dccbfb41b1b76479ec95222db85931, type: 3}
+  - key: survival-kit/rock-c
+    prefab: {fileID: 919132149155446097, guid: e2882a62964fc964186b4ac3be7f3b7f, type: 3}
+  - key: survival-kit/rock-flat
+    prefab: {fileID: 919132149155446097, guid: b05dcc2ede48c5f45bedcf49a5f496c3, type: 3}
+  - key: survival-kit/rock-flat-grass
+    prefab: {fileID: 919132149155446097, guid: e06fa5a87036a1a4ea092f942c4c9bc9, type: 3}
+  - key: survival-kit/rock-sand-a
+    prefab: {fileID: 919132149155446097, guid: a59eb4cf3fa2a824f9defcc9eea63595, type: 3}
+  - key: survival-kit/rock-sand-b
+    prefab: {fileID: 919132149155446097, guid: be0f3fbea79ce0349adcf0ae9f4f1775, type: 3}
+  - key: survival-kit/rock-sand-c
+    prefab: {fileID: 919132149155446097, guid: 8713a6c1eb0259444a0bf8240d7b44fe, type: 3}
+  - key: survival-kit/signpost
+    prefab: {fileID: 919132149155446097, guid: a323231ef78f4284394ec6208d208e62, type: 3}
+  - key: survival-kit/signpost-single
+    prefab: {fileID: 919132149155446097, guid: 8418d8c4d6566f04bb6ef7731dacddae, type: 3}
+  - key: survival-kit/structure
+    prefab: {fileID: 919132149155446097, guid: a1db05b4f24de1745a76f9eebba133b1, type: 3}
+  - key: survival-kit/structure-canvas
+    prefab: {fileID: 919132149155446097, guid: 5b19b2e56f7a6514f9103e4cf0ffa3b3, type: 3}
+  - key: survival-kit/structure-floor
+    prefab: {fileID: 919132149155446097, guid: 9db3952fe92c0384cbb74a9240903c63, type: 3}
+  - key: survival-kit/structure-metal
+    prefab: {fileID: 919132149155446097, guid: c21b3355e3cf96342badfca33fa452aa, type: 3}
+  - key: survival-kit/structure-metal-doorway
+    prefab: {fileID: 919132149155446097, guid: 93fa37048a79d054f8a15527794a0b86, type: 3}
+  - key: survival-kit/structure-metal-floor
+    prefab: {fileID: 919132149155446097, guid: 5a96ff0eb867d88459270c0fa3999214, type: 3}
+  - key: survival-kit/structure-metal-roof
+    prefab: {fileID: 919132149155446097, guid: 81917c9622070054fa1399997e8fafd3, type: 3}
+  - key: survival-kit/structure-metal-wall
+    prefab: {fileID: 919132149155446097, guid: 68c8b264f7dfaca41b458e802d5f68ca, type: 3}
+  - key: survival-kit/structure-roof
+    prefab: {fileID: 919132149155446097, guid: 4fddb7a55f5f056469efc36777af6d1a, type: 3}
+  - key: survival-kit/tent
+    prefab: {fileID: 919132149155446097, guid: 696d71095aa32244280cf980b2ccae27, type: 3}
+  - key: survival-kit/tent-canvas
+    prefab: {fileID: 919132149155446097, guid: 19c0f109201f85644a18758f0a9ffd07, type: 3}
+  - key: survival-kit/tent-canvas-half
+    prefab: {fileID: 919132149155446097, guid: c99c41ea88a5d3c47b053e42bef656e0, type: 3}
+  - key: survival-kit/tool-axe
+    prefab: {fileID: 919132149155446097, guid: 9343306de27323749b93b2544cb581a2, type: 3}
+  - key: survival-kit/tool-axe-upgraded
+    prefab: {fileID: 919132149155446097, guid: 718f285c38b395548aa61c72adeaa573, type: 3}
+  - key: survival-kit/tool-hammer
+    prefab: {fileID: 919132149155446097, guid: d88401521981b9544b928722cbca979c, type: 3}
+  - key: survival-kit/tool-hammer-upgraded
+    prefab: {fileID: 919132149155446097, guid: 72e1a032d9bb10c4293150cabc831496, type: 3}
+  - key: survival-kit/tool-hoe
+    prefab: {fileID: 919132149155446097, guid: 08012ecd44f58df4ca3280db960e779c, type: 3}
+  - key: survival-kit/tool-hoe-upgraded
+    prefab: {fileID: 919132149155446097, guid: 3b4ed2fe836cbce4e8de0c6bf269faea, type: 3}
+  - key: survival-kit/tool-pickaxe
+    prefab: {fileID: 919132149155446097, guid: 2ea7abb56c608ea4e8d1e7687133b02c, type: 3}
+  - key: survival-kit/tool-pickaxe-upgraded
+    prefab: {fileID: 919132149155446097, guid: 9ce22cddb14505148b2d573db560d08f, type: 3}
+  - key: survival-kit/tool-shovel
+    prefab: {fileID: 919132149155446097, guid: db674cf033236394995fc28123a6876b, type: 3}
+  - key: survival-kit/tool-shovel-upgraded
+    prefab: {fileID: 919132149155446097, guid: 32fcc904688fe0e4894c6562b8235322, type: 3}
+  - key: survival-kit/tree
+    prefab: {fileID: 919132149155446097, guid: 862e2d9e6b16b7146991a57ae0322224, type: 3}
+  - key: survival-kit/tree-autumn
+    prefab: {fileID: 919132149155446097, guid: 03ca72ef93c4447498d78fb4aab846fb, type: 3}
+  - key: survival-kit/tree-autumn-tall
+    prefab: {fileID: 919132149155446097, guid: 2a2c2d1b8fca1d14ca326f736cbc0d94, type: 3}
+  - key: survival-kit/tree-autumn-trunk
+    prefab: {fileID: 919132149155446097, guid: fcf316a270feb934cb556af54243a4b5, type: 3}
+  - key: survival-kit/tree-log
+    prefab: {fileID: 919132149155446097, guid: d7d5f56ccf9044d4684a0ab39d651f6f, type: 3}
+  - key: survival-kit/tree-log-small
+    prefab: {fileID: 919132149155446097, guid: 54d4169eeca15044999c830a72708197, type: 3}
+  - key: survival-kit/tree-tall
+    prefab: {fileID: 919132149155446097, guid: 2f14b9e601adb2746b02fe70bc2842ac, type: 3}
+  - key: survival-kit/tree-trunk
+    prefab: {fileID: 919132149155446097, guid: 5582cb9694fbbcc48bc9e28b4d58de66, type: 3}
+  - key: survival-kit/workbench
+    prefab: {fileID: 919132149155446097, guid: dccc44185ec563546a824fb12a614e96, type: 3}
+  - key: survival-kit/workbench-anvil
+    prefab: {fileID: 919132149155446097, guid: 9d3766650b5b91c4c8b1eb75c2ec96f4, type: 3}
+  - key: survival-kit/workbench-grind
+    prefab: {fileID: 919132149155446097, guid: 2ca78f951e9feca4ea2c3612e83bb22a, type: 3}
+  litOpaque: {fileID: 2100000, guid: f8734c2ea9746fe42bbf97dfa72ab649, type: 2}
+  litTransparent: {fileID: 2100000, guid: 1409dacca2245ed4aa7853da8d492562, type: 2}
+  unlitOpaque: {fileID: 2100000, guid: d9f260f0a0362cd40b45e2e9e85d0609, type: 2}
+  unlitTransparent: {fileID: 2100000, guid: 033280c91f9a34c4abc6cd08f7f98fdd, type: 2}

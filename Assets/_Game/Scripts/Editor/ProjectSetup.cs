@@ -1,0 +1,202 @@
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.Build.Reporting;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.Rendering;
+
+namespace StackIsland.EditorTools
+{
+    /// <summary>
+    /// One-click (or batchmode) setup: art library from the Kenney models, template materials, the Main scene,
+    /// build and player settings. Safe to run again.
+    /// Batch: Unity.exe -batchmode -projectPath . -executeMethod StackIsland.EditorTools.ProjectSetup.RunBatch -quit
+    /// </summary>
+    public static class ProjectSetup
+    {
+        public const string ArtRoot = "Assets/_Game/Art/ThirdParty/Kenney";
+        const string ResourcesFolder = "Assets/_Game/Resources";
+        const string ArtLibraryPath = ResourcesFolder + "/ArtLibrary.asset";
+        const string MatFolder = "Assets/_Game/Art/Materials";
+        public const string MainScene = "Assets/_Game/Scenes/Main.unity";
+
+        [MenuItem("Stack Island/Setup Project")]
+        public static void RunBatch()
+        {
+            ImportTmpEssentials();
+            BuildArtLibrary();
+            CreateScene();
+            ConfigurePlayer();
+            AssetDatabase.SaveAssets();
+            Debug.Log("[Setup] Done.");
+        }
+
+        static void ImportTmpEssentials()
+        {
+            if (AssetDatabase.IsValidFolder("Assets/TextMesh Pro")) return;
+            var pkg = Directory.GetDirectories("Library/PackageCache", "com.unity.ugui@*").Select(d => Path.Combine(d, "Package Resources", "TMP Essential Resources.unitypackage")).FirstOrDefault(File.Exists);
+            if (pkg != null) AssetDatabase.ImportPackage(pkg, false);
+        }
+
+        static void EnsureFolder(string path)
+        {
+            if (AssetDatabase.IsValidFolder(path)) return;
+            var parent = Path.GetDirectoryName(path).Replace('\\', '/');
+            EnsureFolder(parent);
+            AssetDatabase.CreateFolder(parent, Path.GetFileName(path));
+        }
+
+        static void BuildArtLibrary()
+        {
+            EnsureFolder(ResourcesFolder);
+            var lib = AssetDatabase.LoadAssetAtPath<ArtLibrary>(ArtLibraryPath);
+            if (lib == null)
+            {
+                lib = ScriptableObject.CreateInstance<ArtLibrary>();
+                AssetDatabase.CreateAsset(lib, ArtLibraryPath);
+            }
+            lib.entries.Clear();
+            foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { ArtRoot }))
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                var rel = path.Substring(ArtRoot.Length + 1);
+                var kit = rel.Split('/')[0];
+                var name = Path.GetFileNameWithoutExtension(path);
+                var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                if (go != null) lib.entries.Add(new ArtLibrary.Entry { key = $"{kit}/{name}", prefab = go });
+            }
+            lib.entries.Sort((a, b) => string.CompareOrdinal(a.key, b.key));
+            EnsureFolder(MatFolder);
+            lib.litOpaque = MakeMat("LitOpaque", "Universal Render Pipeline/Lit", false);
+            lib.litTransparent = MakeMat("LitTransparent", "Universal Render Pipeline/Lit", true);
+            lib.unlitOpaque = MakeMat("UnlitOpaque", "Universal Render Pipeline/Unlit", false);
+            lib.unlitTransparent = MakeMat("UnlitTransparent", "Universal Render Pipeline/Unlit", true);
+            lib.ResetCache();
+            EditorUtility.SetDirty(lib);
+            AssetDatabase.SaveAssets();
+            Debug.Log($"[Setup] ArtLibrary: {lib.entries.Count} models.");
+        }
+
+        static Material MakeMat(string name, string shader, bool transparent)
+        {
+            string path = $"{MatFolder}/{name}.mat";
+            var m = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (m == null)
+            {
+                m = new Material(Shader.Find(shader));
+                AssetDatabase.CreateAsset(m, path);
+            }
+            m.shader = Shader.Find(shader);
+            m.SetFloat("_Smoothness", 0.2f);
+            if (transparent)
+            {
+                m.SetFloat("_Surface", 1);
+                m.SetFloat("_Blend", 0);
+                m.SetOverrideTag("RenderType", "Transparent");
+                m.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+                m.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+                m.SetFloat("_SrcBlendAlpha", (float)BlendMode.One);
+                m.SetFloat("_DstBlendAlpha", (float)BlendMode.OneMinusSrcAlpha);
+                m.SetFloat("_ZWrite", 0);
+                m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                m.renderQueue = (int)RenderQueue.Transparent;
+            }
+            else
+            {
+                m.SetFloat("_Surface", 0);
+                m.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                m.renderQueue = -1;
+            }
+            m.EnableKeyword("_EMISSION");
+            m.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
+            EditorUtility.SetDirty(m);
+            return m;
+        }
+
+        static void CreateScene()
+        {
+            EnsureFolder("Assets/_Game/Scenes");
+            var main = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            new GameObject("Game").AddComponent<Game>();
+            EditorSceneManager.SaveScene(main, MainScene);
+            EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(MainScene, true) };
+        }
+
+        static void ConfigurePlayer()
+        {
+            PlayerSettings.companyName = "Stack Island";
+            PlayerSettings.productName = "Stack Island";
+            PlayerSettings.defaultScreenWidth = 1600;
+            PlayerSettings.defaultScreenHeight = 900;
+            PlayerSettings.defaultIsNativeResolution = true;
+            PlayerSettings.fullScreenMode = FullScreenMode.FullScreenWindow;
+            PlayerSettings.resizableWindow = true;
+            PlayerSettings.runInBackground = true;
+            PlayerSettings.colorSpace = ColorSpace.Linear;
+            QualitySettings.vSyncCount = 1;
+        }
+    }
+
+    /// <summary>Windows build into Builds/Windows (run StackIsland.exe from there).</summary>
+    public static class BuildScript
+    {
+        const string OutDir = "Builds/Windows";
+
+        [MenuItem("Stack Island/Build Windows")]
+        public static void BuildWindows() => Build(false);
+
+        [MenuItem("Stack Island/Build Windows + Zip (to share)")]
+        public static void BuildWindowsZip() => Build(true);
+
+        static void Build(bool zip)
+        {
+            if (Directory.Exists(OutDir)) Directory.Delete(OutDir, true);
+            var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
+            {
+                scenes = new[] { ProjectSetup.MainScene },
+                locationPathName = Path.Combine(OutDir, "StackIsland.exe"),
+                target = BuildTarget.StandaloneWindows64,
+                options = BuildOptions.None,
+            });
+            if (report.summary.result != BuildResult.Succeeded)
+            {
+                Debug.LogError($"[Build] Failed: {report.summary.result}");
+                if (Application.isBatchMode) EditorApplication.Exit(1);
+                return;
+            }
+            foreach (var d in Directory.GetDirectories(OutDir, "*BurstDebugInformation_DoNotShip")) Directory.Delete(d, true);
+            if (zip)
+            {
+                const string z = "Builds/StackIsland-Windows.zip";
+                if (File.Exists(z)) File.Delete(z);
+                ZipFile.CreateFromDirectory(OutDir, z);
+            }
+            Debug.Log($"[Build] OK: {report.summary.totalSize / (1024 * 1024)} MB -> {OutDir}/StackIsland.exe");
+        }
+    }
+
+    /// <summary>Kenney imports: crisp palette textures, no animations/cameras/lights.</summary>
+    public class KenneyImportRules : AssetPostprocessor
+    {
+        void OnPreprocessTexture()
+        {
+            if (!assetPath.Contains("ThirdParty/Kenney")) return;
+            var ti = (TextureImporter)assetImporter;
+            ti.filterMode = FilterMode.Point;
+            ti.mipmapEnabled = false;
+            ti.textureCompression = TextureImporterCompression.Uncompressed;
+        }
+
+        void OnPreprocessModel()
+        {
+            if (!assetPath.Contains("ThirdParty/Kenney")) return;
+            var mi = (ModelImporter)assetImporter;
+            mi.importAnimation = false;
+            mi.importCameras = false;
+            mi.importLights = false;
+            mi.animationType = ModelImporterAnimationType.None;
+        }
+    }
+}
