@@ -42,7 +42,8 @@ namespace StackIsland.Tests
                 var prev = all[i - 1];
                 Assert.Greater(y.GateCost, prev.GateCost, "gates get more expensive");
                 Assert.Greater(Items.Price(y.Product), Items.Price(prev.Product), "later products are worth more");
-                Assert.Greater(y.Scale, prev.Scale, "later yards cost more");
+                // the combo finale is limited by couriers, not by its price, so it's priced on its own
+                if (y.Source != SourceKind.None) Assert.Greater(y.Scale, prev.Scale, "later yards cost more");
             }
         }
 

@@ -26,6 +26,7 @@ namespace StackIsland
         public readonly List<Station> Stations = new List<Station>();
         public readonly List<CatcherWorker> Gatherers = new List<CatcherWorker>();
         public readonly List<WaiterWorker> Waiters = new List<WaiterWorker>();
+        public readonly List<CourierWorker> Couriers = new List<CourierWorker>();
         GameObject _eastGate;
 
         public static Vector3 OriginOf(int index) => new Vector3((index - 1) * Spacing, 0, 0);
@@ -113,6 +114,38 @@ namespace StackIsland
                 Field = root.gameObject.AddComponent<FieldPatch>();
                 Field.Init(this);
             }
+            else BuildVolcano(root);
+        }
+
+        /// <summary>No pen or field here: a smoking volcano fills the corner instead.</summary>
+        void BuildVolcano(Transform root)
+        {
+            var c = W((SrcMinX + SrcMaxX) * 0.5f, (SrcMinZ + SrcMaxZ) * 0.5f + 1f);
+            var rock = new Color(0.36f, 0.3f, 0.32f);
+            for (int i = 0; i < 6; i++)
+            {
+                float r = 9f - i * 1.3f;
+                var ring = Visuals.Primitive(PrimitiveType.Cylinder, root, Vector3.zero, new Vector3(r, 0.55f, r), Mats.Lit(Color.Lerp(rock, new Color(0.5f, 0.4f, 0.4f), i / 6f)), "slope");
+                ring.transform.position = c + Vector3.up * (0.55f + i * 1.0f);
+                ring.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+            var lava = Visuals.Primitive(PrimitiveType.Cylinder, root, Vector3.zero, new Vector3(1.8f, 0.1f, 1.8f), Mats.Glow(new Color(1f, 0.45f, 0.1f), 2.2f), "lava");
+            lava.transform.position = c + Vector3.up * 6.0f;
+            for (int i = 0; i < 4; i++)
+            {
+                var flow = Visuals.Primitive(PrimitiveType.Cube, root, Vector3.zero, new Vector3(0.5f, 0.08f, 4.5f), Mats.Glow(new Color(1f, 0.5f, 0.12f), 1.6f), "lavaFlow");
+                flow.transform.position = c + Vector3.up * 3.6f;
+                flow.transform.rotation = Quaternion.Euler(-42f, i * 90f + 30f, 0);
+            }
+            var top = new GameObject("smokeTop").transform;
+            top.SetParent(root, false);
+            top.position = c + Vector3.up * 6.2f;
+            var smoke = Fx.Smoke(top);
+            var em = smoke.emission;
+            em.rateOverTime = 4f;
+            var main = smoke.main;
+            main.startSize = new ParticleSystem.MinMaxCurve(0.6f, 1.2f);
+            Blocker(c, new Vector3(10f, 4f, 10f), Quaternion.identity);
         }
 
         void BuildGround()

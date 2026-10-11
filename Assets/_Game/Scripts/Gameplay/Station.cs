@@ -34,7 +34,7 @@ namespace StackIsland
 
             var inputs = def.StationInputs;
             for (int i = 0; i < inputs.Length; i++)
-                Inputs.Add(MakeTray("in" + i, new Vector3(-2.9f - i * 2.1f, 0, -2.6f), inputs[i], true, false, new Color(0.96f, 0.55f, 0.5f)));
+                Inputs.Add(MakeTray("in" + i, new Vector3(-2.9f, 0, -2.6f + i * 2.4f), inputs[i], true, false, new Color(0.96f, 0.55f, 0.5f)));
             Output = MakeTray("out", new Vector3(2.9f, 0, -2.6f), def.Product, false, true, new Color(1f, 0.82f, 0.45f));
             if (_chimney != null) _smoke = Fx.Smoke(_chimney);
         }
@@ -120,6 +120,7 @@ namespace StackIsland
                 case "blender": Blender(parent, out mouth, out active); return;
                 case "fryer": Fryer(parent, out mouth, out chimney, out active); return;
                 case "freezer": Freezer(parent, out mouth, out active); return;
+                case "feast": Feast(parent, out mouth, out active); return;
             }
             var oven = ProcArt.DomeOven(parent, out mouth, out chimney);
             var fire = oven.transform.Find("fire");
@@ -201,6 +202,36 @@ namespace StackIsland
             chimney.localPosition = new Vector3(0, 3.65f, 0.6f);
             active = Visuals.Primitive(PrimitiveType.Cylinder, parent, new Vector3(-0.2f, 1.07f, 0.1f), new Vector3(1.3f, 0.02f, 1.3f), Mats.Glow(new Color(1f, 0.6f, 0.2f), 1.2f), "heat");
             mouth = Mouth(parent, new Vector3(-0.2f, 1.3f, -0.4f));
+        }
+
+        /// <summary>Long banquet table with platters, candles and a roast in the middle.</summary>
+        static void Feast(Transform parent, out Transform mouth, out GameObject active)
+        {
+            P(PrimitiveType.Cube, parent, new Vector3(0, 0.85f, 0), new Vector3(3.4f, 0.14f, 2.2f), new Color(0.55f, 0.3f, 0.18f));
+            P(PrimitiveType.Cube, parent, new Vector3(0, 0.93f, 0), new Vector3(3.5f, 0.03f, 2.3f), new Color(0.85f, 0.2f, 0.22f), false);
+            foreach (float x in new[] { -1.5f, 1.5f })
+                foreach (float z in new[] { -0.9f, 0.9f })
+                    P(PrimitiveType.Cube, parent, new Vector3(x, 0.4f, z), new Vector3(0.18f, 0.8f, 0.18f), new Color(0.45f, 0.25f, 0.15f));
+            var roast = Visuals.Spawn("food-kit/turkey", parent, 1.0f, Color.white);
+            roast.transform.localPosition = new Vector3(0, 0.95f, 0);
+            string[] dishes = { "food-kit/maki-salmon", "food-kit/frappe", "food-kit/burger-cheese", "food-kit/cake" };
+            for (int i = 0; i < dishes.Length; i++)
+            {
+                var d = Visuals.Spawn(dishes[i], parent, 0.45f, Color.white);
+                d.transform.localPosition = new Vector3(-1.2f + i * 0.8f, 0.95f, i % 2 == 0 ? 0.6f : -0.6f);
+            }
+            foreach (float x in new[] { -1.4f, 1.4f })
+            {
+                P(PrimitiveType.Cylinder, parent, new Vector3(x, 1.15f, 0), new Vector3(0.12f, 0.22f, 0.12f), new Color(1f, 0.97f, 0.88f), false);
+                Visuals.Primitive(PrimitiveType.Sphere, parent, new Vector3(x, 1.43f, 0), Vector3.one * 0.1f, Mats.Glow(new Color(1f, 0.75f, 0.3f), 2f), "flame");
+            }
+            // golden arch over the table
+            foreach (float x in new[] { -1.8f, 1.8f }) P(PrimitiveType.Cube, parent, new Vector3(x, 1.6f, 1.15f), new Vector3(0.18f, 3.2f, 0.18f), new Color(0.98f, 0.78f, 0.25f));
+            P(PrimitiveType.Cube, parent, new Vector3(0, 3.2f, 1.15f), new Vector3(3.8f, 0.3f, 0.3f), new Color(0.98f, 0.78f, 0.25f));
+            active = new GameObject("spin");
+            active.transform.SetParent(parent, false);
+            active.AddComponent<Spinner>().Target = roast.transform;
+            mouth = Mouth(parent, new Vector3(0, 1.2f, -0.8f));
         }
 
         /// <summary>Ice cream machine: a mini-market freezer with a striped awning.</summary>

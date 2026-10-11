@@ -159,6 +159,17 @@ namespace StackIsland
             return $"<b>{Title}</b>{lvl}\n{Describe(Level)}\nCost: <color=#9CFF9A>{NumberFormatter.Format(Remaining)}</color>{paid}\n<size=80%><color=#B8C8D4>Stand still on it to pay</color></size>";
         }
 
+        /// <summary>Pay the rest in one go if the wallet covers it (the Island Manager does this).</summary>
+        public bool TryBuyNow()
+        {
+            if (Maxed || !Shown || Game.I == null) return false;
+            double need = Remaining;
+            if (need > 0 && !Game.I.Spend(need)) return false;
+            Paid = Cost;
+            Complete();
+            return true;
+        }
+
         /// <summary>Tests / debug: buy without paying.</summary>
         public void ForceBuy()
         {

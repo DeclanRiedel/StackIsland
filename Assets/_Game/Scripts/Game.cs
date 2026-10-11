@@ -155,6 +155,32 @@ namespace StackIsland
             return null;
         }
 
+        /// <summary>
+        /// Waypoints across the island: inside a yard its own routing (detouring through its pen gate), between yards
+        /// out through the side gates and along the walkways.
+        /// </summary>
+        public void IslandRoute(Vector3 from, Vector3 to, List<Vector3> pts)
+        {
+            pts.Clear();
+            int a = Mathf.RoundToInt(from.x / Yard.Spacing) + 1, b = Mathf.RoundToInt(to.x / Yard.Spacing) + 1;
+            var tmp = new List<Vector3>();
+            var cur = from;
+            float gz = (Yard.SideGateZ0 + Yard.SideGateZ1) * 0.5f;
+            while (a != b && Yards.TryGetValue(a, out var ya))
+            {
+                int dir = b > a ? 1 : -1;
+                var exit = ya.W(dir > 0 ? Yard.MaxX - 0.6f : Yard.MinX + 0.6f, gz);
+                ya.Route(cur, exit, tmp);
+                pts.AddRange(tmp);
+                a += dir;
+                if (!Yards.TryGetValue(a, out var yb)) break;
+                cur = yb.W(dir > 0 ? Yard.MinX + 0.6f : Yard.MaxX - 0.6f, gz);
+                pts.Add(cur);
+            }
+            if (Yards.TryGetValue(b, out var yt)) { yt.Route(cur, to, tmp); pts.AddRange(tmp); }
+            else pts.Add(to);
+        }
+
         public double PriceBonus(int yard) => Economy.PriceMult(Level($"y{yard}.recipe"));
 
         // ------------------------------------------------------------------ progression (all tiles; numbers in Economy)
@@ -167,6 +193,7 @@ namespace StackIsland
             foreach (var spec in Economy.YardTiles)
             {
                 var sp = spec;
+                if (!Economy.TileApplies(d, sp.Key)) continue;
                 string title = null;
                 System.Action<int> apply = null;
                 System.Func<int, string> describe = null;
@@ -186,7 +213,9 @@ namespace StackIsland
                     case "gather":
                         title = d.GathererName;
                         apply = l => SyncWorkers(y);
-                        describe = l => $"A helper who gathers {Items.Name(d.Raw)} and brings it to the {d.StationName} ({l} > {l + 1} hired)";
+                        describe = l => d.Source == SourceKind.None
+                            ? $"A helper who fetches dishes from the other yards for the {d.StationName} ({l} > {l + 1} hired)"
+                            : $"A helper who gathers {Items.Name(d.Raw)} and brings it to the {d.StationName} ({l} > {l + 1} hired)";
                         break;
                     case "speed":
                         title = d.SpeedTitle;
@@ -224,6 +253,11 @@ namespace StackIsland
                         apply = l => { y.Counter.SpawnEvery = Economy.SpawnEvery(l); y.Counter.MaxWant = Economy.MaxWant(l); };
                         describe = l => $"Customers arrive 10% more often and buy more (up to {Economy.MaxWant(l + 1)} each)";
                         break;
+                    case "manager":
+                        title = "Island Manager";
+                        apply = l => { if (l >= 1) HireManager(y); };
+                        describe = l => $"Buys this yard's upgrades for you, cheapest first, whenever you can afford them";
+                        break;
                     case "crew":
                         title = "Helper Shoes";
                         apply = l => SyncWorkers(y);
@@ -260,12 +294,60 @@ namespace StackIsland
             }
         }
 
+        readonly HashSet<int> _managed = new HashSet<int>();
+        float _managerT;
+
+        void HireManager(Yard y)
+        {
+            if (!_managed.Add(y.Def.Index)) return;
+            var m = new GameObject("Manager").transform;
+            m.SetParent(y.transform, false);
+            m.position = y.W(2.4f, -3.2f);
+            m.rotation = Quaternion.Euler(0, 200, 0);
+            var body = Visuals.Spawn("mini-characters/character-female-c", m, 1.6f, Color.white, true);
+            Visuals.SetShadows(body, true);
+            CharAnim.Attach(body);
+            var cap = Visuals.Primitive(PrimitiveType.Sphere, m, new Vector3(0, 1.62f, 0), new Vector3(0.62f, 0.3f, 0.62f), Mats.Lit(new Color(0.98f, 0.8f, 0.2f)), "cap");
+            cap.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            var board = Visuals.Spawn("food-kit/cutting-board", m, 0.5f, Color.white);
+            board.transform.localPosition = new Vector3(0.1f, 0.85f, 0.35f);
+            board.transform.localRotation = Quaternion.Euler(-60, 0, 0);
+            if (!_loading) Fx.I?.Puff(m.position + Vector3.up, 20);
+        }
+
+        /// <summary>Managers buy their yard's cheapest affordable upgrade (never gates: moving on is the player's call).</summary>
+        void RunManagers()
+        {
+            _managerT -= Time.deltaTime;
+            if (_managerT > 0 || _managed.Count == 0) return;
+            _managerT = 0.8f;
+            foreach (int yard in _managed)
+            {
+                BuyPad best = null;
+                string prefix = $"y{yard}.";
+                foreach (var p in BuyPad.All)
+                {
+                    if (!p.Id.StartsWith(prefix) || p.Id.EndsWith(".gate") || !p.Shown || p.Maxed) continue;
+                    if (best == null || p.Remaining < best.Remaining) best = p;
+                }
+                if (best != null && best.Remaining <= Save.cash && best.TryBuyNow()) return;   // one purchase per tick
+            }
+        }
+
         void SyncWorkers(Yard y)
         {
             string k = $"y{y.Def.Index}.";
             int crew = Level(k + "crew");
             float speed = Economy.HelperSpeed(crew);
-            while (y.Gatherers.Count < Level(k + "gather"))
+            while (y.Def.Source == SourceKind.None && y.Couriers.Count < Level(k + "gather"))
+            {
+                var w = new GameObject("Courier").AddComponent<CourierWorker>();
+                w.transform.SetParent(y.transform, false);
+                w.Init(y, "mini-characters/character-male-e", new Color(0.98f, 0.6f, 0.15f), Economy.GathererCarry(crew), y.W(-2.6f, -1.4f));
+                y.Couriers.Add(w);
+                if (!_loading) Fx.I?.Puff(w.transform.position + Vector3.up, 20);
+            }
+            while (y.Def.Source != SourceKind.None && y.Gatherers.Count < Level(k + "gather"))
             {
                 var w = new GameObject("Gatherer").AddComponent<CatcherWorker>();
                 w.transform.SetParent(y.transform, false);
@@ -283,6 +365,7 @@ namespace StackIsland
                 if (!_loading) Fx.I?.Puff(w.transform.position + Vector3.up, 20);
             }
             foreach (var w in y.Gatherers) { w.Speed = speed; w.SetCapacity(Economy.GathererCarry(crew)); }
+            foreach (var w in y.Couriers) { w.Speed = speed; w.SetCapacity(Economy.GathererCarry(crew)); }
             foreach (var w in y.Waiters) { w.Speed = speed; w.SetCapacity(Economy.WaiterCarry(crew)); }
         }
 
@@ -406,6 +489,7 @@ namespace StackIsland
 
         void Update()
         {
+            RunManagers();
             Save.playTime += Time.unscaledDeltaTime;
             _autosave += Time.unscaledDeltaTime;
             if (_autosave > 20f) SaveNow();

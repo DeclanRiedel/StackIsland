@@ -47,7 +47,8 @@ namespace StackIsland
             if ((target - _routeTarget).sqrMagnitude > 0.25f)
             {
                 _routeTarget = target;
-                Yard.Route(transform.position, target, _route);
+                if (Game.I != null) Game.I.IslandRoute(transform.position, target, _route);   // may cross into other yards
+                else Yard.Route(transform.position, target, _route);
             }
             if (_route.Count == 0) { Anim.SetMoving(false); return true; }
             var next = _route[0];
@@ -262,6 +263,78 @@ namespace StackIsland
                 }
                 if (Stack.Count == 0) _delivering = false;
             }
+        }
+    }
+
+    /// <summary>
+    /// Courier (yards with no source of their own, like the Volcano Feast): walks the walkways to the yards that make
+    /// the dishes the station needs, takes them off those yards' output trays, and brings them back.
+    /// </summary>
+    public class CourierWorker : Worker
+    {
+        bool _delivering;
+        PileZone _src;
+        float _transfer;
+
+        void Update()
+        {
+            if (Game.I == null) return;
+            _transfer -= Time.deltaTime;
+            if (!_delivering)
+            {
+                if (_src == null || _src.Count == 0)
+                {
+                    _src = PickSource();
+                    if (_src == null)
+                    {
+                        if (Stack.Count > 0) _delivering = true;
+                        return;
+                    }
+                }
+                if (!WalkTo(_src.transform.position, 1.0f)) return;
+                if (_transfer <= 0 && _src.Count > 0 && !Stack.IsFull)
+                {
+                    _transfer = 0.07f;
+                    _src.Remove(out var at, out _);
+                    Stack.Add(_src.Type, at);
+                }
+                if (Stack.IsFull || _src.Count == 0) { _delivering = Stack.Count > 0; _src = null; }
+            }
+            else
+            {
+                if (Stack.Count == 0) { _delivering = false; return; }
+                var t = Stack.ItemsHeld[Stack.Count - 1];
+                var target = Yard.BestStationInput(t);
+                if (target == null) return;   // trays full: wait until the table uses some
+                if (!WalkTo(target.transform.position, 1.0f)) return;
+                if (_transfer <= 0 && !target.IsFull)
+                {
+                    _transfer = 0.07f;
+                    Stack.Remove(t, out var at);
+                    target.Add(at);
+                }
+            }
+        }
+
+        /// <summary>The output tray to fetch from: whichever dish the station is shortest of, from the yard that makes it.</summary>
+        PileZone PickSource()
+        {
+            PileZone best = null;
+            int lowest = int.MaxValue;
+            foreach (var st in Yard.Stations)
+                foreach (var input in st.Inputs)
+                {
+                    if (input.Count >= lowest || input.IsFull) continue;
+                    foreach (var y in Game.I.Yards.Values)
+                    {
+                        if (y.Def.Product != input.Type) continue;
+                        var output = y.BestStationOutput();
+                        if (output == null || output.Count == 0) continue;
+                        lowest = input.Count;
+                        best = output;
+                    }
+                }
+            return best;
         }
     }
 }

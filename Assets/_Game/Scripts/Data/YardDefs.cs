@@ -141,6 +141,21 @@ namespace StackIsland
             },
         };
 
+        static YardDefs()
+        {
+            // the finale: no pen or field - couriers bring the best dishes from three other yards
+            All.Add(new YardDef
+            {
+                Index = 10, Name = "Volcano Feast", Tagline = "Bring sushi, smoothies and burgers together for a legendary feast.",
+                Source = SourceKind.None, Raw = ItemType.None, Inputs = new[] { ItemType.Sushi, ItemType.Smoothie, ItemType.Burger },
+                StationName = "Feast Table", StationLook = "feast", CookSeconds = 2.6f, Product = ItemType.Feast,
+                GathererName = "Courier", SpeedTitle = "Bigger Platters", RecipeTitle = "Royal Garnish",
+                Scale = 1e7, GateCost = 4.8e12,
+                Floor = new Color(0.55f, 0.5f, 0.52f), Tile = new Color(0.45f, 0.4f, 0.42f), SourceFloor = new Color(0.32f, 0.28f, 0.3f),
+                Wall = new Color(0.3f, 0.26f, 0.28f), Cage = new Color(0.98f, 0.45f, 0.15f),
+            });
+        }
+
         public static YardDef Get(int index) => All.Find(y => y.Index == index);
     }
 }

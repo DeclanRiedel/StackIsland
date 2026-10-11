@@ -64,9 +64,37 @@ namespace StackIsland
                 sourceCap = Economy.FieldRegrow(src);
             }
             f.Supply = Math.Min(f.Gatherers * gcap / (gatherTime + 27 / hv + gcap * 0.07), sourceCap);
+            if (d.Source == SourceKind.None) f.Supply = CourierSupply(s, d, f.Gatherers, gcap, hv);
             int wcap = Economy.WaiterCarry(crew);
             f.Waiting = f.Waiters * wcap / (33 / hv + wcap * 0.14);
             return f;
+        }
+
+        /// <summary>Complete sets of inputs per second couriers bring to a yard with no source of its own.</summary>
+        static double CourierSupply(State s, YardDef d, int couriers, int cap, double speed)
+        {
+            if (couriers == 0) return 0;
+            var inputs = d.StationInputs;
+            double share = couriers / (double)inputs.Length, sets = double.MaxValue;
+            foreach (var t in inputs)
+            {
+                var from = YardDefs.All.Find(y => y.Product == t);
+                if (from == null || from.Index > s.Open) return 0;
+                sets = Math.Min(sets, share * cap / (Economy.CourierTrip(d.Index, from.Index) / speed + cap * 0.14));
+            }
+            return sets;
+        }
+
+        /// <summary>Seconds per item for the player fetching one input type from its yard (average over inputs).</summary>
+        static double FetchTime(State s, YardDef d, double ws)
+        {
+            double total = 0;
+            foreach (var t in d.StationInputs)
+            {
+                var from = YardDefs.All.Find(y => y.Product == t);
+                total += from == null ? 999 : Economy.CourierTrip(d.Index, from.Index) / ws;
+            }
+            return total / d.StationInputs.Length;
         }
 
         /// <summary>Items per second a yard sells. The player works the newest yard and fills whichever links have no helper.</summary>
@@ -78,7 +106,9 @@ namespace StackIsland
 
             int cap = Economy.Backpack(s.L("g.backpack"));
             double ws = Economy.WalkSpeed(s.L("g.shoes"));
-            double gather = d.Source == SourceKind.Pen ? cap / (double)d.RawPerAnimal * (d.AnimalHp * 0.36 + 1.2) : cap / 2.0 * 0.05 + 3;
+            double gather = d.Source == SourceKind.Pen ? cap / (double)d.RawPerAnimal * (d.AnimalHp * 0.36 + 1.2)
+                          : d.Source == SourceKind.Field ? cap / 2.0 * 0.05 + 3
+                          : FetchTime(s, d, ws) * d.StationInputs.Length;   // carrying dishes over from other yards
             double hand = cap * 0.055;
             double rate;
             if (f.Gatherers == 0 && f.Waiters == 0)
@@ -146,7 +176,7 @@ namespace StackIsland
                 foreach (var spec in Economy.YardTiles)
                 {
                     int l = L(spec.Key);
-                    if (l < spec.MaxLevel && Economy.Available(spec.Key, L, s.Earned, d.Scale)) yield return new Option { Id = k + spec.Key, Cost = spec.Cost(l, d.Scale) };
+                    if (l < spec.MaxLevel && Economy.TileApplies(d, spec.Key) && Economy.Available(spec.Key, L, s.Earned, d.Scale)) yield return new Option { Id = k + spec.Key, Cost = spec.Cost(l, d.Scale) };
                 }
                 var next = YardDefs.Get(i + 1);
                 if (next != null && L("gate") == 0 && Economy.Available("gate", L, s.Earned, d.Scale))

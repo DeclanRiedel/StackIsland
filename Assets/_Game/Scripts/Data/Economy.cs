@@ -34,6 +34,7 @@ namespace StackIsland
             new TileSpec { Key = "recipe", Kind = "UPGRADE", MaxLevel = 25, Base = 300, Growth = 1.38, Local = new Vector3(-8.2f, 0, -10.6f) },
             new TileSpec { Key = "busy", Kind = "UPGRADE", MaxLevel = 12, Base = 150, Growth = 1.5, Local = new Vector3(-2.6f, 0, -7.0f) },
             new TileSpec { Key = "crew", Kind = "UPGRADE", MaxLevel = 10, Base = 200, Growth = 1.6, Local = new Vector3(-8.2f, 0, -7.6f) },
+            new TileSpec { Key = "manager", Kind = "HIRE", MaxLevel = 1, Base = 2500, Growth = 1, Local = new Vector3(0.4f, 0, -4.0f) },
         };
 
         public static readonly TileSpec Gate = new TileSpec { Key = "gate", Kind = "UNLOCK", MaxLevel = 1, Base = 1, Growth = 1, Local = new Vector3(10.9f, 0, 6.2f) };
@@ -62,6 +63,12 @@ namespace StackIsland
         public static int Backpack(int level) => 12 + 4 * level;
         public static float WalkSpeed(int shoes) => 5.6f * (1 + 0.08f * shoes);
 
+        /// <summary>Does this tile exist in this yard at all? (A yard without a pen or field has no "bigger source".)</summary>
+        public static bool TileApplies(YardDef d, string key) => key != "src" || d.Source != SourceKind.None;
+
+        /// <summary>Walking distance (m) a courier covers for one round trip between two yards (along the walkways).</summary>
+        public static double CourierTrip(int fromYard, int toYard) => 2 * (Math.Abs(fromYard - toYard) * 32.0 + 24.0);
+
         /// <summary>When a yard tile appears (needs its prerequisites), given a level lookup for that yard.</summary>
         public static bool Available(string key, Func<string, int> lvl, double totalEarned, double scale)
         {
@@ -73,7 +80,8 @@ namespace StackIsland
                 case "waiter":
                 case "parrot": return lvl("gather") >= 1;
                 case "station2": return lvl("speed") >= 1 || lvl("waiter") >= 1;
-                case "recipe": return lvl("station2") >= 1;
+                case "recipe":
+                case "manager": return lvl("station2") >= 1;
                 case "gate":
                 case "busy":
                 case "crew": return lvl("waiter") >= 1;

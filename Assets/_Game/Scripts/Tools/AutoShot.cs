@@ -148,6 +148,24 @@ namespace StackIsland
             yield return new WaitForSecondsRealtime(2f);
             yield return Shot("b09_walkway");
 
+            // the finale: open every gate, hire couriers in the Volcano Feast
+            for (int y = 3; y <= 9; y++)
+            {
+                var gate = BuyPad.All.FirstOrDefault(p => p.Id == $"y{y}.gate");
+                if (gate != null) gate.ForceBuy();
+                yield return null;
+            }
+            foreach (var id in new[] { "gather", "gather", "gather", "waiter" })
+            {
+                var pad = BuyPad.All.FirstOrDefault(p => p.Id == $"y10.{id}");
+                if (pad != null) pad.ForceBuy();
+                yield return null;
+            }
+            g.Player.transform.position = Yard.OriginOf(10) + new Vector3(2f, 0, 2f);
+            g.Cam.Distance = 30;
+            yield return new WaitForSeconds(4f);
+            yield return Shot("b10_volcano_feast");
+
             var native = Screen.currentResolution;
             Screen.SetResolution(native.width, native.height, FullScreenMode.FullScreenWindow);
             yield return null;
