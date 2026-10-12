@@ -92,6 +92,7 @@ namespace StackIsland
         Mode _mode;
         float _attack, _transfer;
         LooseItem _claim;
+        PileZone _drop;
         Vector3 _fieldSpot;
         bool _hasSpot;
         readonly List<Vector3> _picked = new List<Vector3>();
@@ -174,7 +175,9 @@ namespace StackIsland
 
         void Deliver()
         {
-            var target = Yard.BestStationInput(Yard.Def.Raw);
+            // stick with the tray we picked: re-picking every frame ping-pongs between stations as their fill levels shift
+            if (_drop == null || _drop.IsFull) _drop = Yard.BestStationInput(Yard.Def.Raw);
+            var target = _drop;
             if (target == null) return;
             if (!WalkTo(target.transform.position, 1.0f)) return;
             _transfer -= Time.deltaTime;
@@ -185,7 +188,7 @@ namespace StackIsland
                 Stack.Remove(Yard.Def.Raw, out var at);
                 target.Add(at);
             }
-            if (Stack.Count == 0 || target.IsFull) { _mode = Mode.Gather; _hasSpot = false; }
+            if (Stack.Count == 0 || target.IsFull) { _mode = Mode.Gather; _hasSpot = false; _drop = null; }
         }
 
         void Release()
@@ -273,7 +276,7 @@ namespace StackIsland
     public class CourierWorker : Worker
     {
         bool _delivering;
-        PileZone _src;
+        PileZone _src, _drop;
         float _transfer;
 
         void Update()
@@ -304,7 +307,8 @@ namespace StackIsland
             {
                 if (Stack.Count == 0) { _delivering = false; return; }
                 var t = Stack.ItemsHeld[Stack.Count - 1];
-                var target = Yard.BestStationInput(t);
+                if (_drop == null || _drop.IsFull || _drop.Type != t) _drop = Yard.BestStationInput(t);
+                var target = _drop;
                 if (target == null) return;   // trays full: wait until the table uses some
                 if (!WalkTo(target.transform.position, 1.0f)) return;
                 if (_transfer <= 0 && !target.IsFull)
