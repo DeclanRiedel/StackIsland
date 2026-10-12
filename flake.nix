@@ -89,7 +89,8 @@
         name = "stackisland-wine";
         runtimeInputs = [
           pkgs.coreutils
-          pkgs.wineWow64Packages.stable
+          # Unity 6 uses EnableMouseInPointer, implemented in Wine 11.3+.
+          pkgs.wineWow64Packages.unstable
         ];
         text = graphics + ''
           export WINEPREFIX="''${STACKISLAND_WINEPREFIX:-''${XDG_DATA_HOME:-$HOME/.local/share}/stackisland/wine}"

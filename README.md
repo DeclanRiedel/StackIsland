@@ -46,7 +46,7 @@ nix run
 
 The launcher prefers a native player in `Builds/Linux`. Until that player is built,
 `nix run` uses the pinned upstream v0.1.0 Windows release with Wine. Nix supplies
-Wine, DXVK, graphics/audio libraries and game files; no Unity license is needed to play
+Wine 11.16, DXVK, graphics/audio libraries and game files; no Unity license is needed to play
 that release. This compatibility runner is separate from the native Linux port.
 The standalone native player can also be launched with `Tools/run-native.sh` on
 a Linux host with Unity's runtime libraries installed. Arguments after `--` reach
@@ -86,6 +86,9 @@ rather than silently falling back. Native saves use Unity's Linux location:
 
 Wine uses its own prefix at `${XDG_DATA_HOME:-$HOME/.local/share}/stackisland/wine`;
 set `STACKISLAND_WINEPREFIX` to override it. Native and Wine saves are separate.
+The runner uses the pinned development Wine package because Unity 6 mouse input
+requires `EnableMouseInPointer`, implemented in Wine 11.3. Wine 11.0 can render
+the game while leaving menu buttons and other mouse controls unresponsive.
 The launcher supplies Mesa drivers for Intel/AMD on non-NixOS Linux. DXVK maps
 the Windows build's Direct3D 11 renderer to Vulkan. Proprietary GPU users can set
 `VK_DRIVER_FILES` and `LIBGL_DRIVERS_PATH` for their host. The native Nix launcher
